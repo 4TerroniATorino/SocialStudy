@@ -55,11 +55,11 @@ public class Groups extends HttpServlet {
         ServletContext cxt = getServletContext();
         String action = request.getParameter("action");
         if (action.equalsIgnoreCase("addGroup")) {
-            Long id = Long.parseLong(request.getParameter("ID"));
+            Long id = Long.parseLong(request.getParameter("id"));
             String nome = request.getParameter("nome");
-            User user = gestoreUsers.getUser(Long.parseLong(request.getParameter("userID")));
+            User user = gestoreUsers.getUser(Long.parseLong(request.getParameter("idUser")));
             // String[] args = request.getParameter("argomenti");
-            Corso corso = gestoreCorso.getCorso(Long.parseLong(request.getParameter("corso")));
+            Corso corso = gestoreCorso.getCorso(Long.parseLong(request.getParameter("idCorso")));
             // gestoreGruppo.addGruppo(id, nome, user, args, corso);
             request.setAttribute("elenco", "Gruppo aggiunto");
             RequestDispatcher rd = cxt.getRequestDispatcher("/Visualizza.jsp");

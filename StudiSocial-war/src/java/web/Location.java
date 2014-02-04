@@ -8,7 +8,6 @@ package web;
 import ejb.GestoreLocation;
 import java.awt.geom.Point2D;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -44,7 +43,7 @@ public class Location extends HttpServlet {
         ServletContext cxt = getServletContext();
         String action = request.getParameter("action");
         if (action.equalsIgnoreCase("add")) {
-            Long id = Long.parseLong(request.getParameter("ID"));
+            Long id = Long.parseLong(request.getParameter("id"));
             String type = request.getParameter("type");
             String address = request.getParameter("address");
             //Point2D coordinate = request.getParameter("coordinate");
