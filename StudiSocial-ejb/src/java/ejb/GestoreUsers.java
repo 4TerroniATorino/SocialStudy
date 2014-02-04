@@ -5,6 +5,7 @@
  */
 package ejb;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -54,5 +55,19 @@ public class GestoreUsers {
         }
         return null;
     }
+
+    public List<User> searchUsers(String key) {
+        List<User> l = listUsers();
+        List<User> out = new ArrayList();
+        for (User u : l) {
+            if (u.getNome().equalsIgnoreCase(key) || u.getCognome().equalsIgnoreCase(key)
+                    || u.getUsername().equalsIgnoreCase(key)) {
+                out.add(u);
+            }
+        }
+        return out;
+    }
+    
+    
 
 }
