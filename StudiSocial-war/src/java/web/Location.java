@@ -46,9 +46,11 @@ public class Location extends HttpServlet {
             Long id = Long.parseLong(request.getParameter("id"));
             String type = request.getParameter("type");
             String address = request.getParameter("address");
-            //Point2D coordinate = request.getParameter("coordinate");
+            String locx = request.getParameter("locx");
+            String locy = request.getParameter("locy");
+            Point2D.Double coordinate =  new Point2D.Double(Double.parseDouble(locx), Double.parseDouble(locy));
             String description = request.getParameter("description");
-            //gestoreLocation.addLocation(id, type, address, coordinate, description);
+            gestoreLocation.addLocation(id, type, address, coordinate, description);
             request.setAttribute("elenco", "Gruppo aggiunto");
             RequestDispatcher rd = cxt.getRequestDispatcher("/Visualizza.jsp");
             rd.forward(request, response);
@@ -84,20 +86,35 @@ public class Location extends HttpServlet {
             rd.forward(request, response);
         }
         if (action.equalsIgnoreCase("listCloseUsers")) {
-            //List<ejb.Location> users = gestoreLocation.listCloseUsers(request.getParameter("posizione attuale"));
-            //request.setAttribute("elenco", users);
+            String locx = request.getParameter("locx");
+            String locy = request.getParameter("locy");
+            ejb.Location attuale = new ejb.Location();
+            Point2D.Double coordinate = new Point2D.Double(Double.parseDouble(locx), Double.parseDouble(locy));            
+            attuale.setCoordinate(coordinate);
+            List<ejb.Location> users = gestoreLocation.listCloseUsers(attuale);
+            request.setAttribute("elenco", users);
             RequestDispatcher rd = cxt.getRequestDispatcher("/visualizza.jsp");
             rd.forward(request, response);
         }
         if (action.equalsIgnoreCase("listCloseGroups")) {
-            //List<ejb.Location> groups = gestoreLocation.listCloseGroups(request.getParameter("posizione attuale"));
-            //request.setAttribute("elenco", groups);
+            String locx = request.getParameter("locx");
+            String locy = request.getParameter("locy");
+            ejb.Location attuale = new ejb.Location();
+            Point2D.Double coordinate = new Point2D.Double(Double.parseDouble(locx), Double.parseDouble(locy));            
+            attuale.setCoordinate(coordinate);            
+            List<ejb.Location> groups = gestoreLocation.listCloseGroups(attuale);
+            request.setAttribute("elenco", groups);
             RequestDispatcher rd = cxt.getRequestDispatcher("/visualizza.jsp");
             rd.forward(request, response);
         }
         if (action.equalsIgnoreCase("listCloseAnnounces")) {
-            //List<ejb.Location> announces = gestoreLocation.listCloseAnnounces(request.getParameter("posizione attuale"));
-            //request.setAttribute("elenco", announces);
+            String locx = request.getParameter("locx");
+            String locy = request.getParameter("locy");
+            ejb.Location attuale = new ejb.Location();
+            Point2D.Double coordinate = new Point2D.Double(Double.parseDouble(locx), Double.parseDouble(locy));            
+            attuale.setCoordinate(coordinate);
+            List<ejb.Location> announces = gestoreLocation.listCloseAnnounces(attuale);
+            request.setAttribute("elenco", announces);
             RequestDispatcher rd = cxt.getRequestDispatcher("/visualizza.jsp");
             rd.forward(request, response);
         }

@@ -15,8 +15,12 @@ import ejb.Gruppo;
 import ejb.Incontro;
 import ejb.User;
 import java.io.IOException;
-import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.sql.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -50,7 +54,7 @@ public class Groups extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ParseException {
         response.setContentType("text/html;charset=UTF-8");
         ServletContext cxt = getServletContext();
         String action = request.getParameter("action");
@@ -58,9 +62,9 @@ public class Groups extends HttpServlet {
             Long id = Long.parseLong(request.getParameter("id"));
             String nome = request.getParameter("nome");
             User user = gestoreUsers.getUser(Long.parseLong(request.getParameter("idUser")));
-            // String[] args = request.getParameter("argomenti");
+            String args = request.getParameter("argomenti");
             Corso corso = gestoreCorso.getCorso(Long.parseLong(request.getParameter("idCorso")));
-            // gestoreGruppo.addGruppo(id, nome, user, args, corso);
+            gestoreGruppo.addGruppo(id, nome, user, args, corso);
             request.setAttribute("elenco", "Gruppo aggiunto");
             RequestDispatcher rd = cxt.getRequestDispatcher("/Visualizza.jsp");
             rd.forward(request, response);
@@ -81,8 +85,9 @@ public class Groups extends HttpServlet {
             Long id = Long.parseLong(request.getParameter("ID"));
             Gruppo gruppo = gestoreGruppo.getGruppo(Long.parseLong(request.getParameter("idGruppo")));
             ejb.Location location = gestoreLocation.getLocation(Long.parseLong(request.getParameter("idLocation")));
-            //Date data = request.getParameter("data");
-            //gestoreIncontro.addIncontro(id, gruppo, location, data);
+            String s = request.getParameter("data");
+            Date d = new Date(new SimpleDateFormat("dd/MM/yyyy").parse(s).getTime());  
+            gestoreIncontro.addIncontro(id, gruppo, location, d);
             request.setAttribute("elenco", "Incontro creato");
             RequestDispatcher rd = cxt.getRequestDispatcher("/Visualizza.jsp");
             rd.forward(request, response);
@@ -114,7 +119,11 @@ public class Groups extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ParseException ex) {
+            Logger.getLogger(Groups.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -128,7 +137,11 @@ public class Groups extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ParseException ex) {
+            Logger.getLogger(Groups.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
