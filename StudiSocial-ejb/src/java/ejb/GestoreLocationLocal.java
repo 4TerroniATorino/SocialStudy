@@ -34,6 +34,6 @@ public interface GestoreLocationLocal {
 
     java.util.List<Location> listCloseGroups(Location loc);
 
-    java.util.List<Location> listCloseAnnounce(Location loc);
+    java.util.List<Location> listCloseAnnounces(Location loc);
     
 }

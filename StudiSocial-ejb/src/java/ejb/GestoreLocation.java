@@ -98,7 +98,7 @@ public class GestoreLocation implements GestoreLocationLocal {
     }
     
     @Override
-    public java.util.List<Location> listCloseAnnounce(Location loc) {
+    public java.util.List<Location> listCloseAnnounces(Location loc) {
         return listFilteredClose(TYPE_ANNOUNCE, loc);
     }
     
