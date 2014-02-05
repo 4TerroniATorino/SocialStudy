@@ -21,7 +21,7 @@ public class GestoreGruppo {
     @EJB
     private GruppoFacadeLocal gruppoFacade;
 
-    public void addGruppo(Long ID, String nome, User fondatore, String[] argomenti, Corso corso) {
+    public void addGruppo(Long ID, String nome, User fondatore, String argomenti, Corso corso) {
         Gruppo gr = new Gruppo();
         gr.setId(ID);
         gr.setNome(nome);

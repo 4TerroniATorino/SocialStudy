@@ -71,14 +71,14 @@ public class Gruppo implements Serializable {
         this.fondatore = fondatore;
     }
 
-    private String[] argomenti;
+    private String argomenti;
 
     /**
      * Get the value of argomenti
      *
      * @return the value of argomenti
      */
-    public String[] getArgomenti() {
+    public String getArgomenti() {
         return argomenti;
     }
 
@@ -87,7 +87,7 @@ public class Gruppo implements Serializable {
      *
      * @param argomenti new value of argomenti
      */
-    public void setArgomenti(String[] argomenti) {
+    public void setArgomenti(String argomenti) {
         this.argomenti = argomenti;
     }
 
