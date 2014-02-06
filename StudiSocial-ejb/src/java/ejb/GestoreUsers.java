@@ -49,7 +49,7 @@ public class GestoreUsers {
     public User getUser(Long id) {
         List<User> l = listUsers();
         for (User u : l) {
-            if (u.getID().equals(id)) {
+            if (u.getId().equals(id)) {
                 return u;
             }
         }

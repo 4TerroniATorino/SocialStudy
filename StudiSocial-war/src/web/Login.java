@@ -1,16 +1,11 @@
-/* To change this license header, choose License Headers in Project Properties.
+/*
+ * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package web;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import ejb.GestoreUsers;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,12 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Daniele
+ * @author Michele
  */
 @WebServlet(urlPatterns = {"/Login"})
 public class Login extends HttpServlet {
-    @EJB
-    private GestoreUsers gestoreUsers;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,20 +30,18 @@ public class Login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
-        gestoreUsers.addUser(3000L, "'Pippinu'", "'Piscinneri'", "'poccu'", "'a@a.it'", "'1234'");
-
-        Gson g = new Gson();
-        JsonObject e = new JsonParser().parse(request.getParameter("data")).getAsJsonObject();
-
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        if(gestoreUsers.getUser(e.get("id").getAsLong())!=null)
-        {
-            out.println("Utente Loggato");
-        }else{
-            out.println("Registrati");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet Login</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
