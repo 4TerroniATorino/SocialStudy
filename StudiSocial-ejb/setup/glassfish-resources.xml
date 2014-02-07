@@ -6,10 +6,9 @@
         <property name="portNumber" value="1527"/>
         <property name="databaseName" value="ssocial"/>
         <property name="User" value="app"/>
-        <property name="Password" value=""/>
+        <property name="Password" value="app"/>
         <property name="URL" value="jdbc:derby://localhost:1527/ssocial"/>
         <property name="driverClass" value="org.apache.derby.jdbc.ClientDriver"/>
     </jdbc-connection-pool>
-    <jdbc-resource enabled="true" jndi-name="ssocial" object-type="user" pool-name="derby_net_ssocial_appPool"/>
     <jdbc-resource enabled="true" jndi-name="jdbc/ssocial" object-type="user" pool-name="derby_net_ssocial_appPool"/>
 </resources>

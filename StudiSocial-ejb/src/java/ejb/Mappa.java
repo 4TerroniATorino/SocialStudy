@@ -31,24 +31,24 @@ public class Mappa implements Serializable {
         this.id = id;
     }
 
-    private User[] user;
+    private Utente[] utente;
 
     /**
-     * Get the value of user
+     * Get the value of utente
      *
-     * @return the value of user
+     * @return the value of utente
      */
-    public User[] getUser() {
-        return user;
+    public Utente[] getUtente() {
+        return utente;
     }
 
     /**
-     * Set the value of user
+     * Set the value of utente
      *
-     * @param user new value of user
+     * @param utente new value of utente
      */
-    public void setUser(User[] user) {
-        this.user = user;
+    public void setUtente(Utente[] utente) {
+        this.utente = utente;
     }
 
     private Location[] location;

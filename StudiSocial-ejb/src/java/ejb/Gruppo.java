@@ -51,14 +51,14 @@ public class Gruppo implements Serializable {
         this.nome = nome;
     }
 
-    private User fondatore;
+    private Utente fondatore;
 
     /**
      * Get the value of fondatore
      *
      * @return the value of fondatore
      */
-    public User getFondatore() {
+    public Utente getFondatore() {
         return fondatore;
     }
 
@@ -67,7 +67,7 @@ public class Gruppo implements Serializable {
      *
      * @param fondatore new value of fondatore
      */
-    public void setFondatore(User fondatore) {
+    public void setFondatore(Utente fondatore) {
         this.fondatore = fondatore;
     }
 
@@ -111,14 +111,14 @@ public class Gruppo implements Serializable {
         this.corso = corso;
     }
 
-    private User[] user;
+    private Utente[] user;
 
     /**
      * Get the value of user
      *
      * @return the value of user
      */
-    public User[] getUser() {
+    public Utente[] getUser() {
         return user;
     }
 
@@ -127,7 +127,7 @@ public class Gruppo implements Serializable {
      *
      * @param user new value of user
      */
-    public void setUser(User[] user) {
+    public void setUser(Utente[] user) {
         this.user = user;
     }
 

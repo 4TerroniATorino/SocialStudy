@@ -31,14 +31,14 @@ public class Annuncio implements Serializable {
         this.id = id;
     }
 
-    private User user;
+    private Utente user;
 
     /**
      * Get the value of user
      *
      * @return the value of user
      */
-    public User getUser() {
+    public Utente getUser() {
         return user;
     }
 
@@ -47,7 +47,7 @@ public class Annuncio implements Serializable {
      *
      * @param user new value of user
      */
-    public void setUser(User user) {
+    public void setUser(Utente user) {
         this.user = user;
     }
 

@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author Daniele
  */
 @Stateless
-public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal {
+public class UtenteFacade extends AbstractFacade<Utente> implements UtenteFacadeLocal {
     @PersistenceContext(unitName = "Studisocial")
     private EntityManager em;
 
@@ -24,8 +24,8 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         return em;
     }
 
-    public UserFacade() {
-        super(User.class);
+    public UtenteFacade() {
+        super(Utente.class);
     }
     
 }

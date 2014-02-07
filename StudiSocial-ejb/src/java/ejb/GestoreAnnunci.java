@@ -21,7 +21,7 @@ public class GestoreAnnunci {
     @EJB
     private AnnuncioFacadeLocal annuncioFacade;
 
-    public void addAnnuncio(Long ID, User user, String testo, Location loc) {
+    public void addAnnuncio(Long ID, Utente user, String testo, Location loc) {
         Annuncio ann = new Annuncio();
         ann.setId(ID);
         ann.setUser(user);

@@ -17,13 +17,13 @@ import javax.ejb.LocalBean;
  */
 @Stateless
 @LocalBean
-public class GestoreUsers {
+public class GestoreUtenti {
 
     @EJB
-    private UserFacadeLocal userFacade;
+    private UtenteFacadeLocal userFacade;
 
     public void addUser(Long id, String nome, String cognome, String username, String email, String password) {
-        User user = new User();
+        Utente user = new Utente();
         user.setId(id);
         user.setNome(nome);
         user.setCognome(cognome);
@@ -36,19 +36,19 @@ public class GestoreUsers {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     public void removeUser(Long id) {
-        User u = getUser(id);
+        Utente u = getUser(id);
         if (u != null) {
             userFacade.remove(u);
         }
     }
 
-    public java.util.List<User> listUsers() {
+    public java.util.List<Utente> listUsers() {
         return userFacade.findAll();
     }
 
-    public User getUser(Long id) {
-        List<User> l = listUsers();
-        for (User u : l) {
+    public Utente getUser(Long id) {
+        List<Utente> l = listUsers();
+        for (Utente u : l) {
             if (u.getId().equals(id)) {
                 return u;
             }
@@ -56,10 +56,10 @@ public class GestoreUsers {
         return null;
     }
 
-    public List<User> searchUsers(String key) {
-        List<User> l = listUsers();
-        List<User> out = new ArrayList();
-        for (User u : l) {
+    public List<Utente> searchUsers(String key) {
+        List<Utente> l = listUsers();
+        List<Utente> out = new ArrayList();
+        for (Utente u : l) {
             if (u.getNome().equalsIgnoreCase(key) || u.getCognome().equalsIgnoreCase(key)
                     || u.getUsername().equalsIgnoreCase(key)) {
                 out.add(u);
