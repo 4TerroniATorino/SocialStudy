@@ -11,11 +11,14 @@ import ejb.GestoreUtenti;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -38,18 +41,35 @@ public class Login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        ServletContext cxt = getServletContext();
+        HttpSession session = request.getSession();
+        String op = request.getParameter("op");
+        String data = request.getParameter("data");
+        if (data != null) {
+            Gson gson = new Gson();
+            JsonObject e = new JsonParser().parse(data).getAsJsonObject();
+            session.setAttribute("idUtente", e.get("id").getAsString());
+            response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            if (gestoreUtenti.getUser(e.get("id").getAsString()) != null) {
+                RequestDispatcher rd = cxt.getRequestDispatcher("/profile.jsp");
+                rd.forward(request, response);
+            } else {
+                request.setAttribute("nome", e.get("name").getAsString().split(" ")[0]);
+                request.setAttribute("cognome", e.get("name").getAsString().split(" ")[1]);
+                RequestDispatcher rd = cxt.getRequestDispatcher("/register.jsp");
+                rd.forward(request, response);
+            }
+        }
 
-        Gson gson = new Gson();
-        JsonObject e = new JsonParser().parse(request.getParameter("data")).getAsJsonObject();
-
-        response.
-                setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        if (gestoreUtenti.getUser(e.get("id").getAsString()) != null)
-        {
-            out.println("Utente Loggato");
-        } else {
-            out.println("Registrati");
+        if (op != null) {
+            if (op.equalsIgnoreCase("reg")) {
+                gestoreUtenti.addUser((String)session.getAttribute("idUtente"), request.getParameter("nome"),
+                        request.getParameter("cognome"), request.getParameter("username"),
+                        request.getParameter("email"), request.getParameter("password"));
+                RequestDispatcher rd = cxt.getRequestDispatcher("/profile.jsp");
+                rd.forward(request, response);
+            }
         }
     }
 
