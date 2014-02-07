@@ -10,10 +10,10 @@ import ejb.GestoreCorso;
 import ejb.GestoreGruppo;
 import ejb.GestoreIncontro;
 import ejb.GestoreLocation;
-import ejb.GestoreUsers;
+import ejb.GestoreUtenti;
 import ejb.Gruppo;
 import ejb.Incontro;
-import ejb.User;
+import ejb.Utente;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,7 +38,7 @@ import javax.servlet.http.HttpServletResponse;
 public class Groups extends HttpServlet {
 
     @EJB
-    private GestoreUsers gestoreUsers;
+    private GestoreUtenti gestoreUsers;
     private GestoreGruppo gestoreGruppo;
     private GestoreIncontro gestoreIncontro;
     private GestoreLocation gestoreLocation;
@@ -61,7 +61,7 @@ public class Groups extends HttpServlet {
         if (action.equalsIgnoreCase("addGroup")) {
             Long id = Long.parseLong(request.getParameter("id"));
             String nome = request.getParameter("nome");
-            User user = gestoreUsers.getUser(Long.parseLong(request.getParameter("idUser")));
+            Utente user = gestoreUsers.getUser(request.getParameter("idUser"));
             String args = request.getParameter("argomenti");
             Corso corso = gestoreCorso.getCorso(Long.parseLong(request.getParameter("idCorso")));
             gestoreGruppo.addGruppo(id, nome, user, args, corso);

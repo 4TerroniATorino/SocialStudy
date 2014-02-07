@@ -22,7 +22,7 @@ public class GestoreUtenti {
     @EJB
     private UtenteFacadeLocal userFacade;
 
-    public void addUser(Long id, String nome, String cognome, String username, String email, String password) {
+    public void addUser(String id, String nome, String cognome, String username, String email, String password) {
         Utente user = new Utente();
         user.setId(id);
         user.setNome(nome);
@@ -35,7 +35,7 @@ public class GestoreUtenti {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-    public void removeUser(Long id) {
+    public void removeUser(String id) {
         Utente u = getUser(id);
         if (u != null) {
             userFacade.remove(u);
@@ -46,7 +46,7 @@ public class GestoreUtenti {
         return userFacade.findAll();
     }
 
-    public Utente getUser(Long id) {
+    public Utente getUser(String id) {
         List<Utente> l = listUsers();
         for (Utente u : l) {
             if (u.getId().equals(id)) {

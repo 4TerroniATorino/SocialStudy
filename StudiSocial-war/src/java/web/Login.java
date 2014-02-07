@@ -4,7 +4,6 @@
  */
 package web;
 
-
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -24,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(urlPatterns = {"/Login"})
 public class Login extends HttpServlet {
+
     @EJB
     private GestoreUtenti gestoreUtenti;
 
@@ -38,18 +38,17 @@ public class Login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
+
         Gson gson = new Gson();
         JsonObject e = new JsonParser().parse(request.getParameter("data")).getAsJsonObject();
 
         response.
                 setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        if(gestoreUtenti.getUser(e.get("id").getAsLong())!=null)
+        if (gestoreUtenti.getUser(e.get("id").getAsString()) != null)
         {
             out.println("Utente Loggato");
-        }else{
+        } else {
             out.println("Registrati");
         }
     }
