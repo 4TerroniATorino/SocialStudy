@@ -4,10 +4,11 @@
  */
 package web;
 
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import ejb.GestoreUsers;
+import ejb.GestoreUtenti;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -24,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = {"/Login"})
 public class Login extends HttpServlet {
     @EJB
-    private GestoreUsers gestoreUsers;
+    private GestoreUtenti gestoreUtenti;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,14 +40,15 @@ public class Login extends HttpServlet {
             throws ServletException, IOException {
         
         
-        gestoreUsers.addUser(3000L, "'Pippinu'", "'Piscinneri'", "'poccu'", "'a@a.it'", "'1234'");
-
-        Gson g = new Gson();
+        gestoreUtenti.addUser(3000L, "'Pippinu'", "'Piscinneri'", "'poccu'", "'a@a.it'", "'1234'");
+        
+        Gson gson = new Gson();
         JsonObject e = new JsonParser().parse(request.getParameter("data")).getAsJsonObject();
 
-        response.setContentType("text/html;charset=UTF-8");
+        response.
+                setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        if(gestoreUsers.getUser(e.get("id").getAsLong())!=null)
+        if(gestoreUtenti.getUser(e.get("id").getAsLong())!=null)
         {
             out.println("Utente Loggato");
         }else{
