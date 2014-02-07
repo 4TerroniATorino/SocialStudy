@@ -111,24 +111,24 @@ public class Gruppo implements Serializable {
         this.corso = corso;
     }
 
-    private Utente[] user;
+    private Utente[] utenti;
 
     /**
-     * Get the value of user
+     * Get the value of utenti
      *
-     * @return the value of user
+     * @return the value of utenti
      */
-    public Utente[] getUser() {
-        return user;
+    public Utente[] getUtenti() {
+        return utenti;
     }
 
     /**
-     * Set the value of user
+     * Set the value of utenti
      *
-     * @param user new value of user
+     * @param utenti new value of utenti
      */
-    public void setUser(Utente[] user) {
-        this.user = user;
+    public void setUtenti(Utente[] utenti) {
+        this.utenti = utenti;
     }
 
     private Incontro[] incontri;
