@@ -40,8 +40,6 @@ public class Login extends HttpServlet {
             throws ServletException, IOException {
         
         
-        gestoreUtenti.addUser(3000L, "'Pippinu'", "'Piscinneri'", "'poccu'", "'a@a.it'", "'1234'");
-        
         Gson gson = new Gson();
         JsonObject e = new JsonParser().parse(request.getParameter("data")).getAsJsonObject();
 
