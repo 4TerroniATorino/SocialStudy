@@ -13,5 +13,9 @@
     </head>
     <body>
         <h1>Questo è il tuo fottuto profilo, st....udente</h1>
+        <form method="get" action="Login">
+            <input type="hidden" name="op" value="crealibretto">
+            <input type="submit" value="Crea libretto">
+        </form>
     </body>
 </html>
