@@ -107,6 +107,28 @@ public class Login extends HttpServlet {
                 RequestDispatcher rd = cxt.getRequestDispatcher("/profile.jsp");
                 rd.forward(request, response);
             }
+            if(op.equalsIgnoreCase("crealibretto")) {
+                List<Corso> l = gestoreCorso.listCorsi();
+                Corso [] corsi = (Corso[]) l.toArray();
+                String [] nomi = new String [corsi.length];
+                for (int i = 0; i<nomi.length; i++)
+                    nomi[i] = corsi[i].getNome();
+                request.setAttribute("elenco", nomi);
+                RequestDispatcher rd = cxt.getRequestDispatcher("/carriera.jsp");
+                rd.forward(request, response);
+            }
+            if(op.equalsIgnoreCase("riempilibretto")) {
+                String corsodistudi = request.getParameter("corsodistudi");
+                String checkboxValues = request.getParameter("corso");
+                String [] nomi = checkboxValues.split(",");
+                Corso [] corsi = new Corso [nomi.length];
+                for (int i = 0; i<nomi.length; i++)
+                    corsi[i]=gestoreCorso.getCorso(nomi[i]);
+                int [] voti = new int [nomi.length];
+                gestoreLibretto.createLibretto((Long)session.getAttribute("idUtente"), corsodistudi, corsi, voti);
+                RequestDispatcher rd = cxt.getRequestDispatcher("/profile.jsp");
+                rd.forward(request, response);
+            }
         }
     }
 
