@@ -30,6 +30,27 @@ public class Libretto implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+    
+        private String Corsodistudi;
+
+    /**
+     * Get the value of Corsodistudi
+     *
+     * @return the value of Corsodistudi
+     */
+    public String getCorsodistudi() {
+        return Corsodistudi;
+    }
+
+    /**
+     * Set the value of Corsodistudi
+     *
+     * @param Corsodistudi new value of Corsodistudi
+     */
+    public void setCorsodistudi(String Corsodistudi) {
+        this.Corsodistudi = Corsodistudi;
+    }
+
 
     private Corso[] corsi;
 
