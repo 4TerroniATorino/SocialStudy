@@ -22,6 +22,9 @@ public class GestoreCorso {
     
     @EJB
     private CorsoFacadeLocal corsoFacade;
+    
+    
+    
     public Corso getCorso(Long ID) {
        List<Corso> l = listCorsi();
         for (Corso c : l) {
@@ -47,5 +50,20 @@ public class GestoreCorso {
 
     public java.util.List<Corso> listCorsi() {
         return corsoFacade.findAll();
+    }
+
+    public void addCorso(Long id, String nome, String descrizione, String mfu, String docente, int crediti, int semestre, int numiscritti, String corsodistudi, Location location) {
+        Corso c = new Corso();
+        c.setId(id);
+        c.setNome(nome);
+        c.setDescrizione(descrizione);
+        c.setMfu(mfu);
+        c.setDocente(docente);
+        c.setCrediti(crediti);
+        c.setSemestre(semestre);
+        c.setNum_iscritti(numiscritti);
+        c.setCorsoDiStudi(corsodistudi);
+        c.setLocation(location);
+        corsoFacade.create(c);
     }
 }
