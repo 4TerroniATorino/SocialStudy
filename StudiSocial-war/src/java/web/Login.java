@@ -11,6 +11,7 @@ import ejb.Corso;
 import ejb.GestoreCorso;
 import ejb.GestoreLibretto;
 import ejb.GestoreUtenti;
+import ejb.Utente;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -51,6 +52,9 @@ public class Login extends HttpServlet {
         HttpSession session = request.getSession();
         String op = request.getParameter("op");
         String data = request.getParameter("data");
+        Utente currentUser;
+        if (session.getAttribute("utente")!=null)
+            currentUser = (Utente) session.getAttribute("utente");
         if (data != null) {
             Gson gson = new Gson();
             JsonObject e = new JsonParser().parse(data).getAsJsonObject();
@@ -58,9 +62,12 @@ public class Login extends HttpServlet {
             response.setContentType("text/html;charset=UTF-8");
             PrintWriter out = response.getWriter();
             if (gestoreUtenti.getUser(e.get("id").getAsString()) != null) {
+                currentUser = gestoreUtenti.getUser(e.get("id").getAsString());
                 RequestDispatcher rd = cxt.getRequestDispatcher("/profile.jsp");
+                session.setAttribute("utente", currentUser);
                 rd.forward(request, response);
             } else {
+                
                 request.setAttribute("nome", e.get("name").getAsString().split(" ")[0]);
                 request.setAttribute("cognome", e.get("name").getAsString().split(" ")[1]);
                 RequestDispatcher rd = cxt.getRequestDispatcher("/register.jsp");
@@ -70,9 +77,33 @@ public class Login extends HttpServlet {
 
         if (op != null) {
             if (op.equalsIgnoreCase("reg")) {
-                gestoreUtenti.addUser((String)session.getAttribute("idUtente"), request.getParameter("nome"),
+                String id = (String)session.getAttribute("idUtente");
+                gestoreUtenti.addUser(id, request.getParameter("nome"),
                         request.getParameter("cognome"), request.getParameter("username"),
                         request.getParameter("email"), request.getParameter("password"));
+                session.setAttribute("utente", gestoreUtenti.getUser(id));
+                RequestDispatcher rd = cxt.getRequestDispatcher("/profile.jsp");
+                rd.forward(request, response);
+            }
+            if(op.equalsIgnoreCase("crealibretto")) {
+                List<Corso> l = gestoreCorso.listCorsi();
+                Corso [] corsi = (Corso[]) l.toArray();
+                String [] nomi = new String [corsi.length];
+                for (int i = 0; i<nomi.length; i++)
+                    nomi[i] = corsi[i].getNome();
+                request.setAttribute("elenco", nomi);
+                RequestDispatcher rd = cxt.getRequestDispatcher("/carriera.jsp");
+                rd.forward(request, response);
+            }
+            if(op.equalsIgnoreCase("riempilibretto")) {
+                String corsodistudi = request.getParameter("corsodistudi");
+                String checkboxValues = request.getParameter("corso");
+                String [] nomi = checkboxValues.split(",");
+                Corso [] corsi = new Corso [nomi.length];
+                for (int i = 0; i<nomi.length; i++)
+                    corsi[i]=gestoreCorso.getCorso(nomi[i]);
+                int [] voti = new int [nomi.length];
+                gestoreLibretto.createLibretto((Long)session.getAttribute("idUtente"), corsodistudi, corsi, voti);
                 RequestDispatcher rd = cxt.getRequestDispatcher("/profile.jsp");
                 rd.forward(request, response);
             }
