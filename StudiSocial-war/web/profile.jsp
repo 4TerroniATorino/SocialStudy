@@ -15,11 +15,14 @@
     </head>
     <body>
         <h1>Questo è il tuo fottuto profilo, st....udente</h1>
-        <br>
         <%
             Utente usr = (Utente) session.getAttribute("utente");
             if(usr.getLibretto()==null)
-                out.print("Devi Inserire i dati del tuo piano carriera");
+                out.print("<form method=\"get\" action=\"Login\">"
+                + "<input type=\"hidden\" name=\"op\" value=\"crealibretto\">"
+                + "<input type=\"submit\" value=\"Crea libretto\">"
+                + "</form>");
         %>
+        
     </body>
 </html>

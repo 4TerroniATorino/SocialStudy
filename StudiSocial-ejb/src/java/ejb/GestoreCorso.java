@@ -31,6 +31,16 @@ public class GestoreCorso {
         }
         return null;
     }
+    
+       public Corso getCorso(String nome) {
+       List<Corso> l = listCorsi();
+        for (Corso c : l) {
+            if (c.getNome().equals(nome)) {
+                return c;
+            }
+        }
+        return null;
+    }
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")

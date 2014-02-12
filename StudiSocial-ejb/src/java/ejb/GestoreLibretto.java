@@ -21,9 +21,10 @@ public class GestoreLibretto {
     @EJB
     private LibrettoFacadeLocal librettoFacade;
 
-    public void createLibretto(Long ID, Corso[] corsi, int[] voti) {
+    public void createLibretto(Long ID, String corsodistudi, Corso[] corsi, int[] voti) {
         Libretto lib = new Libretto();
         lib.setId(ID);
+        lib.setCorsodistudi(corsodistudi);
         lib.setCorsi(corsi);
         lib.setVoti(voti);
         librettoFacade.create(lib);
