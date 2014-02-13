@@ -103,7 +103,7 @@ public class Login extends HttpServlet {
                 for (int i = 0; i<nomi.length; i++)
                     corsi[i]=gestoreCorso.getCorso(nomi[i]);
                 int [] voti = new int [nomi.length];
-                gestoreLibretto.createLibretto((Long)session.getAttribute("idUtente"), corsodistudi, corsi, voti);
+                gestoreLibretto.createLibretto(corsodistudi, corsi, voti);
                 RequestDispatcher rd = cxt.getRequestDispatcher("/profile.jsp");
                 rd.forward(request, response);
             }
@@ -125,7 +125,7 @@ public class Login extends HttpServlet {
                 for (int i = 0; i<nomi.length; i++)
                     corsi[i]=gestoreCorso.getCorso(nomi[i]);
                 int [] voti = new int [nomi.length];
-                gestoreLibretto.createLibretto((Long)session.getAttribute("idUtente"), corsodistudi, corsi, voti);
+                gestoreLibretto.createLibretto(corsodistudi, corsi, voti);
                 RequestDispatcher rd = cxt.getRequestDispatcher("/profile.jsp");
                 rd.forward(request, response);
             }

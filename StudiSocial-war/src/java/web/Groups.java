@@ -64,7 +64,7 @@ public class Groups extends HttpServlet {
             Utente user = gestoreUsers.getUser(request.getParameter("idUser"));
             String args = request.getParameter("argomenti");
             Corso corso = gestoreCorso.getCorso(Long.parseLong(request.getParameter("idCorso")));
-            gestoreGruppo.addGruppo(id, nome, user, args, corso);
+            gestoreGruppo.addGruppo(nome, user, args, corso);
             request.setAttribute("elenco", "Gruppo aggiunto");
             RequestDispatcher rd = cxt.getRequestDispatcher("/Visualizza.jsp");
             rd.forward(request, response);
@@ -87,7 +87,7 @@ public class Groups extends HttpServlet {
             ejb.Location location = gestoreLocation.getLocation(Long.parseLong(request.getParameter("idLocation")));
             String s = request.getParameter("data");
             Date d = new Date(new SimpleDateFormat("dd/MM/yyyy").parse(s).getTime());  
-            gestoreIncontro.addIncontro(id, gruppo, location, d);
+            gestoreIncontro.addIncontro(gruppo, location, d);
             request.setAttribute("elenco", "Incontro creato");
             RequestDispatcher rd = cxt.getRequestDispatcher("/Visualizza.jsp");
             rd.forward(request, response);

@@ -50,7 +50,7 @@ public class Location extends HttpServlet {
             String locy = request.getParameter("locy");
             Point2D.Double coordinate =  new Point2D.Double(Double.parseDouble(locx), Double.parseDouble(locy));
             String description = request.getParameter("description");
-            gestoreLocation.addLocation(id, type, address, coordinate, description);
+            gestoreLocation.addLocation(type, address, coordinate, description);
             request.setAttribute("elenco", "Gruppo aggiunto");
             RequestDispatcher rd = cxt.getRequestDispatcher("/Visualizza.jsp");
             rd.forward(request, response);
