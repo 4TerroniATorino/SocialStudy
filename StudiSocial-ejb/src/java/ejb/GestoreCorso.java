@@ -50,7 +50,7 @@ public class GestoreCorso {
     
     public void addCorso(Long id, String nome, String descrizione, String mfu, String docente, int crediti, int semestre, int numiscritti, String corsodistudi, Location location) {
         Corso c = new Corso();
-        c.setId(id);
+        
         c.setNome(nome);
         c.setDescrizione(descrizione);
         c.setMfu(mfu);
