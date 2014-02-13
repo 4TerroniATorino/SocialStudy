@@ -3,33 +3,33 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package ejb;
 
 import java.util.Arrays;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.ejb.LocalBean;
 
 /**
  *
  * @author Daniele
  */
 @Stateless
-@LocalBean
-public class GestoreLibretto {
+public class GestoreLibretto implements GestoreLibrettoLocal {
 
     @EJB
     private LibrettoFacadeLocal librettoFacade;
 
-    public void createLibretto(Long ID, String corsodistudi, Corso[] corsi, int[] voti) {
+    @Override
+    public void createLibretto(String corsodistudi, Corso[] corsi, int[] voti) {
         Libretto lib = new Libretto();
-        lib.setId(ID);
         lib.setCorsodistudi(corsodistudi);
         lib.setCorsi(corsi);
         lib.setVoti(voti);
         librettoFacade.create(lib);
     }
 
+    @Override
     public Double calcolaMedia() {
         int[] voti = librettoFacade.find(this).getVoti();
         double votoTot = 0d;
@@ -39,6 +39,7 @@ public class GestoreLibretto {
         return votoTot / (double) (voti.length);
     }
 
+    @Override
     public java.util.List<Corso> listCorsi() {
         Corso[] corsi = librettoFacade.find(this).getCorsi();
         return Arrays.asList(corsi);

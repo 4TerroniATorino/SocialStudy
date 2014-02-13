@@ -27,9 +27,8 @@ public class GestoreLocation implements GestoreLocationLocal {
     private LocationFacadeLocal locationFacade;
     
     @Override
-    public void addLocation(Long ID, String type, String via, Point2D.Double coordinata, String descrizione) {
+    public void addLocation(String type, String via, Point2D.Double coordinata, String descrizione) {
         Location location = new Location();
-        location.setId(ID);
         location.setCoordinate(coordinata);
         location.setType(type);
         location.setIndirizzo(via);

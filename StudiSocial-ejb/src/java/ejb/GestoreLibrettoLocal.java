@@ -6,7 +6,6 @@
 
 package ejb;
 
-import java.sql.Date;
 import javax.ejb.Local;
 
 /**
@@ -14,14 +13,12 @@ import javax.ejb.Local;
  * @author Daniele
  */
 @Local
-public interface GestoreIncontroLocal {
-
-    void addIncontro(Gruppo gruppo, Location location, Date data);
-
-    java.util.List<Incontro> listIncontri();
-
-    void removeIncontro(Long id);
-
-    Incontro getIncontro(Long id);
+public interface GestoreLibrettoLocal {
+ 
+    void createLibretto(String corsodistudi, Corso[] corsi, int[] voti);
+    
+    Double calcolaMedia();
+    
+    java.util.List<Corso> listCorsi();
     
 }
