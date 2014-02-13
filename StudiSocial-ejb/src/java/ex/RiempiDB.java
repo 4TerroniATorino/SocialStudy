@@ -21,7 +21,7 @@ public class RiempiDB {
     public static void main(String[] args) {
         GestoreLocation gestoreLocation = new GestoreLocation();
         GestoreCorso gestoreCorso = new GestoreCorso();
-        
+
         gestoreLocation.addLocation("Location", "via Pessinetto", null, "dipartimento di informatica");
         gestoreCorso.addCorso("Reti", "reti", "243", "Sereno", 9, 2, 23, "informatica", gestoreLocation.getLocation(1L));
         gestoreCorso.addCorso("Fisica", "fisica", "432", "Maggiora", 6, 1, 15, "fisica", gestoreLocation.getLocation(1L));
