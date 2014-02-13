@@ -6,14 +6,7 @@
 package ex;
 
 import ejb.GestoreCorso;
-import ejb.GestoreCorsoLocal;
 import ejb.GestoreLocation;
-import ejb.GestoreLocationLocal;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 
 /**
  *
