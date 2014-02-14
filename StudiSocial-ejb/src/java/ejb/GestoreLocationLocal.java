@@ -11,11 +11,11 @@ import javax.ejb.Local;
 
 /**
  *
- * @author Daniele
+ * @author Michele
  */
 @Local
 public interface GestoreLocationLocal {
-
+    
     void addLocation(String type, String via, Point2D.Double coordinata, String descrizione);
 
     java.util.List<Location> listAll();

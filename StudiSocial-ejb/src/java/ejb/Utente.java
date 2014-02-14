@@ -21,7 +21,28 @@ public class Utente implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private Long id;
+    
+    private String idLog;
+
+    /**
+     * Get the value of idLog
+     *
+     * @return the value of idLog
+     */
+    public String getIdLog() {
+        return idLog;
+    }
+
+    /**
+     * Set the value of idLog
+     *
+     * @param idLog new value of idLog
+     */
+    public void setIdLog(String idLog) {
+        this.idLog = idLog;
+    }
+
     
     private String nome;
 
@@ -143,11 +164,11 @@ public class Utente implements Serializable {
         this.libretto = libretto;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

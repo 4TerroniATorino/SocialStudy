@@ -5,7 +5,6 @@
 --%>
 
 <%@page import="ejb.Utente"%>
-<%@page import="ejb.GestoreUtenti"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

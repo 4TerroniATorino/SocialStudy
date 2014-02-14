@@ -22,7 +22,11 @@ public interface GestoreUtentiLocal {
     
     java.util.List<Utente> listUsers();
     
-    Utente getUser(String id);
+    Utente getUser(String idLog);
+    
+    Utente getUser(Long id);
+    
+    Utente getUserByEmail(String email);
     
     List<Utente> searchUsers(String key);
 }

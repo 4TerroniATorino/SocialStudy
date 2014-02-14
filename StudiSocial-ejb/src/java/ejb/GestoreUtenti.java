@@ -22,9 +22,9 @@ public class GestoreUtenti implements GestoreUtentiLocal {
     private UtenteFacadeLocal userFacade;
 
     @Override
-    public void addUser(String id, String nome, String cognome, String username, String email, String password) {
+    public void addUser(String idLog, String nome, String cognome, String username, String email, String password) {
         Utente user = new Utente();
-        user.setId(id);
+        user.setIdLog(idLog);
         user.setNome(nome);
         user.setCognome(cognome);
         user.setEmail(email);
@@ -47,10 +47,23 @@ public class GestoreUtenti implements GestoreUtentiLocal {
     }
 
     @Override
-    public Utente getUser(String id) {
+    public Utente getUser(String idLog) {
         List<Utente> l = listUsers();
         for (Utente u : l) {
-            if (u.getId().equals(id)) {
+            if (u.getIdLog().equals(idLog)) {
+                return u;
+            }
+        }
+        return null;
+    }
+    
+    
+    
+    @Override
+    public Utente getUser(Long id) {
+        List<Utente> l = listUsers();
+        for (Utente u : l) {
+            if (u.getId() == id) {
                 return u;
             }
         }
@@ -69,5 +82,19 @@ public class GestoreUtenti implements GestoreUtentiLocal {
         }
         return out;
     }
+
+    @Override
+    public Utente getUserByEmail(String email) {
+        List<Utente> l = listUsers();
+        for (Utente u : l) {
+            if (u.getEmail().equals(email)) {
+                return u;
+            }
+        }
+        return null;
+        
+    }
+
+    
 
 }

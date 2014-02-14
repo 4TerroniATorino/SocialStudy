@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package ejb;
 
 import java.awt.geom.Point2D;
@@ -13,18 +14,17 @@ import javax.ejb.Stateless;
 
 /**
  *
- * @author Daniele
+ * @author Michele
  */
 @Stateless
 public class GestoreLocation implements GestoreLocationLocal {
+    @EJB
+    private LocationFacadeLocal locationFacade;
     
     public static final String TYPE_USER = "User";
     public static final String TYPE_GROUP = "Group";
     public static final String TYPE_ANNOUNCE = "Announce";
     public static final Double MAX_DISTANCE = 0.02;
-    
-    @EJB
-    private LocationFacadeLocal locationFacade;
     
     @Override
     public void addLocation(String type, String via, Point2D.Double coordinata, String descrizione) {
@@ -111,5 +111,7 @@ public class GestoreLocation implements GestoreLocationLocal {
         }
         return sel;
     }
-    
+
+    // Add business logic below. (Right-click in editor and choose
+    // "Insert Code > Add Business Method")
 }
