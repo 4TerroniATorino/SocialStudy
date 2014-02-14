@@ -18,7 +18,9 @@ public class RiempiDB {
     public static void main(String[] args)
     {
         gestoreLocation = new GestoreLocation();
+
+        GestoreLocation gestoreLocation = new GestoreLocation();
+
         gestoreLocation.addLocation("Location", "via Pessinetto", null, "dipartimento di informatica");
     }
-    
 }
