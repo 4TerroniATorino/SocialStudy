@@ -74,7 +74,8 @@ public class Login extends HttpServlet {
                 RequestDispatcher rd = cxt.getRequestDispatcher("/profile.jsp");
                 rd.forward(request, response);
             } else {
-                request.setAttribute("email", e.get("email").getAsString());
+
+                request.setAttribute("email", e.get("email").getAsString());                
                 request.setAttribute("nome", e.get("name").getAsString().split(" ")[0]);
                 request.setAttribute("cognome", e.get("name").getAsString().split(" ")[1]);
                 RequestDispatcher rd = cxt.getRequestDispatcher("/register.jsp");
@@ -113,6 +114,7 @@ public class Login extends HttpServlet {
                     corsi[i] = gestoreCorso.getCorso(nomi[i]);
                 }
                 int[] voti = new int[nomi.length];
+
                 gestoreLibretto.createLibretto(corsodistudi, corsi, voti);
                 RequestDispatcher rd = cxt.getRequestDispatcher("/profile.jsp");
                 rd.forward(request, response);
