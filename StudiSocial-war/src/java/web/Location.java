@@ -5,13 +5,12 @@
  */
 package web;
 
-import ejb.GestoreLocation;
+import ejb.GestoreLocationLocal;
 import java.awt.geom.Point2D;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,13 +19,13 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Daniele
+ * @author Daniele, oneiros
  */
 @WebServlet(name = "Location", urlPatterns = {"/Location"})
 public class Location extends HttpServlet {
 
     @EJB
-    private GestoreLocation gestoreLocation;
+    private GestoreLocationLocal gestoreLocation;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,87 +36,76 @@ public class Location extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        ServletContext cxt = getServletContext();
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-        if (action.equalsIgnoreCase("add")) {
-            Long id = Long.parseLong(request.getParameter("id"));
+        String output = request.getParameter("output");
+        HashMap<String, Object> map = new HashMap<>();
+        
+        if (action == null){
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "You must provide an action");
+            return;
+        } else if (action.equalsIgnoreCase("add")) {
             String type = request.getParameter("type");
             String address = request.getParameter("address");
-            String locx = request.getParameter("locx");
-            String locy = request.getParameter("locy");
-            Point2D.Double coordinate =  new Point2D.Double(Double.parseDouble(locx), Double.parseDouble(locy));
+            Point2D.Double coords = getCurrentLocation(request);
             String description = request.getParameter("description");
-            gestoreLocation.addLocation(type, address, coordinate, description);
-            request.setAttribute("elenco", "Gruppo aggiunto");
-            RequestDispatcher rd = cxt.getRequestDispatcher("/Visualizza.jsp");
-            rd.forward(request, response);
-        }
-        if (action.equalsIgnoreCase("remove")) {
+            gestoreLocation.addLocation(type, address, coords, description);
+            map.put("output", "Gruppo aggiunto");
+        } else if (action.equalsIgnoreCase("remove")) {
             gestoreLocation.removeLocation(Long.parseLong(request.getParameter("id")));
-            request.setAttribute("elenco", "Location eliminata");
-            RequestDispatcher rd = cxt.getRequestDispatcher("/visualizza.jsp");
-            rd.forward(request, response);
-        }
-        if (action.equalsIgnoreCase("listAll")) {
+            map.put("output", "Location eliminata");
+        } else if (action.equalsIgnoreCase("listAll")) {
             List<ejb.Location> loc = gestoreLocation.listAll();
-            request.setAttribute("elenco", loc);
-            RequestDispatcher rd = cxt.getRequestDispatcher("/visualizza.jsp");
-            rd.forward(request, response);
-        }
-        if (action.equalsIgnoreCase("listUsers")) {
+            map.put("all", loc);
+        } else if (action.equalsIgnoreCase("listUsers")) {
             List<ejb.Location> users = gestoreLocation.listUsers();
-            request.setAttribute("elenco", users);
-            RequestDispatcher rd = cxt.getRequestDispatcher("/visualizza.jsp");
-            rd.forward(request, response);
-        }
-        if (action.equalsIgnoreCase("listGroups")) {
+            map.put("users", users);
+        } else if (action.equalsIgnoreCase("listGroups")) {
             List<ejb.Location> groups = gestoreLocation.listGroups();
-            request.setAttribute("elenco", groups);
-            RequestDispatcher rd = cxt.getRequestDispatcher("/visualizza.jsp");
-            rd.forward(request, response);
-        }
-        if (action.equalsIgnoreCase("listAnnounces")) {
+            map.put("groups", groups);
+        } else if (action.equalsIgnoreCase("listAnnounces")) {
             List<ejb.Location> announces = gestoreLocation.listAnnounce();
-            request.setAttribute("elenco", announces);
-            RequestDispatcher rd = cxt.getRequestDispatcher("/visualizza.jsp");
-            rd.forward(request, response);
-        }
-        if (action.equalsIgnoreCase("listCloseUsers")) {
-            String locx = request.getParameter("locx");
-            String locy = request.getParameter("locy");
-            ejb.Location attuale = new ejb.Location();
-            Point2D.Double coordinate = new Point2D.Double(Double.parseDouble(locx), Double.parseDouble(locy));            
-            attuale.setCoordinate(coordinate);
+            map.put("announces", announces);
+        } else if (action.equalsIgnoreCase("listCloseUsers")) {
+            ejb.Location attuale = new ejb.Location();        
+            attuale.setCoordinate(getCurrentLocation(request));        
             List<ejb.Location> users = gestoreLocation.listCloseUsers(attuale);
-            request.setAttribute("elenco", users);
-            RequestDispatcher rd = cxt.getRequestDispatcher("/visualizza.jsp");
-            rd.forward(request, response);
-        }
-        if (action.equalsIgnoreCase("listCloseGroups")) {
-            String locx = request.getParameter("locx");
-            String locy = request.getParameter("locy");
+            map.put("closeUsers", users);
+        } else if (action.equalsIgnoreCase("listCloseGroups")) {
             ejb.Location attuale = new ejb.Location();
-            Point2D.Double coordinate = new Point2D.Double(Double.parseDouble(locx), Double.parseDouble(locy));            
-            attuale.setCoordinate(coordinate);            
+            attuale.setCoordinate(getCurrentLocation(request));            
             List<ejb.Location> groups = gestoreLocation.listCloseGroups(attuale);
-            request.setAttribute("elenco", groups);
-            RequestDispatcher rd = cxt.getRequestDispatcher("/visualizza.jsp");
-            rd.forward(request, response);
-        }
-        if (action.equalsIgnoreCase("listCloseAnnounces")) {
-            String locx = request.getParameter("locx");
-            String locy = request.getParameter("locy");
-            ejb.Location attuale = new ejb.Location();
-            Point2D.Double coordinate = new Point2D.Double(Double.parseDouble(locx), Double.parseDouble(locy));            
-            attuale.setCoordinate(coordinate);
+            map.put("closeGroups", groups);
+        } else if (action.equalsIgnoreCase("listCloseAnnounces")) {
+            ejb.Location attuale = new ejb.Location();       
+            attuale.setCoordinate(getCurrentLocation(request));        
             List<ejb.Location> announces = gestoreLocation.listCloseAnnounces(attuale);
-            request.setAttribute("elenco", announces);
-            RequestDispatcher rd = cxt.getRequestDispatcher("/visualizza.jsp");
-            rd.forward(request, response);
+            map.put("closeAnnounces", announces);
+        } else {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Not recognized action");
+            return;
         }
+        
+        if (output != null && output.equalsIgnoreCase("json")){
+            request.setAttribute("data", map);
+            request.getRequestDispatcher("/json").include(request, response);
+        } else {
+            for (String s : map.keySet()){
+                request.setAttribute(s, map.get(s));
+            }
+            request.getRequestDispatcher("/view.jsp").include(request, response);
+        }
+    }
+    
+    private Point2D.Double getCurrentLocation(HttpServletRequest request){
+        double x, y;
+        try {
+            x = Double.parseDouble(request.getParameter("locx"));
+            y = Double.parseDouble(request.getParameter("locy"));
+        } catch (Exception e) {
+            return null;
+        }
+        return new Point2D.Double(x, y);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
