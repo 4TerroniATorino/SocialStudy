@@ -3,27 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package ejb;
 
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.ejb.LocalBean;
 
 /**
  *
  * @author Daniele
  */
 @Stateless
-@LocalBean
-public class GestoreGruppo {
+public class GestoreGruppo implements GestoreGruppoLocal {
 
-    @EJB
+     @EJB
     private GruppoFacadeLocal gruppoFacade;
 
-    public void addGruppo(Long ID, String nome, Utente fondatore, String argomenti, Corso corso) {
+     @Override
+    public void addGruppo(String nome, Utente fondatore, String argomenti, Corso corso) {
         Gruppo gr = new Gruppo();
-        gr.setId(ID);
         gr.setNome(nome);
         gr.setFondatore(fondatore);
         gr.setArgomenti(argomenti);
@@ -31,10 +30,12 @@ public class GestoreGruppo {
         gruppoFacade.create(gr);
     }
 
+     @Override
     public java.util.List<Gruppo> listGruppi() {
         return gruppoFacade.findAll();
     }
 
+     @Override
     public void removeGruppo(Long id) {
         Gruppo g = getGruppo(id);
         if (g != null) {
@@ -42,6 +43,7 @@ public class GestoreGruppo {
         }
     }
 
+     @Override
     public Gruppo getGruppo(Long id) {
         List<Gruppo> l = listGruppi();
         for (Gruppo g : l) {
@@ -51,5 +53,5 @@ public class GestoreGruppo {
         }
         return null;
     }
-
+    
 }

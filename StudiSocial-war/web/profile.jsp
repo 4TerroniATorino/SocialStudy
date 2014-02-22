@@ -4,6 +4,7 @@
     Author     : Daniele
 --%>
 
+<%@page import="ejb.Utente"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,5 +14,14 @@
     </head>
     <body>
         <h1>Questo è il tuo fottuto profilo, st....udente</h1>
+        <%
+            Utente usr = (Utente) session.getAttribute("utente");
+            if(usr.getLibretto()==null)
+                out.print("<form method=\"get\" action=\"Login\">"
+                + "<input type=\"hidden\" name=\"op\" value=\"crealibretto\">"
+                + "<input type=\"submit\" value=\"Crea libretto\">"
+                + "</form>");
+        %>
+        
     </body>
 </html>

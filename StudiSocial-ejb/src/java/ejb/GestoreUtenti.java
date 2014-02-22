@@ -3,28 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package ejb;
 
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.ejb.LocalBean;
 
 /**
  *
  * @author Daniele
  */
 @Stateless
-@LocalBean
-public class GestoreUtenti {
+public class GestoreUtenti implements GestoreUtentiLocal {
 
     @EJB
     private UtenteFacadeLocal userFacade;
 
-    public void addUser(String id, String nome, String cognome, String username, String email, String password) {
+    @Override
+    public void addUser(String idLog, String nome, String cognome, String username, String email, String password) {
         Utente user = new Utente();
-        user.setId(id);
+        user.setIdLog(idLog);
         user.setNome(nome);
         user.setCognome(cognome);
         user.setEmail(email);
@@ -33,8 +33,7 @@ public class GestoreUtenti {
         userFacade.create(user);
     }
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    @Override
     public void removeUser(String id) {
         Utente u = getUser(id);
         if (u != null) {
@@ -42,20 +41,36 @@ public class GestoreUtenti {
         }
     }
 
+    @Override
     public java.util.List<Utente> listUsers() {
         return userFacade.findAll();
     }
 
-    public Utente getUser(String id) {
+    @Override
+    public Utente getUser(String idLog) {
         List<Utente> l = listUsers();
         for (Utente u : l) {
-            if (u.getId().equals(id)) {
+            if (u.getIdLog().equals(idLog)) {
+                return u;
+            }
+        }
+        return null;
+    }
+    
+    
+    
+    @Override
+    public Utente getUser(Long id) {
+        List<Utente> l = listUsers();
+        for (Utente u : l) {
+            if (u.getId() == id) {
                 return u;
             }
         }
         return null;
     }
 
+    @Override
     public List<Utente> searchUsers(String key) {
         List<Utente> l = listUsers();
         List<Utente> out = new ArrayList();
@@ -67,7 +82,19 @@ public class GestoreUtenti {
         }
         return out;
     }
-    
+
+    @Override
+    public Utente getUserByEmail(String email) {
+        List<Utente> l = listUsers();
+        for (Utente u : l) {
+            if (u.getEmail().equals(email)) {
+                return u;
+            }
+        }
+        return null;
+        
+    }
+
     
 
 }

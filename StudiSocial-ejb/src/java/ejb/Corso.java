@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ejb;
 
 import java.io.Serializable;
@@ -18,6 +17,7 @@ import javax.persistence.Id;
  */
 @Entity
 public class Corso implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -235,5 +235,5 @@ public class Corso implements Serializable {
     public String toString() {
         return "ejb.Corso[ id=" + id + " ]";
     }
-    
+
 }

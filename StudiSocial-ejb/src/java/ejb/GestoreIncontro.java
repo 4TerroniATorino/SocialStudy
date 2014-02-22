@@ -21,9 +21,8 @@ public class GestoreIncontro implements GestoreIncontroLocal {
     private IncontroFacadeLocal incontroFacade;
 
     @Override
-    public void addIncontro(Long ID, Gruppo gruppo, Location location, Date data) {
+    public void addIncontro(Gruppo gruppo, Location location, Date data) {
         Incontro inc = new Incontro();
-        inc.setId(ID);
         inc.setGruppo(gruppo);
         inc.setLocation(location);
         inc.setData(data);
