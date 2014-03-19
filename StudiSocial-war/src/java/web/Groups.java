@@ -73,8 +73,13 @@ public class Groups extends HttpServlet {
         } else if (action.equalsIgnoreCase("removeGroup")) {
             gestoreGruppo.removeGruppo(Long.parseLong(request.getParameter("id")));
             map.put("output", "Gruppo cancellato");
+        } else if (action.equalsIgnoreCase("addUser")) {
+            gestoreGruppo.addUser(Long.parseLong(request.getParameter("groupid")), Long.parseLong(request.getParameter("userid")));
+            map.put("output", "Utente aggiunto");
+        } else if (action.equalsIgnoreCase("removeUser")) {
+            gestoreGruppo.removeUser(Long.parseLong(request.getParameter("groupid")), Long.parseLong(request.getParameter("userid")));
+            map.put("output", "Utente rimosso");
         } else if (action.equalsIgnoreCase("list")) {
-            System.out.println("LALALA" + gestoreGruppo);
             List<Gruppo> gruppi = gestoreGruppo.listGruppi();
             map.put("groups", gruppi);
         } else if (action.equalsIgnoreCase("addIncontro")) {

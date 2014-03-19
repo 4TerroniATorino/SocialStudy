@@ -64,18 +64,19 @@ public class Login extends HttpServlet {
             PrintWriter out = response.getWriter();
             if (gestoreUtenti.getUser(e.get("id").getAsString()) != null
                     || gestoreUtenti.getUserByEmail(e.get("email").getAsString()) != null) {
-                
+
                 // Metto in sessione l'utente corrente
-                currentUser = gestoreUtenti.getUser(e.get("id").getAsString()) == null ? 
-                        gestoreUtenti.getUserByEmail(e.get("email").getAsString()) : 
-                        gestoreUtenti.getUser(e.get("id").getAsString());
+                currentUser = gestoreUtenti.getUser(e.get("id").getAsString()) == null
+                        ? gestoreUtenti.getUserByEmail(e.get("email").getAsString())
+                        : gestoreUtenti.getUser(e.get("id").getAsString());
                 session.setAttribute("utente", currentUser);
-                
+
                 RequestDispatcher rd = cxt.getRequestDispatcher("/profile.jsp");
                 rd.forward(request, response);
-            } else {
+            } 
+            else {
 
-                request.setAttribute("email", e.get("email").getAsString());                
+                request.setAttribute("email", e.get("email").getAsString());
                 request.setAttribute("nome", e.get("name").getAsString().split(" ")[0]);
                 request.setAttribute("cognome", e.get("name").getAsString().split(" ")[1]);
                 RequestDispatcher rd = cxt.getRequestDispatcher("/register.jsp");
@@ -87,7 +88,7 @@ public class Login extends HttpServlet {
         if (op != null) {
             if (op.equalsIgnoreCase("reg")) {
                 String id = (String) session.getAttribute("idUtente");
-                gestoreUtenti.addUser(id, request.getParameter("nome"),
+                gestoreUtenti.addUser(id, request.getParameter("numero"), request.getParameter("nome"),
                         request.getParameter("cognome"), request.getParameter("username"),
                         request.getParameter("email"), request.getParameter("password"));
                 session.setAttribute("utente", gestoreUtenti.getUser(id));
@@ -115,30 +116,6 @@ public class Login extends HttpServlet {
                 }
                 int[] voti = new int[nomi.length];
 
-                gestoreLibretto.createLibretto(corsodistudi, corsi, voti);
-                RequestDispatcher rd = cxt.getRequestDispatcher("/profile.jsp");
-                rd.forward(request, response);
-            }
-            if (op.equalsIgnoreCase("crealibretto")) {
-                List<Corso> l = gestoreCorso.listCorsi();
-                Corso[] corsi = (Corso[]) l.toArray();
-                String[] nomi = new String[corsi.length];
-                for (int i = 0; i < nomi.length; i++) {
-                    nomi[i] = corsi[i].getNome();
-                }
-                request.setAttribute("elenco", nomi);
-                RequestDispatcher rd = cxt.getRequestDispatcher("/carriera.jsp");
-                rd.forward(request, response);
-            }
-            if (op.equalsIgnoreCase("riempilibretto")) {
-                String corsodistudi = request.getParameter("corsodistudi");
-                String checkboxValues = request.getParameter("corso");
-                String[] nomi = checkboxValues.split(",");
-                Corso[] corsi = new Corso[nomi.length];
-                for (int i = 0; i < nomi.length; i++) {
-                    corsi[i] = gestoreCorso.getCorso(nomi[i]);
-                }
-                int[] voti = new int[nomi.length];
                 gestoreLibretto.createLibretto(corsodistudi, corsi, voti);
                 RequestDispatcher rd = cxt.getRequestDispatcher("/profile.jsp");
                 rd.forward(request, response);
