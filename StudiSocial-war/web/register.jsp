@@ -16,9 +16,11 @@
         <form method="post" action ="Login">
             Inserisci nome <input type="text" name="nome" value="<%= request.getAttribute("nome")%>"><br>
             Inserisci cognome <input type="text" name="cognome" value="<%= request.getAttribute("cognome")%>"><br>
+            Inserisci numero di telefono <input type="text" name="numero"<br>
             Inserisci username <input type="text" name="username"><br>
             Inserisci password <input type="password" name="password"><br>
             Inserisci email <input type="text" name="email" value="<%= request.getAttribute("email")%>"><br>
+            <input type="hidden" name="deviceType" value="android">
             <input type="hidden" name="op" value="reg">
             <input type="submit" value="Registrati">
         </form>
