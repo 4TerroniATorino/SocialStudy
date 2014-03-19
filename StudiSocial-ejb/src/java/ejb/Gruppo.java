@@ -7,6 +7,7 @@
 package ejb;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -111,14 +112,14 @@ public class Gruppo implements Serializable {
         this.corso = corso;
     }
 
-    private Utente[] utenti;
+    private List<Utente> utenti;
 
     /**
      * Get the value of utenti
      *
      * @return the value of utenti
      */
-    public Utente[] getUtenti() {
+    public List<Utente> getUtenti() {
         return utenti;
     }
 
@@ -127,7 +128,7 @@ public class Gruppo implements Serializable {
      *
      * @param utenti new value of utenti
      */
-    public void setUtenti(Utente[] utenti) {
+    public void setUtenti(List<Utente> utenti) {
         this.utenti = utenti;
     }
 

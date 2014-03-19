@@ -17,14 +17,15 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class GestoreUtenti implements GestoreUtentiLocal {
-
+    
     @EJB
     private UtenteFacadeLocal userFacade;
-
+    
     @Override
-    public void addUser(String idLog, String nome, String cognome, String username, String email, String password) {
+    public void addUser(String idLog, String telNumber, String nome, String cognome, String username, String email, String password) {
         Utente user = new Utente();
         user.setIdLog(idLog);
+        user.setTelNumber(telNumber);
         user.setNome(nome);
         user.setCognome(cognome);
         user.setEmail(email);
@@ -32,7 +33,7 @@ public class GestoreUtenti implements GestoreUtentiLocal {
         user.setPassword(password);
         userFacade.create(user);
     }
-
+    
     @Override
     public void removeUser(String id) {
         Utente u = getUser(id);
@@ -40,12 +41,12 @@ public class GestoreUtenti implements GestoreUtentiLocal {
             userFacade.remove(u);
         }
     }
-
+    
     @Override
     public java.util.List<Utente> listUsers() {
         return userFacade.findAll();
     }
-
+    
     @Override
     public Utente getUser(String idLog) {
         List<Utente> l = listUsers();
@@ -57,8 +58,6 @@ public class GestoreUtenti implements GestoreUtentiLocal {
         return null;
     }
     
-    
-    
     @Override
     public Utente getUser(Long id) {
         List<Utente> l = listUsers();
@@ -69,7 +68,7 @@ public class GestoreUtenti implements GestoreUtentiLocal {
         }
         return null;
     }
-
+    
     @Override
     public List<Utente> searchUsers(String key) {
         List<Utente> l = listUsers();
@@ -82,7 +81,7 @@ public class GestoreUtenti implements GestoreUtentiLocal {
         }
         return out;
     }
-
+    
     @Override
     public Utente getUserByEmail(String email) {
         List<Utente> l = listUsers();
@@ -94,7 +93,5 @@ public class GestoreUtenti implements GestoreUtentiLocal {
         return null;
         
     }
-
     
-
 }

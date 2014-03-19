@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ejb;
 
 import java.util.List;
@@ -17,10 +16,11 @@ import javax.ejb.Stateless;
 @Stateless
 public class GestoreGruppo implements GestoreGruppoLocal {
 
-     @EJB
+    @EJB
     private GruppoFacadeLocal gruppoFacade;
+    private GestoreUtenti user;
 
-     @Override
+    @Override
     public void addGruppo(String nome, Utente fondatore, String argomenti, Corso corso) {
         Gruppo gr = new Gruppo();
         gr.setNome(nome);
@@ -30,12 +30,12 @@ public class GestoreGruppo implements GestoreGruppoLocal {
         gruppoFacade.create(gr);
     }
 
-     @Override
+    @Override
     public java.util.List<Gruppo> listGruppi() {
         return gruppoFacade.findAll();
     }
 
-     @Override
+    @Override
     public void removeGruppo(Long id) {
         Gruppo g = getGruppo(id);
         if (g != null) {
@@ -43,7 +43,7 @@ public class GestoreGruppo implements GestoreGruppoLocal {
         }
     }
 
-     @Override
+    @Override
     public Gruppo getGruppo(Long id) {
         List<Gruppo> l = listGruppi();
         for (Gruppo g : l) {
@@ -53,5 +53,19 @@ public class GestoreGruppo implements GestoreGruppoLocal {
         }
         return null;
     }
+
+    @Override
+    public void addUser(Long groupId, Long userId) {
+        Gruppo g = getGruppo(groupId);
+        g.getUtenti().add(user.getUser(userId));
+    }
+
+    @Override
+    public void removeUser(Long groupId, Long userId) {
+        Gruppo g = getGruppo(groupId);
+        g.getUtenti().remove(user.getUser(userId));
+    }
     
+    
+
 }

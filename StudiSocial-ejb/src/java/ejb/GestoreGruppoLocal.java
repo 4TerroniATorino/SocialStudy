@@ -22,5 +22,9 @@ public interface GestoreGruppoLocal {
     void removeGruppo(Long id);
     
     Gruppo getGruppo(Long id);
+
+    void addUser(Long groupId, Long userId);
+
+    void removeUser(Long groupId, Long userId);
     
 }

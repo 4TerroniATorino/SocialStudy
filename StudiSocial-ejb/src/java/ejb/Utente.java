@@ -171,6 +171,27 @@ public class Utente implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+    
+        private String telNumber;
+
+    /**
+     * Get the value of telNumber
+     *
+     * @return the value of telNumber
+     */
+    public String getTelNumber() {
+        return telNumber;
+    }
+
+    /**
+     * Set the value of telNumber
+     *
+     * @param telNumber new value of telNumber
+     */
+    public void setTelNumber(String telNumber) {
+        this.telNumber = telNumber;
+    }
+
 
     @Override
     public int hashCode() {

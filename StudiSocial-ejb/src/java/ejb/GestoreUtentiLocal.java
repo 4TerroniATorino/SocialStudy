@@ -16,7 +16,7 @@ import javax.ejb.Local;
 @Local
 public interface GestoreUtentiLocal {
     
-    void addUser(String id, String nome, String cognome, String username, String email, String password);
+    void addUser(String id, String telNumber, String nome, String cognome, String username, String email, String password);
     
     void removeUser(String id);
     
