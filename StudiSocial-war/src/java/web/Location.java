@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Daniele, oneiros
  */
-@WebServlet(name = "Location", urlPatterns = {"/Location"})
+@WebServlet(name = "Location", urlPatterns = {"/location"})
 public class Location extends HttpServlet {
 
     @EJB
@@ -56,6 +56,9 @@ public class Location extends HttpServlet {
             map.put("output", "Location eliminata");
         } else if (action.equalsIgnoreCase("listAll")) {
             List<ejb.Location> loc = gestoreLocation.listAll();
+            for (ejb.Location l : loc){
+                System.out.println(l);
+            }
             map.put("all", loc);
         } else if (action.equalsIgnoreCase("listUsers")) {
             List<ejb.Location> users = gestoreLocation.listUsers();
