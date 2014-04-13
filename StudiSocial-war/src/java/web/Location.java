@@ -5,7 +5,6 @@
  */
 package web;
 
-import ejb.GestoreLocationLocal;
 import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.util.HashMap;
@@ -16,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import session.LocationFacadeLocal;
 
 /**
  *
@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 public class Location extends HttpServlet {
 
     @EJB
-    private GestoreLocationLocal gestoreLocation;
+    private LocationFacadeLocal gestore;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,42 +47,44 @@ public class Location extends HttpServlet {
         } else if (action.equalsIgnoreCase("add")) {
             String type = request.getParameter("type");
             String address = request.getParameter("address");
-            Point2D.Double coords = getCurrentLocation(request);
+            Point2D.Float coords = getCurrentLocation(request);
             String description = request.getParameter("description");
-            gestoreLocation.addLocation(type, address, coords, description);
+            gestore.addLocation(type, address, coords, description);
             map.put("output", "Gruppo aggiunto");
         } else if (action.equalsIgnoreCase("remove")) {
-            gestoreLocation.removeLocation(Long.parseLong(request.getParameter("id")));
+            long id = Long.parseLong(request.getParameter("id"));
+            entity.Location loc = gestore.find(id);
+            gestore.remove(loc);
             map.put("output", "Location eliminata");
         } else if (action.equalsIgnoreCase("listAll")) {
-            List<ejb.Location> loc = gestoreLocation.listAll();
-            for (ejb.Location l : loc){
+            List<entity.Location> loc = gestore.findAll();
+            for (entity.Location l : loc){
                 System.out.println(l);
             }
             map.put("all", loc);
         } else if (action.equalsIgnoreCase("listUsers")) {
-            List<ejb.Location> users = gestoreLocation.listUsers();
+            List<entity.Location> users = gestore.findUsers();
             map.put("users", users);
         } else if (action.equalsIgnoreCase("listGroups")) {
-            List<ejb.Location> groups = gestoreLocation.listGroups();
+            List<entity.Location> groups = gestore.findGroups();
             map.put("groups", groups);
         } else if (action.equalsIgnoreCase("listAnnounces")) {
-            List<ejb.Location> announces = gestoreLocation.listAnnounce();
+            List<entity.Location> announces = gestore.findAnnounce();
             map.put("announces", announces);
         } else if (action.equalsIgnoreCase("listCloseUsers")) {
-            ejb.Location attuale = new ejb.Location();        
+            entity.Location attuale = new entity.Location();        
             attuale.setCoordinate(getCurrentLocation(request));        
-            List<ejb.Location> users = gestoreLocation.listCloseUsers(attuale);
+            List<entity.Location> users = gestore.findCloseUsers(attuale);
             map.put("closeUsers", users);
         } else if (action.equalsIgnoreCase("listCloseGroups")) {
-            ejb.Location attuale = new ejb.Location();
+            entity.Location attuale = new entity.Location();
             attuale.setCoordinate(getCurrentLocation(request));            
-            List<ejb.Location> groups = gestoreLocation.listCloseGroups(attuale);
+            List<entity.Location> groups = gestore.findCloseGroups(attuale);
             map.put("closeGroups", groups);
         } else if (action.equalsIgnoreCase("listCloseAnnounces")) {
-            ejb.Location attuale = new ejb.Location();       
+            entity.Location attuale = new entity.Location();       
             attuale.setCoordinate(getCurrentLocation(request));        
-            List<ejb.Location> announces = gestoreLocation.listCloseAnnounces(attuale);
+            List<entity.Location> announces = gestore.findCloseAnnounces(attuale);
             map.put("closeAnnounces", announces);
         } else {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Not recognized action");
@@ -100,15 +102,15 @@ public class Location extends HttpServlet {
         }
     }
     
-    private Point2D.Double getCurrentLocation(HttpServletRequest request){
-        double x, y;
+    private Point2D.Float getCurrentLocation(HttpServletRequest request){
+        float x, y;
         try {
-            x = Double.parseDouble(request.getParameter("locx"));
-            y = Double.parseDouble(request.getParameter("locy"));
-        } catch (Exception e) {
+            x = Float.parseFloat(request.getParameter("locx"));
+            y = Float.parseFloat(request.getParameter("locy"));
+        } catch (NumberFormatException e) {
             return null;
         }
-        return new Point2D.Double(x, y);
+        return new Point2D.Float(x, y);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

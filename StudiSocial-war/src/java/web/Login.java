@@ -7,11 +7,8 @@ package web;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import ejb.Corso;
-import ejb.GestoreCorsoLocal;
-import ejb.GestoreLibrettoLocal;
-import ejb.GestoreUtentiLocal;
-import ejb.Utente;
+import entity.Corso;
+import entity.Utente;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -24,6 +21,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import session.CorsoFacadeLocal;
+import session.LibrettoFacadeLocal;
+import session.UtenteFacadeLocal;
 
 /**
  *
@@ -32,10 +32,9 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "Login", urlPatterns = {"/Login"})
 public class Login extends HttpServlet {
 
-    @EJB
-    private GestoreUtentiLocal gestoreUtenti;
-    private GestoreCorsoLocal gestoreCorso;
-    private GestoreLibrettoLocal gestoreLibretto;
+    @EJB private UtenteFacadeLocal gestoreUtenti;
+    @EJB private CorsoFacadeLocal gestoreCorso;
+    @EJB private LibrettoFacadeLocal gestoreLibretto;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -54,21 +53,21 @@ public class Login extends HttpServlet {
         String data = request.getParameter("data");
         Utente currentUser;
         if (session.getAttribute("utente") != null) {
-            currentUser = (Utente) session.getAttribute("utente");
+            currentUser = (Utente) session.getAttribute("utente"); //???? Quest'assegnazione non fa nulla
         }
         if (data != null) {
-            Gson gson = new Gson();
+            Gson gson = new Gson(); //???? Questa variabile non è usata
             JsonObject e = new JsonParser().parse(data).getAsJsonObject();
             session.setAttribute("idUtente", e.get("id").getAsString());
             response.setContentType("text/html;charset=UTF-8");
             PrintWriter out = response.getWriter();
-            if (gestoreUtenti.getUser(e.get("id").getAsString()) != null
+            if (gestoreUtenti.find(e.get("id").getAsString()) != null
                     || gestoreUtenti.getUserByEmail(e.get("email").getAsString()) != null) {
 
                 // Metto in sessione l'utente corrente
-                currentUser = gestoreUtenti.getUser(e.get("id").getAsString()) == null
+                currentUser = gestoreUtenti.find(e.get("id").getAsString()) == null
                         ? gestoreUtenti.getUserByEmail(e.get("email").getAsString())
-                        : gestoreUtenti.getUser(e.get("id").getAsString());
+                        : gestoreUtenti.find(e.get("id").getAsString());
                 session.setAttribute("utente", currentUser);
 
                 RequestDispatcher rd = cxt.getRequestDispatcher("/profile.jsp");
@@ -87,16 +86,21 @@ public class Login extends HttpServlet {
 
         if (op != null) {
             if (op.equalsIgnoreCase("reg")) {
-                String id = (String) session.getAttribute("idUtente");
-                gestoreUtenti.addUser(id, request.getParameter("numero"), request.getParameter("nome"),
-                        request.getParameter("cognome"), request.getParameter("username"),
-                        request.getParameter("email"), request.getParameter("password"));
-                session.setAttribute("utente", gestoreUtenti.getUser(id));
+                Utente utente = new Utente();
+                utente.setId((Long) session.getAttribute("idUtente"));
+                utente.setPhoneNumber(request.getParameter("numero"));
+                utente.setNome(request.getParameter("nome"));
+                utente.setCognome(request.getParameter("cognome"));
+                utente.setUsername(request.getParameter("username"));
+                utente.setEmail(request.getParameter("email"));
+                utente.setPassword(request.getParameter("password"));
+                gestoreUtenti.create(utente);
+                session.setAttribute("utente", utente);
                 RequestDispatcher rd = cxt.getRequestDispatcher("/profile.jsp");
                 rd.forward(request, response);
             }
             if (op.equalsIgnoreCase("crealibretto")) {
-                List<Corso> l = gestoreCorso.listCorsi();
+                List<Corso> l = gestoreCorso.findAll();
                 Corso[] corsi = (Corso[]) l.toArray();
                 String[] nomi = new String[corsi.length];
                 for (int i = 0; i < nomi.length; i++) {
@@ -107,18 +111,22 @@ public class Login extends HttpServlet {
                 rd.forward(request, response);
             }
             if (op.equalsIgnoreCase("riempilibretto")) {
-                String corsodistudi = request.getParameter("corsodistudi");
+                /*String corsodistudi = request.getParameter("corsodistudi");
                 String checkboxValues = request.getParameter("corso");
                 String[] nomi = checkboxValues.split(",");
                 Corso[] corsi = new Corso[nomi.length];
                 for (int i = 0; i < nomi.length; i++) {
-                    corsi[i] = gestoreCorso.getCorso(nomi[i]);
+                    corsi[i] = gestoreCorso.find(nomi[i]);
                 }
                 int[] voti = new int[nomi.length];
 
+                Libretto libretto = new Libretto();
+                libretto.setVoti(voti);
                 gestoreLibretto.createLibretto(corsodistudi, corsi, voti);
                 RequestDispatcher rd = cxt.getRequestDispatcher("/profile.jsp");
-                rd.forward(request, response);
+                rd.forward(request, response);*/
+                
+                //da rifare: nel database il libretto non ha corsodistudi e corso
             }
         }
     }

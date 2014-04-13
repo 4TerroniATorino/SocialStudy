@@ -5,16 +5,10 @@
  */
 package web;
 
-import ejb.Corso;
-import ejb.GestoreCorsoLocal;
-import ejb.GestoreGruppoLocal;
-import ejb.GestoreIncontroLocal;
-import ejb.GestoreLocationLocal;
-import ejb.GestoreUtentiLocal;
-import ejb.Gruppo;
-import ejb.Incontro;
-import ejb.Utente;
+import entity.Gruppo;
+import entity.Incontro;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
@@ -26,6 +20,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import session.CorsoFacadeLocal;
+import session.GruppoFacadeLocal;
+import session.IncontroFacadeLocal;
 
 /**
  *
@@ -34,16 +31,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "Groups", urlPatterns = {"/Groups"})
 public class Groups extends HttpServlet {
 
-    @EJB
-    private GestoreUtentiLocal gestoreUsers;
-    @EJB
-    private GestoreGruppoLocal gestoreGruppo;
-    @EJB
-    private GestoreIncontroLocal gestoreIncontro;
-    @EJB
-    private GestoreLocationLocal gestoreLocation;
-    @EJB
-    private GestoreCorsoLocal gestoreCorso;
+    @EJB private GruppoFacadeLocal gestoreGruppo;
+    @EJB private IncontroFacadeLocal gestoreIncontro;
+    @EJB private CorsoFacadeLocal gestoreCorso;
 
     /**
      * Processes requests for both HTTP
@@ -64,35 +54,39 @@ public class Groups extends HttpServlet {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "You must provide an action");
             return;
         } else if (action.equalsIgnoreCase("addGroup")) {
-            String nome = request.getParameter("nome");
-            Utente user = gestoreUsers.getUser(request.getParameter("idUser"));
-            String args = request.getParameter("argomenti");
-            Corso corso = gestoreCorso.getCorso(Long.parseLong(request.getParameter("idCorso")));
-            gestoreGruppo.addGruppo(nome, user, args, corso);
+            Gruppo gr = new Gruppo();
+            gr.setNome(request.getParameter("nome"));
+            gr.setFondatoreId(request.getParameter("user"));
+            gr.setArgomenti(request.getParameter("argomenti"));
+            gr.setCorsoId(new BigInteger(request.getParameter("corso")));
+            gestoreGruppo.create(gr);
             map.put("output", "Gruppo aggiunto");
         } else if (action.equalsIgnoreCase("removeGroup")) {
-            gestoreGruppo.removeGruppo(Long.parseLong(request.getParameter("id")));
+            Gruppo gr = gestoreGruppo.find(Long.parseLong(request.getParameter("id")));
+            gestoreGruppo.remove(gr);
             map.put("output", "Gruppo cancellato");
         } else if (action.equalsIgnoreCase("addUser")) {
-            gestoreGruppo.addUser(Long.parseLong(request.getParameter("groupid")), Long.parseLong(request.getParameter("userid")));
+            //gestoreGruppo.addUser(Long.parseLong(request.getParameter("groupid")), Long.parseLong(request.getParameter("userid")));
             map.put("output", "Utente aggiunto");
         } else if (action.equalsIgnoreCase("removeUser")) {
-            gestoreGruppo.removeUser(Long.parseLong(request.getParameter("groupid")), Long.parseLong(request.getParameter("userid")));
+            //gestoreGruppo.removeUser(Long.parseLong(request.getParameter("groupid")), Long.parseLong(request.getParameter("userid")));
             map.put("output", "Utente rimosso");
         } else if (action.equalsIgnoreCase("list")) {
-            List<Gruppo> gruppi = gestoreGruppo.listGruppi();
+            List<Gruppo> gruppi = gestoreGruppo.findAll();
             map.put("groups", gruppi);
         } else if (action.equalsIgnoreCase("addIncontro")) {
-            Gruppo gruppo = gestoreGruppo.getGruppo(Long.parseLong(request.getParameter("idGruppo")));
-            ejb.Location location = gestoreLocation.getLocation(Long.parseLong(request.getParameter("idLocation")));
-            Date date = parseDate(request.getParameter("data"));
-            gestoreIncontro.addIncontro(gruppo, location, date);
+            Incontro incontro = new Incontro();
+            incontro.setGruppoId(new BigInteger(request.getParameter("idGruppo")));
+            incontro.setLocationId(new BigInteger(request.getParameter("idLocation")));
+            incontro.setDataincontro(parseDate(request.getParameter("data")));
+            gestoreIncontro.create(incontro);
             map.put("output", "Incontro creato");
         } else if (action.equalsIgnoreCase("removeIncontro")) {
-            gestoreIncontro.removeIncontro(Long.parseLong(request.getParameter("id")));
+            Incontro incontro = gestoreIncontro.find(Long.parseLong(request.getParameter("id")));
+            gestoreIncontro.remove(incontro);
             map.put("output", "Incontro eliminato");
         } else if (action.equalsIgnoreCase("listIncontri")) {
-            List<Incontro> incontri = gestoreIncontro.listIncontri();
+            List<Incontro> incontri = gestoreIncontro.findAll();
             map.put("incontri", incontri);
         } else {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Not recognized action");
