@@ -52,7 +52,7 @@ public class Location implements Serializable {
         this.type = type;
     }
 
-    private Point2D.Double coordinate;
+    private double lat, lng;
 
     /**
      * Get the value of coordinate
@@ -60,7 +60,7 @@ public class Location implements Serializable {
      * @return the value of coordinate
      */
     public Point2D getCoordinate() {
-        return coordinate;
+        return new Point2D.Double(this.lat, this.lng);
     }
 
     /**
@@ -69,7 +69,8 @@ public class Location implements Serializable {
      * @param coordinate new value of coordinate
      */
     public void setCoordinate(Point2D.Double coordinate) {
-        this.coordinate = coordinate;
+        this.lat = coordinate.x;
+        this.lng = coordinate.y;
     }
 
     private String indirizzo;
