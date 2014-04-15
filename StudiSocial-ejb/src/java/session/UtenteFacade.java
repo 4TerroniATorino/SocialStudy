@@ -41,5 +41,16 @@ public class UtenteFacade extends AbstractFacade<Utente> implements UtenteFacade
     public UtenteFacade() {
         super(Utente.class);
     }
+
+    @Override
+    public Utente find(String idlog) {
+        List<Utente> l = findAll();
+        for (Utente u : l) {
+            if (u.getIdlog().equals(idlog)) {
+                return u;
+            }
+        }
+        return null;
+    }
     
 }

@@ -26,6 +26,8 @@ public interface UtenteFacadeLocal {
     void remove(Utente utente);
 
     Utente find(Object id);
+    
+    Utente find(String idlog);
 
     List<Utente> findAll();
 
