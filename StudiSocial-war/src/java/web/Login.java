@@ -87,7 +87,7 @@ public class Login extends HttpServlet {
         if (op != null) {
             if (op.equalsIgnoreCase("reg")) {
                 Utente utente = new Utente();
-                utente.setId((Long) session.getAttribute("idUtente"));
+                utente.setIdlog((String) session.getAttribute("idUtente"));
                 utente.setPhoneNumber(request.getParameter("numero"));
                 utente.setNome(request.getParameter("nome"));
                 utente.setCognome(request.getParameter("cognome"));
