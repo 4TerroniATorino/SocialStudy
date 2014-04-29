@@ -28,6 +28,8 @@ public interface MessagesFacadeLocal {
     List<Messages> findAll();
 
     List<Messages> findRange(int[] range);
+    
+    List<Messages> findAllByRecipient(String phoneNumber);
 
     int count();
     
