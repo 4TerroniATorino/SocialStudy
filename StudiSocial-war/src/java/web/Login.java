@@ -100,11 +100,10 @@ public class Login extends HttpServlet {
                 rd.forward(request, response);
             }
             if (op.equalsIgnoreCase("crealibretto")) {
-                List<Corso> l = gestoreCorso.findAll();
-                Corso[] corsi = (Corso[]) l.toArray();
-                String[] nomi = new String[corsi.length];
+                List<Corso> corsi = gestoreCorso.findAll();
+                String[] nomi = new String[corsi.size()];
                 for (int i = 0; i < nomi.length; i++) {
-                    nomi[i] = corsi[i].getNome();
+                    nomi[i] = corsi.get(i).getNome();
                 }
                 request.setAttribute("elenco", nomi);
                 RequestDispatcher rd = cxt.getRequestDispatcher("/carriera.jsp");
