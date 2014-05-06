@@ -85,20 +85,6 @@ public class Login extends HttpServlet {
         }
 
         if (op != null) {
-            if (op.equalsIgnoreCase("reg")) {
-                Utente utente = new Utente();
-                utente.setIdlog((String) session.getAttribute("idUtente"));
-                utente.setPhoneNumber(request.getParameter("numero"));
-                utente.setNome(request.getParameter("nome"));
-                utente.setCognome(request.getParameter("cognome"));
-                utente.setUsername(request.getParameter("username"));
-                utente.setEmail(request.getParameter("email"));
-                utente.setPassword(request.getParameter("password"));
-                gestoreUtenti.create(utente);
-                session.setAttribute("utente", utente);
-                RequestDispatcher rd = cxt.getRequestDispatcher("/profile.jsp");
-                rd.forward(request, response);
-            }
             if (op.equalsIgnoreCase("crealibretto")) {
                 List<Corso> corsi = gestoreCorso.findAll();
                 String[] nomi = new String[corsi.size()];
