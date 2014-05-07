@@ -1,1 +1,2 @@
-rhc port-forward -a studisocial
+rhc port-forward -a socialstudy
+pause;
