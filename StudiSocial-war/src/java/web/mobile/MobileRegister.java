@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package web.mobile;
 
 import entity.PhoneNumbers;
@@ -25,36 +24,33 @@ import web.utils.MobileResponse;
  * @author Gianvito
  *
  * Servlet per la registrazione da device mobile:
- * 
- *    reqParam: email, phone_number, device_type, device_id
- * 
- *    la servlet controlla:
- *    -  se i parametri sono corretti,
- *    -  se l'utente è già loggato (tramite fb/g)
- *    -  quindi aggiorna o aggiunge nel db: in caso di aggiunta bisgona richiamare 
- *         la procedura di login per gli altri dati
- *    -  infine invia la response con: 
- *         0, 'phone number registered'
- *         1, 'errore nei parametri'
- *         3, 'errore internocol DB'
- *         5, 'errore utente non registrato' (nota: client reindirizza alla registrazione)
- *  
- * 
+ *
+ * reqParam: email, phone_number, device_type, device_id
+ *
+ * la servlet controlla: - se i parametri sono corretti, - se l'utente è già
+ * loggato (tramite fb/g) - quindi aggiorna o aggiunge nel db: in caso di
+ * aggiunta bisgona richiamare la procedura di login per gli altri dati - infine
+ * invia la response con: 0, 'phone number registered' 1, 'errore nei parametri'
+ * 3, 'errore internocol DB' 5, 'errore utente non registrato' (nota: client
+ * reindirizza alla registrazione)
+ *
+ *
  */
 @WebServlet(name = "MobileRegister", urlPatterns = {"/MobileRegister"})
 public class MobileRegister extends HttpServlet {
 
-    @EJB private PhoneNumbersFacadeLocal phoneNumberFacade;
-    @EJB private UtenteFacadeLocal utenteFacade;
-    
+    @EJB
+    private PhoneNumbersFacadeLocal phoneNumberFacade;
+    @EJB
+    private UtenteFacadeLocal utenteFacade;
+
     final String pattern_phNumber = "/^\\+\\d{5,19}$/";
     final String pattern_devId = "/^\\S{5,255}$/";
-    
+
     public static boolean pregMatch(String pattern, String content) {
         return content.matches(pattern);
     }
 
-    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -66,42 +62,41 @@ public class MobileRegister extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String email = request.getParameter("email");
         String phone_number = request.getParameter("phone_number");
         String device_type = request.getParameter("device_type");
         String device_id = request.getParameter("device_id");
         String output = null;
-        
-        if(email==null){
+
+        if (email == null) {
             output = "email";
-        } else if (phone_number==null || !pregMatch(pattern_phNumber, phone_number)){
+        } else if (phone_number == null || !pregMatch(pattern_phNumber, phone_number)) {
             output = "phone_number";
-        } else if (device_type==null || !device_type.equalsIgnoreCase("Android") || !device_type.equalsIgnoreCase("iOS") ){
+        } else if (device_type == null || !device_type.equalsIgnoreCase("Android") || !device_type.equalsIgnoreCase("iOS")) {
             output = "device_type";
-        } else if (device_id==null || pregMatch(pattern_devId, phone_number)){
+        } else if (device_id == null || pregMatch(pattern_devId, phone_number)) {
             output = "device_id";
         } else {
-            
+
             //controlla la mail nel db: si->loggato, no->errore
             Utente utente = null;
-            try{
+            try {
                 utente = utenteFacade.getUserByEmail(email);
-            }catch(Exception e){
+            } catch (Exception e) {
                 output = "user";
                 System.err.println(e);
             }
-            
-            
-            if (utente != null){
+
+            if (utente != null) {
                 try {
-                    
+
                     //controlla phone_number nel db: si->update, no->add
                     String number = utente.getPhoneNumber();
                     PhoneNumbers phoneNumber = phoneNumberFacade.find(number);
 
                     //salva nel DB e aggancia all'utente *********(tabelle/ejb: messages e phone_numbers)
-                    if (phoneNumber != null){
+                    if (phoneNumber != null) {
                         phoneNumber.setDeviceId(device_id);
                         phoneNumber.setDeviceType(device_type);
                         phoneNumberFacade.edit(phoneNumber);
@@ -114,28 +109,22 @@ public class MobileRegister extends HttpServlet {
                     }
 
                     output = "registered";
-                    
-                } catch (Exception e){
+
+                } catch (Exception e) {
                     output = "db";
                     System.err.println(e);
                 }
-                
-            }
-            
-            //!logged: richiama la procedura di login e completa la registrazione
+
+            } //!logged: richiama la procedura di login e completa la registrazione
             else {
                 output = "unregistered";
             }
         }
-        
+
         Map map = MobileResponse.createResponse(output);
         request.setAttribute("data", map);
         request.getRequestDispatcher("/json").include(request, response);
     }
-    
-
-
-
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

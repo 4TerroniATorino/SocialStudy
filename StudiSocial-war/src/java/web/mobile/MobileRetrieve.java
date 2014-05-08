@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package web.mobile;
 
 import entity.Messages;
@@ -27,13 +26,16 @@ import web.utils.MobileResponse;
 public class MobileRetrieve extends HttpServlet {
 
     final String pattern_phNumber = "/^\\+\\d{5,19}$/";
-    
-    @EJB private PhoneNumbersFacadeLocal phoneNumberFacade;
-    @EJB private MessagesFacadeLocal messagesFacade;
-    
+
+    @EJB
+    private PhoneNumbersFacadeLocal phoneNumberFacade;
+    @EJB
+    private MessagesFacadeLocal messagesFacade;
+
     public static boolean pregMatch(String pattern, String content) {
         return content.matches(pattern);
     }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,37 +44,36 @@ public class MobileRetrieve extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
-     * 
-     * 
-     *  unregistered : error invalid phone number -> response = 2
-     *  success : da vedere nell app
-     *  DB     -> response = 0
+     *
+     *
+     * unregistered : error invalid phone number -> response = 2 success : da
+     * vedere nell app DB -> response = 0
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String priv_key = request.getParameter("private_key");
         String phone_number = request.getParameter("phone_number"); //richiedente
         String output;
-        
-        if(priv_key==null){
+
+        if (priv_key == null) {
             output = "priv_key";
-        } else if(phone_number==null || !pregMatch(pattern_phNumber, phone_number)){
+        } else if (phone_number == null || !pregMatch(pattern_phNumber, phone_number)) {
             output = "phone_number";
         } else {
 
             try {
-            
+
                 //controlla richiedente
                 PhoneNumbers phoneNumber = phoneNumberFacade.find(phone_number);
 
-                if (phoneNumber != null){
-                    
+                if (phoneNumber != null) {
+
                     //cerca i msg nel db e restituisci un array
                     List<Messages> messages = messagesFacade.findAllByRecipient(phone_number);
 
                     //segna come letti
-                    for (Messages m : messages){
+                    for (Messages m : messages) {
                         messagesFacade.remove(m);
                     }
 
@@ -82,22 +83,22 @@ public class MobileRetrieve extends HttpServlet {
                     request.setAttribute("data", map);
                     request.getRequestDispatcher("/json").include(request, response);
                     return;
-                    
+
                 } else {
-                    output = "unregistered"; 
+                    output = "unregistered";
                 }
 
-            } catch (Exception e){
-                output = "db"; 
+            } catch (Exception e) {
+                output = "db";
                 System.err.println(e);
             }
-        
+
         }
-        
+
         Map map = MobileResponse.createResponse(output);
         request.setAttribute("data", map);
         request.getRequestDispatcher("/json").include(request, response);
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
