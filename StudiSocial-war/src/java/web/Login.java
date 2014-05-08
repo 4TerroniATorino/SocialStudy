@@ -85,6 +85,23 @@ public class Login extends HttpServlet {
         }
 
         if (op != null) {
+            if (op.equalsIgnoreCase("getcorsi")) {
+                String corsostudi = request.getParameter("corso");
+                int len = 0;
+                List<Corso> corsi = gestoreCorso.findAll();
+                for (Corso c : corsi) {
+                    len++;
+                }
+                String[] nomi = new String[len];
+                int i = 0;
+                for (Corso c : corsi) {
+                    if (c.getCorsodistudi().equalsIgnoreCase(corsostudi)) {
+                        nomi[i] = c.getNome();
+                        i++;
+                    }
+                }
+                request.setAttribute("elenco", nomi);
+            }
             if (op.equalsIgnoreCase("crealibretto")) {
                 List<Corso> corsi = gestoreCorso.findAll();
                 String[] nomi = new String[corsi.size()];

@@ -21,8 +21,8 @@
 
         var xhrObj = setXMLHttpRequest();
 
-        function addCorso(op) {
-            var url = "Controller?op=" + op + "&id=" + id.value + "&method=" + method.value;
+        function getCorsi(corso) {
+            var url = "Controller?op=getcorsi&corso=" + corso.value;
             xhrObj.open("GET", url, true);
             xhrObj.onreadystatechange = updateRis;
             xhrObj.send(null);
@@ -35,10 +35,13 @@
     <body>
         <h2>Inserisci piano di studi</h2>
         <form method="get" action ="Login">
-            Corso di studi <input type="text" name="corsodistudi"><br>
+            Corso di studi <select name="corsostudi" onchange="getCorsi(corso)"><br>
+                <%=request.getAttribute("elenco")%>
+            </select>
+
             Scegli corsi
-            <% for (int i = 0; i<((String[])request.getAttribute("elenco")).length; i++) {%>
-            <input type="checkbox" name="corso" value="<%= ((String[])request.getAttribute("elenco"))[i] %>"><br><%}%>
+            <% for (int i = 0; i < ((String[]) request.getAttribute("elenco")).length; i++) {%>
+            <input type="checkbox" name="corso" value="<%= ((String[]) request.getAttribute("elenco"))[i]%>"><br><%}%>
             <input type="hidden" name="op" value="riempilibretto">
             <input type="submit" value="Confema">
         </form>
