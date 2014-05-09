@@ -80,7 +80,7 @@ public class Login extends HttpServlet {
                         : gestoreUtenti.find(e.get("id").getAsString());
                 session.setAttribute("utente", currentUser);
 
-                RequestDispatcher rd = cxt.getRequestDispatcher("/profile.jsp");
+                RequestDispatcher rd = cxt.getRequestDispatcher("/index.jsp");
                 rd.forward(request, response);
             } else {
 
@@ -108,7 +108,7 @@ public class Login extends HttpServlet {
                 //Arrays.sort(corsidistudi);
                 System.out.println("lista:"+corsodistudi);
                 request.setAttribute("elenco", corsidistudi);
-                RequestDispatcher rd = cxt.getRequestDispatcher("/carriera.jsp");
+                RequestDispatcher rd = cxt.getRequestDispatcher("/career.jsp");
                 rd.forward(request, response);
             }
             if (op.equalsIgnoreCase("getcorsi")) {
