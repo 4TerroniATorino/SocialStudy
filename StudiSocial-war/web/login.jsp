@@ -10,32 +10,22 @@
 <!--[if gt IE 8]><!-->
 <html class="no-js"> <!--<![endif]-->
     <head>
-        <title>Profilo</title>
+        <title>Login</title>
         <meta name="description" content="">
         <jsp:include page="includes.jsp"></jsp:include>
-        <script src="js/cordova.js"></script>
     </head>
     <body>
-        <jsp:include page="header.jsp"></jsp:include>
-
         <div class="jumbotron">
             <div class="container">
                 <h1>Benvenuto in SocialStudy</h1>
-                <%@page import="entity.Utente"%>
-                <%
-                    Utente usr = (Utente) session.getAttribute("utente");
-                    if(usr.getLibrettoId()==null)
-                        out.print("<form method=\"get\" action=\"Login\">"
-                        + "<input type=\"hidden\" name=\"op\" value=\"crealibretto\">"
-                        + "<input type=\"submit\" value=\"Riempi libretto\">"
-                        + "</form>");
-                %>
-                <p>
-                <button	onClick="cordova.exec(function(res){}, function(err){}, 'avviaActivity' , 'chat', [<%= usr.getPhoneNumber()%>]);">Chat</button>
-               </p>
+                <p>Entra con:</p>
+                 <p>
+                    <a href="https://studisocial.appspot.com/auth/google">Google</a>
+                    <a href="https://studisocial.appspot.com/auth/facebook">Facebook</a>
+                </p><p><a class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
             </div>
         </div>
-        
+
         <hr>
         <jsp:include page="footer.jsp"></jsp:include>
     </body>
