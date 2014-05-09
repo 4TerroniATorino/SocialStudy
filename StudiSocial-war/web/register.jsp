@@ -15,7 +15,7 @@
             <div class="container">
                 <h1>Registrazione</h1>
                 <h3> Non sei un utente registrato, compila tutti i campi e clicca su "registrati"</h3>
-                <form method="post" action ="Login">
+                <form method="post" action ="Registration">
                     Inserisci nome <input type="text" name="nome" value="<%= request.getAttribute("nome")%>"><br>
                     Inserisci cognome <input type="text" name="cognome" value="<%= request.getAttribute("cognome")%>"><br>
                     Inserisci numero di telefono <input type="text" name="numero"><br>

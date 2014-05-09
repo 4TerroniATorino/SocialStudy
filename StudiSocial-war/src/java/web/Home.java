@@ -28,10 +28,10 @@ public class Home extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         // controllo se l'utente è mobile o desktop
-        boolean mobile = false;
-        String ua = request.getHeader("User-Agent").toLowerCase();
-        if (ua.contains("studisocialmobile"))
-                mobile=true;
+        
+        String ua = request.getHeader("User-Agent");
+        if (ua.contains("mobileSocialStudy"))
+            request.getSession().setAttribute("mobile", true);
         
         // controllo se l'utente è già loggato (sessione aperta)
         Utente currentUser = (Utente) request.getSession().getAttribute("utente");

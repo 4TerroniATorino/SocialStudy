@@ -79,6 +79,7 @@ public class Login extends HttpServlet {
                         ? gestoreUtenti.getUserByEmail(e.get("email").getAsString())
                         : gestoreUtenti.find(e.get("id").getAsString());
                 session.setAttribute("utente", currentUser);
+               
 
                 RequestDispatcher rd = cxt.getRequestDispatcher("/index.jsp");
                 rd.forward(request, response);

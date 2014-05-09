@@ -1,3 +1,4 @@
+<%@page import="entity.Utente"%>
 <%@page pageEncoding="UTF-8" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -41,13 +42,15 @@
                 </li>
             </ul>
             <form class="navbar-form navbar-right">
-                <div class="form-group">
-                    <input type="text" placeholder="Email" class="form-control">
-                </div>
-                <div class="form-group">
-                    <input type="password" placeholder="Password" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-success">Sign in</button>
+                <%
+                Boolean mobile = (Boolean)session.getAttribute("mobile");
+                if(mobile != null && mobile){
+                Utente usr = (Utente)session.getAttribute("utente");
+                %>
+                <script src="js/cordova.js"></script>
+                <button	onClick="cordova.exec(function(res){}, function(err){}, 'avviaActivity' , 'chat', [<%= usr.getPhoneNumber()%>]);">Chat</button>
+            
+                <% } %>
             </form>
         </div><!--/.navbar-collapse -->
     </div>
