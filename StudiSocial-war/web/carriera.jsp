@@ -4,7 +4,6 @@
     Author     : Daniele
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <script>
@@ -29,21 +28,23 @@
         }
     </script>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Carriera</title>
     </head>
     <body>
         <h2>Inserisci piano di studi</h2>
         <form method="get" action ="Login">
             Corso di studi <select name="corsostudi" onchange="getCorsi(corso)"><br>
-                <%=request.getAttribute("elenco")%>
+                <% String [] corsi = (String[])request.getAttribute("elenco");
+                for (int i = 0; i < corsi.length; i++) {%>
+                <option><%=corsi[i]%></option>
+            <%}%>
             </select>
 
-            Scegli corsi
-            <% for (int i = 0; i < ((String[]) request.getAttribute("elenco")).length; i++) {%>
+                <%-- Scegli corsi
+            <% for (int i = 0; i < request.getAttribute("elenco"); i++) {%>
             <input type="checkbox" name="corso" value="<%= ((String[]) request.getAttribute("elenco"))[i]%>"><br><%}%>
             <input type="hidden" name="op" value="riempilibretto">
-            <input type="submit" value="Confema">
+            <input type="submit" value="Confema">--%>
         </form>
     </body>
 </html>

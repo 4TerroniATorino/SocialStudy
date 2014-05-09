@@ -20,14 +20,14 @@
 
         <div class="jumbotron">
             <div class="container">
-                <h1>Questo è il tuo fottuto profilo, st....udente</h1>
+                <h1>Benvenuto in SocialStudy</h1>
                 <%@page import="entity.Utente"%>
                 <%
                     Utente usr = (Utente) session.getAttribute("utente");
                     if(usr.getLibrettoId()==null)
                         out.print("<form method=\"get\" action=\"Login\">"
                         + "<input type=\"hidden\" name=\"op\" value=\"crealibretto\">"
-                        + "<input type=\"submit\" value=\"Crea libretto\">"
+                        + "<input type=\"submit\" value=\"Riempi libretto\">"
                         + "</form>");
                 %>
                 <p>

@@ -11,6 +11,8 @@ import entity.Corso;
 import entity.Utente;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -90,13 +92,18 @@ public class Login extends HttpServlet {
         if (op != null) {
             if (op.equalsIgnoreCase("crealibretto")) {
                 List<Corso> corsi = gestoreCorso.findAll();
-                List<String> corsodistudi = new LinkedList<String>();
+                List<String> corsodistudi = new ArrayList();
                 for (Corso c : corsi) {
                     String corsost = c.getCorsodistudi();
                     if (!corsodistudi.contains(corsost))
                         corsodistudi.add(corsost);
                 }
-                request.setAttribute("elenco", corsodistudi);
+                String [] corsidistudi = new String[corsodistudi.size()];
+                for (int i =0; i<corsodistudi.size();i++)
+                    corsidistudi[i] = corsodistudi.get(i);
+                //Arrays.sort(corsidistudi);
+                System.out.println("lista:"+corsodistudi);
+                request.setAttribute("elenco", corsidistudi);
                 RequestDispatcher rd = cxt.getRequestDispatcher("/carriera.jsp");
                 rd.forward(request, response);
             }
