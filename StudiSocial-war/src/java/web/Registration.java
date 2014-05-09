@@ -52,7 +52,7 @@ public class Registration extends HttpServlet {
         utente.setPassword(request.getParameter("password"));
         gestoreUtenti.create(utente);
         session.setAttribute("utente", utente);
-        RequestDispatcher rd = cxt.getRequestDispatcher("/profile.jsp");
+        RequestDispatcher rd = cxt.getRequestDispatcher("/index.jsp");
         rd.forward(request, response);
     }
 

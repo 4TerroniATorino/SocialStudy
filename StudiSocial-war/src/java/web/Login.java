@@ -53,6 +53,10 @@ public class Login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        // controllo se l'utente è già registrato
+        // prendi json
+        
         ServletContext cxt = getServletContext();
         HttpSession session = request.getSession();
         String op = request.getParameter("op");

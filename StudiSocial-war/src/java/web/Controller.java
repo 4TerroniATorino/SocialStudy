@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Daniele
  */
-@WebServlet(name = "Chat", urlPatterns = {"/Chat"})
-public class Chat extends HttpServlet {
+@WebServlet(name = "Controller", urlPatterns = {"/Controller"})
+public class Controller extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,8 +31,7 @@ public class Chat extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        
+        // Riceve da index.jsp e rimanda alle altre servlet
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
