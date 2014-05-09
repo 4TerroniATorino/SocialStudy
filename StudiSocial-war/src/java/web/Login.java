@@ -11,6 +11,7 @@ import entity.Corso;
 import entity.Utente;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.LinkedList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -32,9 +33,12 @@ import session.UtenteFacadeLocal;
 @WebServlet(name = "Login", urlPatterns = {"/Login"})
 public class Login extends HttpServlet {
 
-    @EJB private UtenteFacadeLocal gestoreUtenti;
-    @EJB private CorsoFacadeLocal gestoreCorso;
-    @EJB private LibrettoFacadeLocal gestoreLibretto;
+    @EJB
+    private UtenteFacadeLocal gestoreUtenti;
+    @EJB
+    private CorsoFacadeLocal gestoreCorso;
+    @EJB
+    private LibrettoFacadeLocal gestoreLibretto;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -72,8 +76,7 @@ public class Login extends HttpServlet {
 
                 RequestDispatcher rd = cxt.getRequestDispatcher("/profile.jsp");
                 rd.forward(request, response);
-            } 
-            else {
+            } else {
 
                 request.setAttribute("email", e.get("email").getAsString());
                 request.setAttribute("nome", e.get("name").getAsString().split(" ")[0]);
@@ -85,6 +88,18 @@ public class Login extends HttpServlet {
         }
 
         if (op != null) {
+            if (op.equalsIgnoreCase("crealibretto")) {
+                List<Corso> corsi = gestoreCorso.findAll();
+                List<String> corsodistudi = new LinkedList<String>();
+                for (Corso c : corsi) {
+                    String corsost = c.getCorsodistudi();
+                    if (!corsodistudi.contains(corsost))
+                        corsodistudi.add(corsost);
+                }
+                request.setAttribute("elenco", corsodistudi);
+                RequestDispatcher rd = cxt.getRequestDispatcher("/carriera.jsp");
+                rd.forward(request, response);
+            }
             if (op.equalsIgnoreCase("getcorsi")) {
                 String corsostudi = request.getParameter("corso");
                 int len = 0;
@@ -102,32 +117,22 @@ public class Login extends HttpServlet {
                 }
                 request.setAttribute("elenco", nomi);
             }
-            if (op.equalsIgnoreCase("crealibretto")) {
-                List<Corso> corsi = gestoreCorso.findAll();
-                String[] nomi = new String[corsi.size()];
-                for (int i = 0; i < nomi.length; i++) {
-                    nomi[i] = corsi.get(i).getNome();
-                }
-                request.setAttribute("elenco", nomi);
-                RequestDispatcher rd = cxt.getRequestDispatcher("/carriera.jsp");
-                rd.forward(request, response);
-            }
             if (op.equalsIgnoreCase("riempilibretto")) {
                 /*String corsodistudi = request.getParameter("corsodistudi");
-                String checkboxValues = request.getParameter("corso");
-                String[] nomi = checkboxValues.split(",");
-                Corso[] corsi = new Corso[nomi.length];
-                for (int i = 0; i < nomi.length; i++) {
-                    corsi[i] = gestoreCorso.find(nomi[i]);
-                }
-                int[] voti = new int[nomi.length];
+                 String checkboxValues = request.getParameter("corso");
+                 String[] nomi = checkboxValues.split(",");
+                 Corso[] corsi = new Corso[nomi.length];
+                 for (int i = 0; i < nomi.length; i++) {
+                 corsi[i] = gestoreCorso.find(nomi[i]);
+                 }
+                 int[] voti = new int[nomi.length];
 
-                Libretto libretto = new Libretto();
-                libretto.setVoti(voti);
-                gestoreLibretto.createLibretto(corsodistudi, corsi, voti);
-                RequestDispatcher rd = cxt.getRequestDispatcher("/profile.jsp");
-                rd.forward(request, response);*/
-                
+                 Libretto libretto = new Libretto();
+                 libretto.setVoti(voti);
+                 gestoreLibretto.createLibretto(corsodistudi, corsi, voti);
+                 RequestDispatcher rd = cxt.getRequestDispatcher("/profile.jsp");
+                 rd.forward(request, response);*/
+
                 //da rifare: nel database il libretto non ha corsodistudi e corso
             }
         }
