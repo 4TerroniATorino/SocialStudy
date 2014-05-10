@@ -21,7 +21,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Studi Social</a>
+            <a class="navbar-brand" href="#">Social Study</a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -48,7 +48,7 @@
                 Utente usr = (Utente)session.getAttribute("utente");
                 %>
                 <script src="js/cordova.js"></script>
-                <button	onClick="cordova.exec(function(res){}, function(err){}, 'avviaActivity' , 'chat', [<%= usr.getPhoneNumber()%>]);">Chat</button>
+                <button class="btn btn-success"	onClick="cordova.exec(function(res){}, function(err){}, 'avviaActivity' , 'chat', [<%= usr.getPhoneNumber()%>]);">Chat</button>
             
                 <% } %>
             </form>
