@@ -40,7 +40,7 @@ public class Controller extends HttpServlet {
         String op = request.getParameter("action");
         if (op.equalsIgnoreCase("logout")) {
             s.invalidate();
-            RequestDispatcher rdLog = cxt.getRequestDispatcher("/index.html");
+            RequestDispatcher rdLog = cxt.getRequestDispatcher("/login.jsp");
             rdLog.forward(request, response);
         }
     }
