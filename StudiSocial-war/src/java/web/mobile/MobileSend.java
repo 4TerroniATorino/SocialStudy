@@ -44,6 +44,10 @@ public class MobileSend extends HttpServlet {
      * @throws IOException if an I/O error occurs
      *
      * db -> 3 sender_invalid -> 0 recipient_invalid -> 4 success -> ?
+     * 
+     * Da ServerProxy.java: response.code == 4 recipientException
+     *                      response.code != 0 errore server
+     * 
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

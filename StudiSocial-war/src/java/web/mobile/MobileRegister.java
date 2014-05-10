@@ -29,7 +29,7 @@ import web.utils.MobileResponse;
  *
  * la servlet controlla: - se i parametri sono corretti, - se l'utente è già
  * loggato (tramite fb/g) - quindi aggiorna o aggiunge nel db: in caso di
- * aggiunta bisgona richiamare la procedura di login per gli altri dati - infine
+ * aggiunta bisogna richiamare la procedura di login per gli altri dati - infine
  * invia la response con: 0, 'phone number registered' 1, 'errore nei parametri'
  * 3, 'errore internocol DB' 5, 'errore utente non registrato' (nota: client
  * reindirizza alla registrazione)
