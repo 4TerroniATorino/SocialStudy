@@ -25,6 +25,14 @@
             xhrObj.onreadystatechange = updateRis;
             xhrObj.send(null);
         }
+        
+        function updateRis() {
+	if(xhrObj.readyState==4) {
+            var risp = xhrObj.responseText;
+            document.getElementById("divRes").innerHTML=risp;
+	}
+}
+
     </script>
     <head>
         <jsp:include page="includes.jsp"></jsp:include>
@@ -43,12 +51,8 @@
                     </select>
                     <input type="hidden" name="idLib" value="<%request.getAttribute("idLibretto")%>">
                 </form>
-
-                    <%-- Scegli corsi
-                    <% for (int i = 0; i < request.getAttribute("elenco"); i++) {%>
-                    <input type="checkbox" name="corso" value="<%= ((String[]) request.getAttribute("elenco"))[i]%>"><br><%}%>
-                    <input type="hidden" name="op" value="riempilibretto">
-                    <input type="submit" value="Confema">--%>
+            </div>
+            <div class="divRes">
             </div>
         </div>
         <hr>

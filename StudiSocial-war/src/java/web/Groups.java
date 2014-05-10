@@ -96,7 +96,8 @@ public class Groups extends HttpServlet {
         if (output != null && output.equalsIgnoreCase("json")) {
             request.setAttribute("data", map);
             request.getRequestDispatcher("/json").include(request, response);
-        } else {
+        } 
+        else {
             for (String s : map.keySet()) {
                 request.setAttribute(s, map.get(s));
             }
@@ -109,7 +110,8 @@ public class Groups extends HttpServlet {
         Date d = null;
         try {
             d = new Date(new SimpleDateFormat("dd/MM/yyyy").parse(s).getTime());
-        } catch (ParseException ex) {
+        } 
+        catch (ParseException ex) {
         }
         return d;
     }

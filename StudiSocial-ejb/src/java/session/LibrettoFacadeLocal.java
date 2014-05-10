@@ -7,7 +7,6 @@
 package session;
 
 import entity.Libretto;
-import entity.Location;
 import java.util.List;
 import javax.ejb.Local;
 
