@@ -41,17 +41,20 @@
                     </ul>
                 </li>
             </ul>
+            <% Utente usr = (Utente)session.getAttribute("utente"); %>
+            <b>Ciao  <%=usr.getUsername() %></b>
+            <a href="Controller?action=logout">Logout</a>  </h4>
             <form class="navbar-form navbar-right">
                 <%
                 Boolean mobile = (Boolean)session.getAttribute("mobile");
                 if(mobile != null && mobile){
-                Utente usr = (Utente)session.getAttribute("utente");
                 %>
                 <script src="js/cordova.js"></script>
                 <button class="btn btn-success"	onClick="cordova.exec(function(res){}, function(err){}, 'avviaActivity' , 'chat', [<%= usr.getPhoneNumber()%>]);">Chat</button>
             
                 <% } %>
             </form>
+
         </div><!--/.navbar-collapse -->
     </div>
 </div>
