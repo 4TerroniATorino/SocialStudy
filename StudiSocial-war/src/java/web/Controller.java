@@ -3,15 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package web;
 
 import java.io.IOException;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -32,9 +34,14 @@ public class Controller extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Riceve da index.jsp e rimanda alle altre servlet
+        HttpSession s = request.getSession();
+        ServletContext cxt = getServletContext();
+
         String op = request.getParameter("action");
         if (op.equalsIgnoreCase("logout")) {
-            
+            s.invalidate();
+            RequestDispatcher rdLog = cxt.getRequestDispatcher("/index.html");
+            rdLog.forward(request, response);
         }
     }
 
