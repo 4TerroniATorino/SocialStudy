@@ -54,7 +54,7 @@
             </form>
             
             <h4>Ciao <%=session.getAttribute("Utente") %> 
-            <a href="/Libreria/Controller?action=logout">Logout</a>  </h4>
+            <a href="Controller?action=logout">Logout</a>  </h4>
 
         </div><!--/.navbar-collapse -->
     </div>

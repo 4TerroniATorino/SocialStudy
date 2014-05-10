@@ -32,6 +32,10 @@ public class Controller extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Riceve da index.jsp e rimanda alle altre servlet
+        String op = request.getParameter("action");
+        if (op.equalsIgnoreCase("logout")) {
+            
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
