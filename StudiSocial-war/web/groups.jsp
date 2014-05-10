@@ -12,7 +12,7 @@
         <div class="jumbotron">
             <div class="container">
                 <h1>Gruppo</h1>
-                <h3>In questa pagina andrà la descrizione di un gruppo, se fai parte del gruppo opzioni aggiuntive</h3>
+                <h3><%request.getAttribute("elenco")%></h3>
             </div>
         </div>
         <hr>

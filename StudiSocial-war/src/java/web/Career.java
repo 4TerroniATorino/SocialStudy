@@ -87,26 +87,29 @@ public class Career extends HttpServlet {
                     }
                 }
                 request.setAttribute("elenco", nomi);
+                String code = "<form method=\"post\" action=\"Career\">"
+                    + "<% for (int i = 0; i < request.getAttribute(\"elenco\"); i++) {%>"
+                    +"<input type=\"checkbox\" name=\"corso\" value=\"<%= ((String[]) request.getAttribute(\"elenco\"))[i]%>\"><br><%}%>"
+                    +"<input type=\"hidden\" name=\"op\" value=\"riempilibretto\">"
+                    +"<input type=\"submit\" value=\"Confema\">"
+                    +"</form>";
+                request.setAttribute("code", code);
             }
             if (op.equalsIgnoreCase("riempilibretto")) {
-                /*String corsodistudi = request.getParameter("corsodistudi");
-                 String checkboxValues = request.getParameter("corso");
-                 String[] nomi = checkboxValues.split(",");
-                 Corso[] corsi = new Corso[nomi.length];
-                 for (int i = 0; i < nomi.length; i++) {
-                 corsi[i] = gestoreCorso.find(nomi[i]);
-                 }
-                 int[] voti = new int[nomi.length];
-
-                 Libretto libretto = new Libretto();
-                 libretto.setVoti(voti);
-                 gestoreLibretto.createLibretto(corsodistudi, corsi, voti);
-                 RequestDispatcher rd = cxt.getRequestDispatcher("/profile.jsp");
-                 rd.forward(request, response);*/
-
-                //da rifare: nel database il libretto non ha corsodistudi e corso
+                String checkboxValues = request.getParameter("corso");
+                String[] nomi = checkboxValues.split(",");
+                //Corso[] corsi = new Corso[nomi.length];
+                //for (int i = 0; i < nomi.length; i++) {
+                //    corsi[i] = gestoreCorso.find(nomi[i]);
+                //}
+                byte[] voti = new byte[nomi.length];
+                Libretto libretto = new Libretto();
+                libretto.setVoti(voti);
+                //gestoreLibretto.createLibretto(corsi, voti); perchè i corsi sono un array di byte????
+                RequestDispatcher rd = cxt.getRequestDispatcher("/profile.jsp");
+                rd.forward(request, response);
             }
-    }
+        }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

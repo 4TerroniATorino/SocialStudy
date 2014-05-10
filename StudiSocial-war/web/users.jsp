@@ -20,7 +20,7 @@
                     if(usr.getLibrettoId()==null && usr.getId()==request.getAttribute("idUtente")) {
                         out.print("<form method=\"get\" action=\"Career\">"
                             + "<input type=\"hidden\" name=\"id\" value=\"request.getAttribute(\"idUtente\")\">"
-                            + "<input type=\"hidden\" name=\"op\" value=\"riempilibretto\">"
+                            + "<input type=\"hidden\" name=\"op\" value=\"crealibretto\">"
                             + "<input type=\"submit\" value=\"Riempi libretto\">"
                             + "</form>");
                         request.getAttribute("elenco");
