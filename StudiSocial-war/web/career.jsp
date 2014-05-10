@@ -20,7 +20,7 @@
         var xhrObj = setXMLHttpRequest();
 
         function getCorsi(corso) {
-            var url = "Controller?op=getcorsi&corso=" + corso.value;
+            var url = "Career?op=getcorsi&corso="+corso.value;
             xhrObj.open("GET", url, true);
             xhrObj.onreadystatechange = updateRis;
             xhrObj.send(null);
@@ -34,20 +34,21 @@
             <div class="container">
                 <h1>Carriera</h1>
                 <h2>Inserisci piano di studi</h2>
-        <form method="get" action ="Login">
-            Corso di studi <select name="corsostudi" onchange="getCorsi(corso)"><br>
-                <% String [] corsi = (String[])request.getAttribute("elenco");
-                for (int i = 0; i < corsi.length; i++) {%>
-                <option><%=corsi[i]%></option>
-            <%}%>
-            </select>
+                <form method="post" action ="Career">
+                    Corso di studi <select name="corsostudi" onchange="getCorsi(this)"><br>
+                    <% String [] corsi = (String[])request.getAttribute("elenco");
+                    for (int i = 0; i < corsi.length; i++) {%>
+                        <option><%=corsi[i]%></option>
+                    <%}%>
+                    </select>
+                    <input type="hidden" name="idLib" value="<%request.getAttribute("idLibretto")%>">
+                </form>
 
-                <%-- Scegli corsi
-            <% for (int i = 0; i < request.getAttribute("elenco"); i++) {%>
-            <input type="checkbox" name="corso" value="<%= ((String[]) request.getAttribute("elenco"))[i]%>"><br><%}%>
-            <input type="hidden" name="op" value="riempilibretto">
-            <input type="submit" value="Confema">--%>
-        </form>
+                    <%-- Scegli corsi
+                    <% for (int i = 0; i < request.getAttribute("elenco"); i++) {%>
+                    <input type="checkbox" name="corso" value="<%= ((String[]) request.getAttribute("elenco"))[i]%>"><br><%}%>
+                    <input type="hidden" name="op" value="riempilibretto">
+                    <input type="submit" value="Confema">--%>
             </div>
         </div>
         <hr>

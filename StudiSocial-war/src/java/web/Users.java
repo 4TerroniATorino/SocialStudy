@@ -3,15 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package web;
 
+import entity.Utente;
 import java.io.IOException;
+import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import session.UtenteFacadeLocal;
 
 /**
  *
@@ -19,7 +24,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "Users", urlPatterns = {"/Users"})
 public class Users extends HttpServlet {
-
+    
+    @EJB
+    private UtenteFacadeLocal gestoreUtente;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -31,7 +38,20 @@ public class Users extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        ServletContext cxt = getServletContext();
+        HttpSession session = request.getSession();
+        String op = request.getParameter("op");
+        if (op.equalsIgnoreCase("show")) {
+            String id = request.getParameter("id");
+            Utente user = gestoreUtente.find(id);
+            String username = user.getUsername();
+            request.setAttribute("username", username);
+            String out = user.getNome()+" "+user.getCognome()+"\n";
+            out += user.getUsername()+"\n"+user.getEmail()+"\n"+user.getPhoneNumber()+"\n";
+            request.setAttribute("elenco", out);
+            RequestDispatcher rd = cxt.getRequestDispatcher("/users.jsp");
+            rd.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -3,15 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package web;
 
+import entity.Corso;
+import entity.Libretto;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import session.CorsoFacadeLocal;
+import session.LibrettoFacadeLocal;
 
 /**
  *
@@ -19,6 +28,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "Career", urlPatterns = {"/Career"})
 public class Career extends HttpServlet {
+    
+    @EJB
+    private LibrettoFacadeLocal gestoreLibretto;
+    @EJB
+    private CorsoFacadeLocal gestoreCorso;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,7 +45,67 @@ public class Career extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        ServletContext cxt = getServletContext();
+        HttpSession session = request.getSession();
+        String op = request.getParameter("op");
+        if (op.equalsIgnoreCase("riempilibretto")) {
+            String id = request.getParameter("id");
+            Libretto lib = gestoreLibretto.find(id);
+            request.setAttribute("idLibretto", id);
+            RequestDispatcher rd = cxt.getRequestDispatcher("/career.jsp");
+            rd.forward(request, response);
+        }
+        if (op.equalsIgnoreCase("crealibretto")) {
+                List<Corso> corsi = gestoreCorso.findAll();
+                List<String> corsodistudi = new ArrayList();
+                for (Corso c : corsi) {
+                    String corsost = c.getCorsodistudi();
+                    if (!corsodistudi.contains(corsost))
+                        corsodistudi.add(corsost);
+                }
+                String [] corsidistudi = new String[corsodistudi.size()];
+                for (int i =0; i<corsodistudi.size();i++)
+                    corsidistudi[i] = corsodistudi.get(i);
+                //Arrays.sort(corsidistudi);
+                request.setAttribute("elenco", corsidistudi);
+                RequestDispatcher rd = cxt.getRequestDispatcher("/career.jsp");
+                rd.forward(request, response);
+            }
+            if (op.equalsIgnoreCase("getcorsi")) {
+                String corsostudi = request.getParameter("corso");
+                int len = 0;
+                List<Corso> corsi = gestoreCorso.findAll();
+                for (Corso c : corsi) {
+                    len++;
+                }
+                String[] nomi = new String[len];
+                int i = 0;
+                for (Corso c : corsi) {
+                    if (c.getCorsodistudi().equalsIgnoreCase(corsostudi)) {
+                        nomi[i] = c.getNome();
+                        i++;
+                    }
+                }
+                request.setAttribute("elenco", nomi);
+            }
+            if (op.equalsIgnoreCase("riempilibretto")) {
+                /*String corsodistudi = request.getParameter("corsodistudi");
+                 String checkboxValues = request.getParameter("corso");
+                 String[] nomi = checkboxValues.split(",");
+                 Corso[] corsi = new Corso[nomi.length];
+                 for (int i = 0; i < nomi.length; i++) {
+                 corsi[i] = gestoreCorso.find(nomi[i]);
+                 }
+                 int[] voti = new int[nomi.length];
+
+                 Libretto libretto = new Libretto();
+                 libretto.setVoti(voti);
+                 gestoreLibretto.createLibretto(corsodistudi, corsi, voti);
+                 RequestDispatcher rd = cxt.getRequestDispatcher("/profile.jsp");
+                 rd.forward(request, response);*/
+
+                //da rifare: nel database il libretto non ha corsodistudi e corso
+            }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
