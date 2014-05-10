@@ -42,16 +42,18 @@ public class Registration extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         ServletContext cxt = getServletContext();
         HttpSession session = request.getSession();
-        Utente utente = new Utente();
-        utente.setIdlog((String) session.getAttribute("idUtente"));
-        utente.setPhoneNumber(request.getParameter("numero"));
-        utente.setNome(request.getParameter("nome"));
-        utente.setCognome(request.getParameter("cognome"));
-        utente.setUsername(request.getParameter("username"));
-        utente.setEmail(request.getParameter("email"));
-        utente.setPassword(request.getParameter("password"));
-        gestoreUtenti.create(utente);
-        session.setAttribute("utente", utente);
+        if (session.getAttribute("utente") == null) {
+            Utente utente = new Utente();
+            utente.setIdlog((String) session.getAttribute("idUtente"));
+            utente.setPhoneNumber(request.getParameter("numero"));
+            utente.setNome(request.getParameter("nome"));
+            utente.setCognome(request.getParameter("cognome"));
+            utente.setUsername(request.getParameter("username"));
+            utente.setEmail(request.getParameter("email"));
+            utente.setPassword(request.getParameter("password"));
+            gestoreUtenti.create(utente);
+            session.setAttribute("utente", utente);
+        }
         RequestDispatcher rd = cxt.getRequestDispatcher("/index.jsp");
         rd.forward(request, response);
     }
