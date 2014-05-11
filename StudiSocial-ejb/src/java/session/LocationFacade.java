@@ -21,11 +21,6 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class LocationFacade extends AbstractFacade<Location> implements LocationFacadeLocal {
     
-    public static final String TYPE_USER = "User";
-    public static final String TYPE_GROUP = "Group";
-    public static final String TYPE_ANNOUNCE = "Announce";
-    public static final Double MAX_DISTANCE = 0.02;
-    
     @PersistenceContext(unitName = "Studisocial")
     private EntityManager em;
 
@@ -50,11 +45,12 @@ public class LocationFacade extends AbstractFacade<Location> implements Location
     }
     
     @Override
-    public java.util.List<Location> findAnnounce() {
+    public List<Location> findAnnounce() {
         return findFiltered(TYPE_ANNOUNCE);
     }
     
-    private java.util.List<Location> findFiltered(String type) {
+    @Override
+    public List<Location> findFiltered(String type) {
         List<Location> all = findAll();
         List sel = new ArrayList();
         for (Location l : all) {
@@ -66,21 +62,21 @@ public class LocationFacade extends AbstractFacade<Location> implements Location
     }
     
     @Override
-    public java.util.List<Location> findCloseUsers(Location loc) {
+    public List<Location> findCloseUsers(Location loc) {
         return findFilteredClose(TYPE_USER, loc);
     }
     
     @Override
-    public java.util.List<Location> findCloseGroups(Location loc) {
+    public List<Location> findCloseGroups(Location loc) {
         return findFilteredClose(TYPE_GROUP, loc);
     }
     
     @Override
-    public java.util.List<Location> findCloseAnnounces(Location loc) {
+    public List<Location> findCloseAnnounces(Location loc) {
         return findFilteredClose(TYPE_ANNOUNCE, loc);
     }
     
-    private java.util.List<Location> findFilteredClose(String type, Location pos) {
+    private List<Location> findFilteredClose(String type, Location pos) {
         List<Location> all = findAll();
         List sel = new ArrayList();
         for (Location l : all) {

@@ -1,12 +1,18 @@
 package web;
 
+import entity.Gruppo;
 import entity.Utente;
 import java.io.IOException;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import session.GruppoFacadeLocal;
+import session.LocationFacadeLocal;
+import session.UtenteFacadeLocal;
 
 /**
  *
@@ -14,6 +20,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "Home", urlPatterns = {"/Home"})
 public class Home extends HttpServlet {
+    
+    @EJB private UtenteFacadeLocal usersManager;
+    @EJB private GruppoFacadeLocal groupsManager;
+    @EJB private LocationFacadeLocal locationsManager;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -24,11 +34,10 @@ public class Home extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        // controllo se l'utente è mobile o desktop
         
+        // controllo se l'utente è mobile o desktop
         String ua = request.getHeader("User-Agent");
         if (ua.contains("mobileSocialStudy"))
             request.getSession().setAttribute("mobile", true);
@@ -38,6 +47,16 @@ public class Home extends HttpServlet {
         if (currentUser == null) {
             request.getRequestDispatcher("/login.jsp").include(request, response);
         } else {
+            List<Utente> users = this.usersManager.findAll();
+            request.setAttribute("users", users);
+            List<Gruppo> groups = this.groupsManager.findAll();
+            request.setAttribute("groups", groups);
+            List<entity.Location> locations1 = this.locationsManager.findFiltered(LocationFacadeLocal.TYPE_DEPARTMENT);
+            List<entity.Location> locations2 = this.locationsManager.findFiltered(LocationFacadeLocal.TYPE_STUDY_HALL);
+            List<entity.Location> locations3 = this.locationsManager.findFiltered(LocationFacadeLocal.TYPE_LIBRARY);
+            request.setAttribute("locations1", locations1);
+            request.setAttribute("locations2", locations2);
+            request.setAttribute("locations3", locations3);
             request.getRequestDispatcher("/index.jsp").include(request, response);
         }
     }

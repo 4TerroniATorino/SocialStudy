@@ -20,9 +20,9 @@
                 <h1>Benvenuto in SocialStudy</h1>
                 <p>Entra con:</p>
                  <p>
-                    <a href="https://studisocial.appspot.com/auth/google">Google</a>
-                    <a href="https://studisocial.appspot.com/auth/facebook">Facebook</a>
-                </p><p><a class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+                    <a href="https://studisocial.appspot.com/auth/google" class="btn btn-primary btn-lg">Google</a>
+                    <a href="https://studisocial.appspot.com/auth/facebook" class="btn btn-primary btn-lg">Facebook</a>
+                </p>
             </div>
         </div>
 

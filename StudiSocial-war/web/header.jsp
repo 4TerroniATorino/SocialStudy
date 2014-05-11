@@ -25,21 +25,59 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Utenti</a></li>
-                <li><a href="#about">Gruppi</a></li>
-                <li><a href="#contact">Location</a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Utenti <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
+                        <li class="dropdown-header">Il tuo profilo</li>
+                        <li><a href="Users?id=${sessionScope.utente.id}">${sessionScope.utente.nome} ${sessionScope.utente.cognome}</a></li>
                         <li class="divider"></li>
-                        <li class="dropdown-header">Nav header</li>
-                        <li><a href="#">Separated link</a></li>
-                        <li><a href="#">One more separated link</a></li>
+                        <li class="dropdown-header">I tuoi amici</li>
+                        <c:forEach var="user" items="${users}" end="10">
+                            <c:if test="${user.id ne sessionScope.utente.id}">
+                                <li><a href="Users?id=${user.id}">${user.nome} ${user.cognome}</a></li>
+                            </c:if>
+                        </c:forEach>
+                        <li class="divider"></li>
+                        <li><a href="Users">Altro...</a></li>
                     </ul>
                 </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Location <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-header">Dipartimenti</li>
+                        <c:forEach var="location" items="${locations1}" end="5">
+                            <li><a href="Location?id=${location.id}">${location.descrizione}</a></li>
+                        </c:forEach>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">Aule Studio</li>
+                        <c:forEach var="location" items="${locations2}" end="5">
+                            <li><a href="Location?id=${location.id}">${location.descrizione}</a></li>
+                        </c:forEach>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">Biblioteche</li>
+                        <c:forEach var="location" items="${locations3}" end="5">
+                            <li><a href="Location?id=${location.id}">${location.descrizione}</a></li>
+                        </c:forEach>
+                        <li class="divider"></li>
+                        <li><a href="Location">Altro...</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Gruppi <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <c:if test="${empty groups}">
+                            <li class="dropdown-header">Non sono presenti gruppi</li>
+                        </c:if>
+                        <c:forEach var="group" items="${groups}" end="10">
+                            <li><a href="Groups?id=${group.id}">${group.nome}</a></li>
+                        </c:forEach>
+                        <li class="divider"></li>
+                        <li><a href="Groups">Altro...</a></li>
+                    </ul>
+                </li>
+                <li><a href="Meetings">Incontri</a></li>
+                <li><a href="Career">Carriera</a></li>
+                <li><a href="Map">Mappa</a></li>
             </ul>
             <% Utente usr = (Utente)session.getAttribute("utente"); %> 
             <form class="navbar-form navbar-right">

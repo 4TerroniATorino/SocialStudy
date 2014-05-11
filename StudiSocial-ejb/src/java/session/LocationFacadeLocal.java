@@ -18,6 +18,14 @@ import javax.ejb.Local;
 @Local
 public interface LocationFacadeLocal {
     
+    public static final String TYPE_USER = "User";
+    public static final String TYPE_GROUP = "Group";
+    public static final String TYPE_ANNOUNCE = "Announce";
+    public static final String TYPE_DEPARTMENT = "Dipartimento";
+    public static final String TYPE_STUDY_HALL = "Aula Studio";
+    public static final String TYPE_LIBRARY = "Biblioteca";
+    public static final Double MAX_DISTANCE = 0.02;
+    
     void addLocation(String type, String via, Point2D.Float coordinata, String descrizione);
 
     List<Location> findUsers();
@@ -32,7 +40,7 @@ public interface LocationFacadeLocal {
 
     List<Location> findCloseAnnounces(Location loc);
     
-    
+    List<Location> findFiltered(String type);
 
     void create(Location location);
 

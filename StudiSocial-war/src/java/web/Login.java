@@ -79,8 +79,7 @@ public class Login extends HttpServlet {
                 session.setAttribute("utente", currentUser);
                
 
-                RequestDispatcher rd = cxt.getRequestDispatcher("/index.jsp");
-                rd.forward(request, response);
+                response.sendRedirect("Home");
             } else {
 
                 request.setAttribute("email", e.get("email").getAsString());

@@ -15,6 +15,5 @@
                 <h3>In questa pagina andranno le ultime notizie</h3>
             </div>
         </div>
-        <hr>
     </body>
 </html>
