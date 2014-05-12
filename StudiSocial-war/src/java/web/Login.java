@@ -48,10 +48,9 @@ public class Login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         // controllo se l'utente è già registrato
         // prendi json
-        
         ServletContext cxt = getServletContext();
         HttpSession session = request.getSession();
         String data = request.getParameter("data");
@@ -63,6 +62,10 @@ public class Login extends HttpServlet {
             Gson gson = new Gson(); //???? Questa variabile non è usata
             JsonObject e = new JsonParser().parse(data).getAsJsonObject();
             session.setAttribute("idUtente", e.get("id").getAsString());
+            String ua = request.getHeader("User-Agent");
+            if (ua.contains("mobileSocialStudy")) {
+                request.getSession().setAttribute("mobile", true);
+            }
             response.setContentType("text/html;charset=UTF-8");
             PrintWriter out = response.getWriter();
             if (gestoreUtenti.find(e.get("id").getAsString()) != null
@@ -73,7 +76,6 @@ public class Login extends HttpServlet {
                         ? gestoreUtenti.getUserByEmail(e.get("email").getAsString())
                         : gestoreUtenti.find(e.get("id").getAsString());
                 session.setAttribute("utente", currentUser);
-               
 
                 response.sendRedirect("Home");
             } else {
