@@ -15,7 +15,7 @@
         <jsp:include page="includes.jsp"></jsp:include>
     </head>
     <body>
-        <div class="jumbotron">
+        <div class="jumbotron"><!--ciao-->
             <div class="container">
                 <h1>Benvenuto in SocialStudy</h1>
                 <p>Entra con:</p>
