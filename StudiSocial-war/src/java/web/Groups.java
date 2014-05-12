@@ -52,6 +52,7 @@ public class Groups extends HttpServlet {
         String action = request.getParameter("action");
         String output = request.getParameter("output");
         HashMap<String, Object> map = new HashMap<>();
+        map.put("page", "groups");
 
         if (action == null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "You must provide an action");
@@ -61,15 +62,11 @@ public class Groups extends HttpServlet {
             String id = request.getParameter("id");
             if (id!=null){
                 Gruppo gruppo = gestoreGruppo.find(id);
-                request.setAttribute("gruppo", gruppo);
-            }
-            else {
+                map.put("gruppo", gruppo);
+            } else {
                 List<Gruppo> gruppi = gestoreGruppo.findAll();
-                request.setAttribute("gruppi", gruppi);
+                map.put("gruppi", gruppi);
             }
-            request.setAttribute("page", "groups");
-            RequestDispatcher rd = cxt.getRequestDispatcher("/inedx.jsp");
-            rd.forward(request, response);
         }
         else if (action.equalsIgnoreCase("addGroup")) {
             Gruppo gr = new Gruppo();
@@ -127,7 +124,7 @@ public class Groups extends HttpServlet {
             for (String s : map.keySet()) {
                 request.setAttribute(s, map.get(s));
             }
-            request.getRequestDispatcher("/view.jsp").include(request, response);
+            request.getRequestDispatcher("/Home").forward(request, response);
         }
 
     }

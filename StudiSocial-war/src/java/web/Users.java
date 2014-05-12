@@ -39,20 +39,17 @@ public class Users extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ServletContext cxt = getServletContext();
         String id = request.getParameter("id");
         if (id!=null) {
             Utente user = gestoreUtente.find(id);
             request.setAttribute("user", user);
-            
         }
         else {
             List<Utente> users = gestoreUtente.findAll();
             request.setAttribute("users", users);
         }
         request.setAttribute("page", "users");
-        RequestDispatcher rd = cxt.getRequestDispatcher("/index.jsp");
-        rd.forward(request, response);
+        request.getRequestDispatcher("/Home").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

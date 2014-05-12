@@ -38,7 +38,6 @@ public class Location extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ServletContext cxt = getServletContext();
         String id = request.getParameter("id");
         if (id != null) {
             entity.Location loc = gestoreLocation.find(id);
@@ -48,8 +47,7 @@ public class Location extends HttpServlet {
             request.setAttribute("locations", locs);
         }
         request.setAttribute("page", "locations");
-        RequestDispatcher rd = cxt.getRequestDispatcher("/index.jsp");
-        rd.forward(request, response);
+        request.getRequestDispatcher("/Home").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

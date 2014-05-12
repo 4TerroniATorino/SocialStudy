@@ -20,10 +20,13 @@ import session.UtenteFacadeLocal;
  */
 @WebServlet(name = "Home", urlPatterns = {"/Home"})
 public class Home extends HttpServlet {
-    
-    @EJB private UtenteFacadeLocal usersManager;
-    @EJB private GruppoFacadeLocal groupsManager;
-    @EJB private LocationFacadeLocal locationsManager;
+
+    @EJB
+    private UtenteFacadeLocal usersManager;
+    @EJB
+    private GruppoFacadeLocal groupsManager;
+    @EJB
+    private LocationFacadeLocal locationsManager;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,12 +39,13 @@ public class Home extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         // controllo se l'utente è mobile o desktop
         String ua = request.getHeader("User-Agent");
-        if (ua.contains("mobileSocialStudy"))
+        if (ua.contains("mobileSocialStudy")) {
             request.getSession().setAttribute("mobile", true);
-        
+        }
+
         // controllo se l'utente è già loggato (sessione aperta)
         Utente currentUser = (Utente) request.getSession().getAttribute("utente");
         if (currentUser == null) {
@@ -57,7 +61,9 @@ public class Home extends HttpServlet {
             request.setAttribute("locations1", locations1);
             request.setAttribute("locations2", locations2);
             request.setAttribute("locations3", locations3);
-            request.setAttribute("page", "news");
+            if (request.getAttribute("page") == null) {
+                request.setAttribute("page", "news");
+            }
             request.getRequestDispatcher("/index.jsp").forward(request, response);
         }
     }

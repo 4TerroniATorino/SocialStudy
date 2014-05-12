@@ -16,9 +16,7 @@
     </head>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-        <div>
         <jsp:include page="${page}.jsp"></jsp:include>
-        </div>
         <hr>
         <jsp:include page="footer.jsp"></jsp:include>
     </body>

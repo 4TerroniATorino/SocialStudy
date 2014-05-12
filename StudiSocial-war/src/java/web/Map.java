@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,7 +27,7 @@ import session.LocationFacadeLocal;
 public class Map extends HttpServlet {
 
     @EJB
-    private LocationFacadeLocal gestore;
+    private LocationFacadeLocal locationsManager;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,56 +39,76 @@ public class Map extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ServletContext cxt = getServletContext();
         String action = request.getParameter("action");
         String output = request.getParameter("output");
         HashMap<String, Object> map = new HashMap<>();
+        map.put("page", "map");
         
         if (action == null){
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "You must provide an action");
             return;
-        } else if (action.equalsIgnoreCase("add")) {
+        } 
+        else if (action.equalsIgnoreCase("show")){
+            List<entity.Location> locations1 = this.locationsManager.findFiltered(LocationFacadeLocal.TYPE_DEPARTMENT);
+            List<entity.Location> locations2 = this.locationsManager.findFiltered(LocationFacadeLocal.TYPE_STUDY_HALL);
+            List<entity.Location> locations3 = this.locationsManager.findFiltered(LocationFacadeLocal.TYPE_LIBRARY);
+            map.put("locations1", locations1);
+            map.put("locations2", locations2);
+            map.put("locations3", locations3);
+        }
+        else if (action.equalsIgnoreCase("add")) {
             String type = request.getParameter("type");
             String address = request.getParameter("address");
             Point2D.Float coords = getCurrentLocation(request);
             String description = request.getParameter("description");
-            gestore.addLocation(type, address, coords, description);
+            locationsManager.addLocation(type, address, coords, description);
             map.put("output", "Gruppo aggiunto");
-        } else if (action.equalsIgnoreCase("remove")) {
+        } 
+        else if (action.equalsIgnoreCase("remove")) {
             long id = Long.parseLong(request.getParameter("id"));
-            entity.Location loc = gestore.find(id);
-            gestore.remove(loc);
+            entity.Location loc = locationsManager.find(id);
+            locationsManager.remove(loc);
             map.put("output", "Location eliminata");
-        } else if (action.equalsIgnoreCase("listAll")) {
-            List<entity.Location> loc = gestore.findAll();
+        } 
+        else if (action.equalsIgnoreCase("listAll")) {
+            List<entity.Location> loc = locationsManager.findAll();
             for (entity.Location l : loc){
                 System.out.println(l);
             }
             map.put("all", loc);
-        } else if (action.equalsIgnoreCase("listUsers")) {
-            List<entity.Location> users = gestore.findUsers();
+        } 
+        else if (action.equalsIgnoreCase("listUsers")) {
+            List<entity.Location> users = locationsManager.findUsers();
             map.put("users", users);
-        } else if (action.equalsIgnoreCase("listGroups")) {
-            List<entity.Location> groups = gestore.findGroups();
+        } 
+        else if (action.equalsIgnoreCase("listGroups")) {
+            List<entity.Location> groups = locationsManager.findGroups();
             map.put("groups", groups);
-        } else if (action.equalsIgnoreCase("listAnnounces")) {
-            List<entity.Location> announces = gestore.findAnnounce();
+        } 
+        else if (action.equalsIgnoreCase("listAnnounces")) {
+            List<entity.Location> announces = locationsManager.findAnnounce();
             map.put("announces", announces);
-        } else if (action.equalsIgnoreCase("listCloseUsers")) {
+        } 
+        else if (action.equalsIgnoreCase("listCloseUsers")) {
             entity.Location attuale = new entity.Location();        
             attuale.setCoordinate(getCurrentLocation(request));        
-            List<entity.Location> users = gestore.findCloseUsers(attuale);
+            List<entity.Location> users = locationsManager.findCloseUsers(attuale);
             map.put("closeUsers", users);
-        } else if (action.equalsIgnoreCase("listCloseGroups")) {
+        } 
+        else if (action.equalsIgnoreCase("listCloseGroups")) {
             entity.Location attuale = new entity.Location();
             attuale.setCoordinate(getCurrentLocation(request));            
-            List<entity.Location> groups = gestore.findCloseGroups(attuale);
+            List<entity.Location> groups = locationsManager.findCloseGroups(attuale);
             map.put("closeGroups", groups);
-        } else if (action.equalsIgnoreCase("listCloseAnnounces")) {
+        } 
+        else if (action.equalsIgnoreCase("listCloseAnnounces")) {
             entity.Location attuale = new entity.Location();       
             attuale.setCoordinate(getCurrentLocation(request));        
-            List<entity.Location> announces = gestore.findCloseAnnounces(attuale);
+            List<entity.Location> announces = locationsManager.findCloseAnnounces(attuale);
             map.put("closeAnnounces", announces);
-        } else {
+        } 
+        else {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Not recognized action");
             return;
         }
@@ -94,11 +116,12 @@ public class Map extends HttpServlet {
         if (output != null && output.equalsIgnoreCase("json")){
             request.setAttribute("data", map);
             request.getRequestDispatcher("/json").include(request, response);
-        } else {
+        } 
+        else {
             for (String s : map.keySet()){
                 request.setAttribute(s, map.get(s));
             }
-            request.getRequestDispatcher("/view.jsp").include(request, response);
+            request.getRequestDispatcher("/Home").forward(request, response);
         }
     }
     

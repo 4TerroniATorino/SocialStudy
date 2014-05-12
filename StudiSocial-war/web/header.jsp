@@ -18,7 +18,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Social Study</a>
+            <a class="navbar-brand" href="News">Social Study</a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -66,15 +66,14 @@
                             <li class="dropdown-header">Non sono presenti gruppi</li>
                         </c:if>
                         <c:forEach var="group" items="${groups}" end="10">
-                            <li><a href="Groups?id=${group.id}">${group.nome}</a></li>
+                            <li><a href="Groups?action=show&id=${group.id}">${group.nome}</a></li>
                         </c:forEach>
                         <li class="divider"></li>
-                        <li><a href="Groups">Altro...</a></li>
+                        <li><a href="Groups?action=show">Altro...</a></li>
                     </ul>
                 </li>
                 <li><a href="Meetings">Incontri</a></li>
-                <li><a href="Career">Carriera</a></li>
-                <li><a href="Map">Mappa</a></li>
+                <li><a href="Map?action=show">Mappa</a></li>
             </ul>
             <% Utente usr = (Utente)session.getAttribute("utente"); %> 
             <form class="navbar-form navbar-right">
