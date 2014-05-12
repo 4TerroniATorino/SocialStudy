@@ -44,15 +44,15 @@ public class Users extends HttpServlet {
         if (id!=null) {
             Utente user = gestoreUtente.find(id);
             request.setAttribute("user", user);
-            RequestDispatcher rd = cxt.getRequestDispatcher("/users.jsp");
-            rd.forward(request, response);
+            
         }
         else {
             List<Utente> users = gestoreUtente.findAll();
             request.setAttribute("users", users);
-            RequestDispatcher rd = cxt.getRequestDispatcher("/users.jsp");
-            rd.forward(request, response);
         }
+        request.setAttribute("page", "users");
+        RequestDispatcher rd = cxt.getRequestDispatcher("/index.jsp");
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

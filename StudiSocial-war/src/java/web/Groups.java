@@ -62,15 +62,14 @@ public class Groups extends HttpServlet {
             if (id!=null){
                 Gruppo gruppo = gestoreGruppo.find(id);
                 request.setAttribute("gruppo", gruppo);
-                RequestDispatcher rd = cxt.getRequestDispatcher("/groups.jsp");
-                rd.forward(request, response);
             }
             else {
                 List<Gruppo> gruppi = gestoreGruppo.findAll();
                 request.setAttribute("gruppi", gruppi);
-                RequestDispatcher rd = cxt.getRequestDispatcher("/groups.jsp");
-                rd.forward(request, response);
             }
+            request.setAttribute("page", "groups");
+            RequestDispatcher rd = cxt.getRequestDispatcher("/inedx.jsp");
+            rd.forward(request, response);
         }
         else if (action.equalsIgnoreCase("addGroup")) {
             Gruppo gr = new Gruppo();

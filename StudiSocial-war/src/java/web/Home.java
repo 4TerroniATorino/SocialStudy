@@ -57,7 +57,8 @@ public class Home extends HttpServlet {
             request.setAttribute("locations1", locations1);
             request.setAttribute("locations2", locations2);
             request.setAttribute("locations3", locations3);
-            request.getRequestDispatcher("/index.jsp").include(request, response);
+            request.setAttribute("page", "news");
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
         }
     }
 

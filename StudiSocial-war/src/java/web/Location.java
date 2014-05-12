@@ -43,14 +43,13 @@ public class Location extends HttpServlet {
         if (id != null) {
             entity.Location loc = gestoreLocation.find(id);
             request.setAttribute("location", loc);
-            RequestDispatcher rd = cxt.getRequestDispatcher("/locations.jsp");
-            rd.forward(request, response);
         } else {
             List<entity.Location> locs = gestoreLocation.findAll();
             request.setAttribute("locations", locs);
-            RequestDispatcher rd = cxt.getRequestDispatcher("/locations.jsp");
-            rd.forward(request, response);
         }
+        request.setAttribute("page", "locations");
+        RequestDispatcher rd = cxt.getRequestDispatcher("/index.jsp");
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

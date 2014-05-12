@@ -16,9 +16,9 @@
     </head>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-        <c:if test="${param.page eq 'news'}">
-            <jsp:include page="news.jsp"></jsp:include>
-        </c:if>
+        <div>
+        <jsp:include page="${page}.jsp"></jsp:include>
+        </div>
         <hr>
         <jsp:include page="footer.jsp"></jsp:include>
     </body>
