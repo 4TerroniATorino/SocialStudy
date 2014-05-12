@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,9 +25,10 @@ import web.utils.MobileResponse;
  *
  * @author fase
  */
+@WebServlet(name = "MobileSend", urlPatterns = {"/MobileSend"})
 public class MobileSend extends HttpServlet {
 
-    final String pattern_phNumber = "/^\\+\\d{5,19}$/";
+    final String pattern_phNumber = "^[0-9\\-\\+]{9,15}$";
     final String pattern_devId = "/^\\S{5,255}$/";
 
     @EJB
@@ -52,11 +54,16 @@ public class MobileSend extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String priv_key = request.getParameter("private_key");
-        String phone_number = request.getParameter("phone_number");
-        String recipient = request.getParameter("recipient");
-        String message = request.getParameter("message");
+//        String priv_key = request.getParameter("private_key");
+//        String phone_number = request.getParameter("phone_number");
+//        String recipient = request.getParameter("recipient");
+//        String message = request.getParameter("message");
         String output = null;
+        
+        String priv_key = "9e247a2c-65a1-4b16-b499-902c6740";
+        String phone_number = "+393476364301";
+        String recipient ="+393392726676";
+        String message ="ciao lurida,  e suca";
 
         if (priv_key == null) {
             output = "priv_key";
@@ -68,6 +75,7 @@ public class MobileSend extends HttpServlet {
             output = "msg-length";
         } else {
 
+            System.out.println("CIAOOOOOOOO");
             try {
 
                 //controlla mittente e destinatario

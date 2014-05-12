@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,9 +24,10 @@ import web.utils.MobileResponse;
  *
  * @author fase
  */
+@WebServlet(name = "MobileRetrieve", urlPatterns = {"/MobileRetrieve"})
 public class MobileRetrieve extends HttpServlet {
 
-    final String pattern_phNumber = "/^\\+\\d{5,19}$/";
+    final String pattern_phNumber = "^[0-9\\-\\+]{9,15}$";
 
     @EJB
     private PhoneNumbersFacadeLocal phoneNumberFacade;
@@ -52,8 +54,12 @@ public class MobileRetrieve extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String priv_key = request.getParameter("private_key");
-        String phone_number = request.getParameter("phone_number"); //richiedente
+//        String priv_key = request.getParameter("private_key");
+//        String phone_number = request.getParameter("phone_number"); //richiedente
+        
+        String priv_key = "bb91c962-3425-4db2-aa51-a886a0d5";
+        String phone_number = "+393392726676";
+        
         String output;
 
         if (priv_key == null) {
@@ -70,7 +76,7 @@ public class MobileRetrieve extends HttpServlet {
                 if (phoneNumber != null) {
 
                     //cerca i msg nel db e restituisci un array
-                    List<Messages> messages = messagesFacade.findAllByRecipient(phone_number);
+                    List<Messages> messages = messagesFacade.findAllByRecipient(phoneNumber);
 
                     //segna come letti
                     for (Messages m : messages) {
@@ -80,7 +86,7 @@ public class MobileRetrieve extends HttpServlet {
                     //invia msg in json
                     output = "success";
                     Map map = MobileResponse.createResponse(output, messages);
-                    request.setAttribute("data", map);
+                    request.setAttribute("data", output);
                     request.getRequestDispatcher("/json").include(request, response);
                     return;
 
@@ -90,7 +96,7 @@ public class MobileRetrieve extends HttpServlet {
 
             } catch (Exception e) {
                 output = "db";
-                System.err.println(e);
+                e.printStackTrace();
             }
 
         }

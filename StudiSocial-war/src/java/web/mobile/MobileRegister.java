@@ -9,6 +9,7 @@ import entity.PhoneNumbers;
 import entity.Utente;
 import java.io.IOException;
 import java.util.Map;
+import java.util.UUID;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -44,7 +45,7 @@ public class MobileRegister extends HttpServlet {
     @EJB
     private UtenteFacadeLocal utenteFacade;
 
-    final String pattern_phNumber = "/^\\+\\d{5,19}$/";
+    final String pattern_phNumber = "^[0-9\\-\\+]{9,15}$";
     final String pattern_devId = "/^\\S{5,255}$/";
 
     public static boolean pregMatch(String pattern, String content) {
@@ -63,17 +64,25 @@ public class MobileRegister extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String email = request.getParameter("email");
-        String phone_number = request.getParameter("phone_number");
-        String device_type = request.getParameter("device_type");
-        String device_id = request.getParameter("device_id");
+//        String email = request.getParameter("email");
+//        String phone_number = request.getParameter("phone_number");
+//        String device_type = request.getParameter("device_type");
+//        String device_id = request.getParameter("device_id");
         String output = null;
 
-        if (email == null) {
-            output = "email";
-        } else if (phone_number == null || !pregMatch(pattern_phNumber, phone_number)) {
+        String email = "gianvito.siciliano@gmail.com";
+        String phone_number = "+393392726676";
+        String device_type = "Android";
+        String device_id = "30293u1203120939123";
+        //Utente lorenzo = utenteFacade.find(6);
+        
+        
+//        if (email == null) {
+//            output = "email";
+//        } else 
+        if (phone_number == null || !pregMatch(pattern_phNumber, phone_number)) {
             output = "phone_number";
-        } else if (device_type == null || !device_type.equalsIgnoreCase("Android") || !device_type.equalsIgnoreCase("iOS")) {
+        } else if (device_type == null || (!device_type.equalsIgnoreCase("Android") && !device_type.equalsIgnoreCase("iOS"))) {
             output = "device_type";
         } else if (device_id == null || pregMatch(pattern_devId, phone_number)) {
             output = "device_id";
@@ -92,8 +101,10 @@ public class MobileRegister extends HttpServlet {
                 try {
 
                     //controlla phone_number nel db: si->update, no->add
-                    String number = utente.getPhoneNumber();
+                    String number = "+39"+utente.getPhoneNumber();
                     PhoneNumbers phoneNumber = phoneNumberFacade.find(number);
+                    System.out.println(utente.getCognome()+" "+number+" "+phoneNumber);
+                    
 
                     //salva nel DB e aggancia all'utente *********(tabelle/ejb: messages e phone_numbers)
                     if (phoneNumber != null) {
@@ -104,7 +115,7 @@ public class MobileRegister extends HttpServlet {
                         phoneNumber = new PhoneNumbers(phone_number);
                         phoneNumber.setDeviceId(device_id);
                         phoneNumber.setDeviceType(device_type);
-                        //phoneNumber.setPrivateKey(UUID.randomUUID()); //genera una key per la entry nel db
+                        phoneNumber.setPrivateKey(UUID.randomUUID().toString().substring(0,32)); //genera una key per la entry nel db
                         phoneNumberFacade.create(phoneNumber);
                     }
 

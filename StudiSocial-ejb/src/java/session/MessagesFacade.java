@@ -7,6 +7,7 @@
 package session;
 
 import entity.Messages;
+import entity.PhoneNumbers;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -31,7 +32,7 @@ public class MessagesFacade extends AbstractFacade<Messages> implements Messages
     }
 
     @Override
-    public List<Messages> findAllByRecipient(String phoneNumber) {
+    public List<Messages> findAllByRecipient(PhoneNumbers phoneNumber) {
         return em.createNamedQuery("Messages.findByRecipient")
                 .setParameter("recipient", phoneNumber)
                 .getResultList();

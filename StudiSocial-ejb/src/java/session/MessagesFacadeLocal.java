@@ -7,6 +7,7 @@
 package session;
 
 import entity.Messages;
+import entity.PhoneNumbers;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,7 +30,7 @@ public interface MessagesFacadeLocal {
 
     List<Messages> findRange(int[] range);
     
-    List<Messages> findAllByRecipient(String phoneNumber);
+    List<Messages> findAllByRecipient(PhoneNumbers phoneNumber);
 
     int count();
     
