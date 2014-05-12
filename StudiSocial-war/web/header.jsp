@@ -78,7 +78,7 @@
             </ul>
             <% Utente usr = (Utente)session.getAttribute("utente"); %> 
             <form class="navbar-form navbar-right">
-                <a class="btn btn-danger" href="Controller?action=logout">Logout: Ciao  <%=usr.getUsername() %></a>
+                <a class="btn btn-danger" href="Controller?action=logout">Logout: <%=usr.getUsername() %></a>
                 <%
                 Boolean mobile = (Boolean)session.getAttribute("mobile");
                 if(mobile != null && mobile){
