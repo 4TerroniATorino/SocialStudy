@@ -10,9 +10,6 @@
     <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a>
     to improve your experience.</p>
 <![endif]-->
-                <%--<p> tasto per la chat
-                <button	onClick="cordova.exec(function(res){}, function(err){}, 'avviaActivity' , 'chat', [<%= usr.getPhoneNumber()%>]);">Chat</button>
-               </p>--%>
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
