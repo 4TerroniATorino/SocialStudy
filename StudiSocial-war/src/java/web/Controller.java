@@ -38,8 +38,8 @@ public class Controller extends HttpServlet {
         HttpSession s = request.getSession();
         ServletContext cxt = getServletContext();
 
-        String op = request.getParameter("action");
-        if (op.equalsIgnoreCase("logout")) {
+        String action = request.getParameter("action");
+        if (action.equalsIgnoreCase("logout")) {
             s.invalidate();
             request.getRequestDispatcher("/login.jsp").forward(request, response);
         }

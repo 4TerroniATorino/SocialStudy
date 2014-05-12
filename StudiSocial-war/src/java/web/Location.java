@@ -3,15 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package web;
 
 import java.io.IOException;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import session.LocationFacadeLocal;
 
 /**
  *
@@ -19,6 +23,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "Location", urlPatterns = {"/Location"})
 public class Location extends HttpServlet {
+
+    @EJB
+    private LocationFacadeLocal gestoreLocation;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,7 +38,19 @@ public class Location extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        ServletContext cxt = getServletContext();
+        String id = request.getParameter("id");
+        if (id != null) {
+            entity.Location loc = gestoreLocation.find(id);
+            request.setAttribute("location", loc);
+            RequestDispatcher rd = cxt.getRequestDispatcher("/locations.jsp");
+            rd.forward(request, response);
+        } else {
+            List<entity.Location> locs = gestoreLocation.findAll();
+            request.setAttribute("locations", locs);
+            RequestDispatcher rd = cxt.getRequestDispatcher("/locations.jsp");
+            rd.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

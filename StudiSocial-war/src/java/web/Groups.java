@@ -9,12 +9,14 @@ import entity.Gruppo;
 import entity.Incontro;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -46,6 +48,7 @@ public class Groups extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ServletContext cxt = getServletContext();
         String action = request.getParameter("action");
         String output = request.getParameter("output");
         HashMap<String, Object> map = new HashMap<>();
@@ -53,7 +56,23 @@ public class Groups extends HttpServlet {
         if (action == null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "You must provide an action");
             return;
-        } else if (action.equalsIgnoreCase("addGroup")) {
+        } 
+        else if (action.equalsIgnoreCase("show")) {
+            String id = request.getParameter("id");
+            if (id!=null){
+                Gruppo gruppo = gestoreGruppo.find(id);
+                request.setAttribute("gruppo", gruppo);
+                RequestDispatcher rd = cxt.getRequestDispatcher("/groups.jsp");
+                rd.forward(request, response);
+            }
+            else {
+                List<Gruppo> gruppi = gestoreGruppo.findAll();
+                request.setAttribute("gruppi", gruppi);
+                RequestDispatcher rd = cxt.getRequestDispatcher("/groups.jsp");
+                rd.forward(request, response);
+            }
+        }
+        else if (action.equalsIgnoreCase("addGroup")) {
             Gruppo gr = new Gruppo();
             gr.setNome(request.getParameter("nome"));
             gr.setFondatoreId(request.getParameter("user"));
@@ -61,34 +80,42 @@ public class Groups extends HttpServlet {
             gr.setCorsoId(new BigInteger(request.getParameter("corso")));
             gestoreGruppo.create(gr);
             map.put("output", "Gruppo aggiunto");
-        } else if (action.equalsIgnoreCase("removeGroup")) {
+        } 
+        else if (action.equalsIgnoreCase("removeGroup")) {
             Gruppo gr = gestoreGruppo.find(Long.parseLong(request.getParameter("id")));
             gestoreGruppo.remove(gr);
             map.put("output", "Gruppo cancellato");
-        } else if (action.equalsIgnoreCase("addUser")) {
+        } 
+        else if (action.equalsIgnoreCase("addUser")) {
             //gestoreGruppo.addUser(Long.parseLong(request.getParameter("groupid")), Long.parseLong(request.getParameter("userid")));
             map.put("output", "Utente aggiunto");
-        } else if (action.equalsIgnoreCase("removeUser")) {
+        } 
+        else if (action.equalsIgnoreCase("removeUser")) {
             //gestoreGruppo.removeUser(Long.parseLong(request.getParameter("groupid")), Long.parseLong(request.getParameter("userid")));
             map.put("output", "Utente rimosso");
-        } else if (action.equalsIgnoreCase("list")) {
+        } 
+        else if (action.equalsIgnoreCase("list")) {
             List<Gruppo> gruppi = gestoreGruppo.findAll();
             map.put("groups", gruppi);
-        } else if (action.equalsIgnoreCase("addIncontro")) {
+        } 
+        else if (action.equalsIgnoreCase("addIncontro")) {
             Incontro incontro = new Incontro();
             incontro.setGruppoId(new BigInteger(request.getParameter("idGruppo")));
             incontro.setLocationId(new BigInteger(request.getParameter("idLocation")));
             incontro.setDataincontro(parseDate(request.getParameter("data")));
             gestoreIncontro.create(incontro);
             map.put("output", "Incontro creato");
-        } else if (action.equalsIgnoreCase("removeIncontro")) {
+        } 
+        else if (action.equalsIgnoreCase("removeIncontro")) {
             Incontro incontro = gestoreIncontro.find(Long.parseLong(request.getParameter("id")));
             gestoreIncontro.remove(incontro);
             map.put("output", "Incontro eliminato");
-        } else if (action.equalsIgnoreCase("listIncontri")) {
+        } 
+        else if (action.equalsIgnoreCase("listIncontri")) {
             List<Incontro> incontri = gestoreIncontro.findAll();
             map.put("incontri", incontri);
-        } else {
+        } 
+        else {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Not recognized action");
             return;
         }
@@ -96,7 +123,7 @@ public class Groups extends HttpServlet {
         if (output != null && output.equalsIgnoreCase("json")) {
             request.setAttribute("data", map);
             request.getRequestDispatcher("/json").include(request, response);
-        } 
+        }
         else {
             for (String s : map.keySet()) {
                 request.setAttribute(s, map.get(s));

@@ -57,7 +57,6 @@ public class Login extends HttpServlet {
         
         ServletContext cxt = getServletContext();
         HttpSession session = request.getSession();
-        String op = request.getParameter("op");
         String data = request.getParameter("data");
         Utente currentUser;
         if (session.getAttribute("utente") != null) {
@@ -89,10 +88,6 @@ public class Login extends HttpServlet {
                 rd.forward(request, response);
                 //out.println(data); //Stampa il Json restituito dal Login in Python
             }
-        }
-
-        if (op != null) {
-            
         }
     }
 

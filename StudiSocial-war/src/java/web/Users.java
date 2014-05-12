@@ -7,6 +7,7 @@ package web;
 
 import entity.Utente;
 import java.io.IOException;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -39,16 +40,16 @@ public class Users extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ServletContext cxt = getServletContext();
-        HttpSession session = request.getSession();
-        String op = request.getParameter("op");
-        if (op.equalsIgnoreCase("show")) {
-            String id = request.getParameter("id");
+        String id = request.getParameter("id");
+        if (id!=null) {
             Utente user = gestoreUtente.find(id);
-            String username = user.getUsername();
-            request.setAttribute("username", username);
-            String out = user.getNome()+" "+user.getCognome()+"\n";
-            out += user.getUsername()+"\n"+user.getEmail()+"\n"+user.getPhoneNumber()+"\n";
-            request.setAttribute("elenco", out);
+            request.setAttribute("user", user);
+            RequestDispatcher rd = cxt.getRequestDispatcher("/users.jsp");
+            rd.forward(request, response);
+        }
+        else {
+            List<Utente> users = gestoreUtente.findAll();
+            request.setAttribute("users", users);
             RequestDispatcher rd = cxt.getRequestDispatcher("/users.jsp");
             rd.forward(request, response);
         }

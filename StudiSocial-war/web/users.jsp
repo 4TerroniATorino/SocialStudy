@@ -23,10 +23,8 @@
                             + "<input type=\"hidden\" name=\"op\" value=\"crealibretto\">"
                             + "<input type=\"submit\" value=\"Riempi libretto\">"
                             + "</form>");
-                        request.getAttribute("elenco");
                     }
-                    else
-                        request.getAttribute("username");
+                    request.getAttribute("elenco");
                 %>
             </div>
         </div>
