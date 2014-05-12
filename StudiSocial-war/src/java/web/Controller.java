@@ -6,8 +6,6 @@
 package web;
 
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,7 +34,6 @@ public class Controller extends HttpServlet {
         // Riceve da index.jsp e rimanda alle altre servlet
         response.setContentType("text/html;charset=UTF-8");
         HttpSession s = request.getSession();
-        ServletContext cxt = getServletContext();
 
         String action = request.getParameter("action");
         if (action.equalsIgnoreCase("logout")) {
