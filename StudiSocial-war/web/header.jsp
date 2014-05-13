@@ -42,17 +42,17 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Location <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-header">Dipartimenti</li>
-                        <c:forEach var="location" items="${locations1}" end="5">
+                        <c:forEach var="location" items="${locations1}" end="2">
                             <li><a href="Location?id=${location.id}">${location.descrizione}</a></li>
                         </c:forEach>
                         <li class="divider"></li>
                         <li class="dropdown-header">Aule Studio</li>
-                        <c:forEach var="location" items="${locations2}" end="5">
+                        <c:forEach var="location" items="${locations2}" end="2">
                             <li><a href="Location?id=${location.id}">${location.descrizione}</a></li>
                         </c:forEach>
                         <li class="divider"></li>
                         <li class="dropdown-header">Biblioteche</li>
-                        <c:forEach var="location" items="${locations3}" end="5">
+                        <c:forEach var="location" items="${locations3}" end="2">
                             <li><a href="Location?id=${location.id}">${location.descrizione}</a></li>
                         </c:forEach>
                         <li class="divider"></li>
