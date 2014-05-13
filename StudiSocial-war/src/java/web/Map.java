@@ -38,25 +38,16 @@ public class Map extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ServletContext cxt = getServletContext();
         String action = request.getParameter("action");
         String output = request.getParameter("output");
         HashMap<String, Object> map = new HashMap<>();
         map.put("page", "map");
         
-        if (action == null){
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "You must provide an action");
-            return;
-        } 
-        else if (action.equalsIgnoreCase("show")){
-            List<entity.Location> locations1 = this.locationsManager.findFiltered(LocationFacadeLocal.TYPE_DEPARTMENT);
-            List<entity.Location> locations2 = this.locationsManager.findFiltered(LocationFacadeLocal.TYPE_STUDY_HALL);
-            List<entity.Location> locations3 = this.locationsManager.findFiltered(LocationFacadeLocal.TYPE_LIBRARY);
-            map.put("locations1", locations1);
-            map.put("locations2", locations2);
-            map.put("locations3", locations3);
+        if (action == null || action.equalsIgnoreCase("show")){
+            List<entity.Location> locations = this.locationsManager.findAll();
+            map.put("locations", locations);
         }
-        else if (action.equalsIgnoreCase("add")) {
+        /*else if (action.equalsIgnoreCase("add")) {
             String type = request.getParameter("type");
             String address = request.getParameter("address");
             Point2D.Float coords = getCurrentLocation(request);
@@ -106,7 +97,7 @@ public class Map extends HttpServlet {
             attuale.setCoordinate(getCurrentLocation(request));        
             List<entity.Location> announces = locationsManager.findCloseAnnounces(attuale);
             map.put("closeAnnounces", announces);
-        } 
+        } */
         else {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Not recognized action");
             return;
