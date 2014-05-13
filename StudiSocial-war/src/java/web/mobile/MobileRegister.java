@@ -32,7 +32,7 @@ import web.utils.MobileResponse;
  * loggato (tramite fb/g) - quindi aggiorna o aggiunge nel db: in caso di
  * aggiunta bisogna richiamare la procedura di login per gli altri dati - infine
  * invia la response con: 0, 'phone number registered' 1, 'errore nei parametri'
- * 3, 'errore internocol DB' 5, 'errore utente non registrato' (nota: client
+ * 3, 'errore interno col DB' 5, 'errore utente non registrato' (nota: client
  * reindirizza alla registrazione)
  *
  *

@@ -75,7 +75,6 @@ public class MobileSend extends HttpServlet {
             output = "msg-length";
         } else {
 
-            System.out.println("CIAOOOOOOOO");
             try {
 
                 //controlla mittente e destinatario
