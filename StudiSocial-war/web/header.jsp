@@ -43,20 +43,20 @@
                     <ul class="dropdown-menu">
                         <li class="dropdown-header">Dipartimenti</li>
                         <c:forEach var="location" items="${locations1}" end="2">
-                            <li><a href="Location?id=${location.id}">${location.descrizione}</a></li>
+                            <li><a href="Locations?id=${location.id}">${location.descrizione}</a></li>
                         </c:forEach>
                         <li class="divider"></li>
                         <li class="dropdown-header">Aule Studio</li>
                         <c:forEach var="location" items="${locations2}" end="2">
-                            <li><a href="Location?id=${location.id}">${location.descrizione}</a></li>
+                            <li><a href="Locations?id=${location.id}">${location.descrizione}</a></li>
                         </c:forEach>
                         <li class="divider"></li>
                         <li class="dropdown-header">Biblioteche</li>
                         <c:forEach var="location" items="${locations3}" end="2">
-                            <li><a href="Location?id=${location.id}">${location.descrizione}</a></li>
+                            <li><a href="Locations?id=${location.id}">${location.descrizione}</a></li>
                         </c:forEach>
                         <li class="divider"></li>
-                        <li><a href="Location">Altro...</a></li>
+                        <li><a href="Locations">Altro...</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">

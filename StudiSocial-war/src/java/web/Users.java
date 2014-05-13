@@ -42,7 +42,7 @@ public class Users extends HttpServlet {
         if (id != null) {
             System.out.println("c'è l'id!");
             Utente user = gestoreUtente.find(id);
-            request.setAttribute("user", user);
+            request.setAttribute("utente", user);
         } else {
             List<Utente> users = gestoreUtente.findAll();
             request.setAttribute("users", users);

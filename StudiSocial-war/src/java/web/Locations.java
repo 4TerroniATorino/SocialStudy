@@ -5,6 +5,7 @@
  */
 package web;
 
+import entity.Location;
 import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
@@ -19,8 +20,8 @@ import session.LocationFacadeLocal;
  *
  * @author Daniele
  */
-@WebServlet(name = "Location", urlPatterns = {"/Location"})
-public class Location extends HttpServlet {
+@WebServlet(name = "Locations", urlPatterns = {"/Locations"})
+public class Locations extends HttpServlet {
 
     @EJB
     private LocationFacadeLocal gestoreLocation;
@@ -38,10 +39,10 @@ public class Location extends HttpServlet {
             throws ServletException, IOException {
         String id = request.getParameter("id");
         if (id != null) {
-            entity.Location loc = gestoreLocation.find(id);
+            Location loc = gestoreLocation.find(Long.parseLong(id));
             request.setAttribute("location", loc);
         } else {
-            List<entity.Location> locs = gestoreLocation.findAll();
+            List<Location> locs = gestoreLocation.findAll();
             request.setAttribute("locations", locs);
         }
         request.setAttribute("page", "locations");

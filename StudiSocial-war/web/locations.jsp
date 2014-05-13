@@ -6,7 +6,14 @@
 
 <div class="jumbotron">
     <div class="container">
-        <h1>Location</h1>
-        <h3>In questa pagina andranno le informazioni su una location, possibilità di passare a mappa</h3>
+        <h2>Location</h2>
+        <%
+            if(request.getAttribute("location")!=null) {
+                out.print("location");
+            }
+            else if (request.getAttribute("locations")!=null) {
+                out.print("lista locations");
+            }
+        %>
     </div>
 </div>
