@@ -5,18 +5,30 @@
 --%>
 
 <html class="no-js"> <!--<![endif]-->
+    <script>
+        function checkForm() {
+            f = document.regForm;
+            if (f.nome.value == null || f.cognome.value == null || f.numero.value == null || f.username.value == null || f.password.value == null || f.email.value == null
+                    || f.nome.value == "" || f.cognome.value == "" || f.numero.value == "" || f.username.value == "" || f.password.value == "" || f.email.value == "") {
+                alert("Riempi tutti i campi della registrazione");
+                return false;
+            }
+            else
+                return true;
+        }
+    </script>
     <head>
         <title>Registrazione</title>
         <meta name="description" content="">
         <jsp:include page="includes.jsp"></jsp:include>
-    </head>
-    <body>
-        <div class="jumbotron">
-            <div class="container">
-                <h1>Registrazione</h1>
-                <h3> Non sei un utente registrato, compila tutti i campi e clicca su "registrati"</h3>
-                <form method="post" action ="Registration">
-                    Inserisci nome <input type="text" name="nome" value="<%= request.getAttribute("nome")%>"><br>
+        </head>
+        <body>
+            <div class="jumbotron">
+                <div class="container">
+                    <h1>Registrazione</h1>
+                    <h3> Non sei un utente registrato, compila tutti i campi e clicca su "registrati"</h3>
+                    <form method="post" name="regForm" action="Registration" onkeypress="noEnter(event)" onSubmit="return(checkForm());">
+                        Inserisci nome <input type="text" name="nome" value="<%= request.getAttribute("nome")%>"><br>
                     Inserisci cognome <input type="text" name="cognome" value="<%= request.getAttribute("cognome")%>"><br>
                     Inserisci numero di telefono <input type="text" name="numero"><br>
                     Inserisci username <input type="text" name="username"><br>

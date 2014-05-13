@@ -8,8 +8,6 @@ package web;
 import entity.Utente;
 import java.io.IOException;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,7 +38,6 @@ public class Registration extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        ServletContext cxt = getServletContext();
         HttpSession session = request.getSession();
         if (session.getAttribute("utente") == null) {
             Utente utente = new Utente();
@@ -54,8 +51,7 @@ public class Registration extends HttpServlet {
             gestoreUtenti.create(utente);
             session.setAttribute("utente", utente);
         }
-        RequestDispatcher rd = cxt.getRequestDispatcher("/index.jsp");
-        rd.forward(request, response);
+        request.getRequestDispatcher("/Home").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
