@@ -26,6 +26,13 @@
             <div class="jumbotron">
                 <div class="container">
                     <h1>Registrazione</h1>
+                    <% HttpSession s = request.getSession(); 
+                        if (!s.isNew())
+                        {
+                            String redirectURL = "/index.jsp";
+                            response.sendRedirect(redirectURL);
+                        }
+                    %>
                     <h3> Non sei un utente registrato, compila tutti i campi e clicca su "registrati"</h3>
                     <form method="post" name="regForm" action="Registration" onkeypress="noEnter(event)" onSubmit="return(checkForm());">
                         Inserisci nome <input type="text" name="nome" value="<%= request.getAttribute("nome")%>"><br>
