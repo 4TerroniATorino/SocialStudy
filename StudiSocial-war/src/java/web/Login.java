@@ -18,8 +18,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import session.CorsoFacadeLocal;
-import session.LibrettoFacadeLocal;
 import session.UtenteFacadeLocal;
 
 /**
@@ -31,10 +29,6 @@ public class Login extends HttpServlet {
 
     @EJB
     private UtenteFacadeLocal gestoreUtenti;
-    @EJB
-    private CorsoFacadeLocal gestoreCorso;
-    @EJB
-    private LibrettoFacadeLocal gestoreLibretto;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

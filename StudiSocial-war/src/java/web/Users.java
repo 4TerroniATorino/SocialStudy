@@ -38,9 +38,9 @@ public class Users extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String id = request.getParameter("id");
-        System.out.print("id: "+id);
+        System.out.println("id: "+id);
         if (id != null) {
-            System.out.print("c'è l'id!");
+            System.out.println("c'è l'id!");
             Utente user = gestoreUtente.find(id);
             request.setAttribute("user", user);
         } else {
