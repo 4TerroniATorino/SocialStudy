@@ -54,11 +54,9 @@ public class MobileRetrieve extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-//        String priv_key = request.getParameter("private_key");
-//        String phone_number = request.getParameter("phone_number"); //richiedente
-        
-        String priv_key = "bb91c962-3425-4db2-aa51-a886a0d5";
-        String phone_number = "+393392726676";
+        String priv_key = request.getParameter("private_key");
+        String phone_number = request.getParameter("phone_number"); //richiedente
+
         
         String output;
 

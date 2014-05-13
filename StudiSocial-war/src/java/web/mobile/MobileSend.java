@@ -70,16 +70,12 @@ public class MobileSend extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-//        String priv_key = request.getParameter("private_key");
-//        String phone_number = request.getParameter("phone_number");
-//        String recipient = request.getParameter("recipient");
-//        String message = request.getParameter("message");
+        String priv_key = request.getParameter("private_key");
+        String phone_number = request.getParameter("phone_number");
+        String recipient = request.getParameter("recipient");
+        String message = request.getParameter("message");
         String output = null;
-        
-        String priv_key = "9e247a2c-65a1-4b16-b499-902c6740";
-        String phone_number = "+393476364301";
-        String recipient ="+393392726676";
-        String message ="ciao lurida,  e suca";
+
 
         if (priv_key == null) {
             output = "priv_key";

@@ -64,16 +64,13 @@ public class MobileRegister extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-//        String email = request.getParameter("email");
-//        String phone_number = request.getParameter("phone_number");
-//        String device_type = request.getParameter("device_type");
-//        String device_id = request.getParameter("device_id");
+   //     String email = request.getParameter("email");
+        String phone_number = request.getParameter("phone_number");
+        String device_type = request.getParameter("device_type");
+        String device_id = request.getParameter("device_id");
         String output = null;
 
-        String email = "gianvito.siciliano@gmail.com";
-        String phone_number = "+393392726676";
-        String device_type = "Android";
-        String device_id = "30293u1203120939123";
+
         //Utente lorenzo = utenteFacade.find(6);
         
         
@@ -87,23 +84,25 @@ public class MobileRegister extends HttpServlet {
         } else if (device_id == null || pregMatch(pattern_devId, phone_number)) {
             output = "device_id";
         } else {
-
+            
             //controlla la mail nel db: si->loggato, no->errore
-            Utente utente = null;
-            try {
+            Utente utente = (Utente)request.getSession().getAttribute("utente");
+
+            /*try {
                 utente = utenteFacade.getUserByEmail(email);
             } catch (Exception e) {
                 output = "user";
                 System.err.println(e);
-            }
+            }*/
 
             if (utente != null) {
                 try {
 
                     //controlla phone_number nel db: si->update, no->add
-                    String number = "+39"+utente.getPhoneNumber();
+                    String number = utente.getPhoneNumber();
                     PhoneNumbers phoneNumber = phoneNumberFacade.find(number);
-                    System.out.println(utente.getCognome()+" "+number+" "+phoneNumber);
+                    
+                    //System.out.println(utente.getCognome()+" "+number+" "+phoneNumber);
                     
 
                     //salva nel DB e aggancia all'utente *********(tabelle/ejb: messages e phone_numbers)
