@@ -9,7 +9,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import entity.Utente;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -67,7 +66,7 @@ public class Login extends HttpServlet {
                 request.getSession().setAttribute("mobile", true);
             }
             response.setContentType("text/html;charset=UTF-8");
-            PrintWriter out = response.getWriter();
+            //PrintWriter out = response.getWriter();
             if (gestoreUtenti.find(e.get("id").getAsString()) != null
                     || gestoreUtenti.getUserByEmail(e.get("email").getAsString()) != null) {
 
