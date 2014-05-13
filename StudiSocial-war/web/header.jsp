@@ -28,7 +28,7 @@
                         <li class="dropdown-header">Il tuo profilo</li>
                         <li><a href="Users?id=${sessionScope.utente.id}">${sessionScope.utente.nome} ${sessionScope.utente.cognome}</a></li>
                         <li class="divider"></li>
-                        <li class="dropdown-header">I tuoi amici</li>
+                        <li class="dropdown-header">Utenti</li>
                         <c:forEach var="user" items="${users}" end="10">
                             <c:if test="${user.id ne sessionScope.utente.id}">
                                 <li><a href="Users?id=${user.id}">${user.nome} ${user.cognome}</a></li>

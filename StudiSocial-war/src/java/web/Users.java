@@ -22,9 +22,10 @@ import session.UtenteFacadeLocal;
  */
 @WebServlet(name = "Users", urlPatterns = {"/Users"})
 public class Users extends HttpServlet {
-    
+
     @EJB
     private UtenteFacadeLocal gestoreUtente;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,11 +38,12 @@ public class Users extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String id = request.getParameter("id");
-        if (id!=null) {
+        System.out.print("id: "+id);
+        if (id != null) {
+            System.out.print("c'è l'id!");
             Utente user = gestoreUtente.find(id);
             request.setAttribute("user", user);
-        }
-        else {
+        } else {
             List<Utente> users = gestoreUtente.findAll();
             request.setAttribute("users", users);
         }
