@@ -42,7 +42,11 @@ public class Registration extends HttpServlet {
         if (session.getAttribute("utente") == null) {
             Utente utente = new Utente();
             utente.setIdlog((String) session.getAttribute("idUtente"));
-            utente.setPhoneNumber("+39"+request.getParameter("numero"));
+            String num = request.getParameter("numero");
+            if(num.startsWith("+39")){
+                num = num.substring(3);
+            }
+            utente.setPhoneNumber(num);
             utente.setNome(request.getParameter("nome"));
             utente.setCognome(request.getParameter("cognome"));
             utente.setUsername(request.getParameter("username"));

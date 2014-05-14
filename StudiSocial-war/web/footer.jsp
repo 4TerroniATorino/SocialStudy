@@ -5,6 +5,6 @@
 
 <div class="container">
     <footer>
-        <p>&copy; Company 2013</p>
+        <p>Realizzato da Barresi Daniele, Cataudella Michele, Siciliano Gianvito, Valente Lorenzo</p>
     </footer>
 </div>

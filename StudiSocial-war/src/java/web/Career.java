@@ -87,6 +87,8 @@ public class Career extends HttpServlet {
                     + "<input type=\"submit\" value=\"Confema\">"
                     + "</form>";
             request.setAttribute("code", code);
+            request.setAttribute("page", "career");
+            request.getRequestDispatcher("/Home").forward(request, response);
         }
         else if (action.equalsIgnoreCase("riempilibretto")) {
             String checkboxValues = request.getParameter("corso");
@@ -100,8 +102,7 @@ public class Career extends HttpServlet {
             libretto.setVoti(voti);
             //gestoreLibretto.createLibretto(corsi, voti); perchè i corsi sono un array di byte????
         }
-        request.setAttribute("page", "career");
-        request.getRequestDispatcher("/Home").forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
