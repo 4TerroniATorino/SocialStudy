@@ -21,8 +21,6 @@ import session.PhoneNumbersFacadeLocal;
 import static web.mobile.MobileRegister.pregMatch;
 import web.utils.MobileResponse;
 
-
-
 import com.google.android.gcm.server.Message;
 import com.google.android.gcm.server.Result;
 import com.google.android.gcm.server.Sender;
@@ -37,21 +35,17 @@ public class MobileSend extends HttpServlet {
     final String pattern_phNumber = "^[0-9\\-\\+]{9,15}$";
     final String pattern_devId = "/^\\S{5,255}$/";
 
-    @EJB
-    private PhoneNumbersFacadeLocal phoneNumberFacade;
-    @EJB
-    private MessagesFacadeLocal messagesFacade;
-    
-    
+    @EJB private PhoneNumbersFacadeLocal phoneNumberFacade;
+    @EJB private MessagesFacadeLocal messagesFacade;
+
     private static final String GOOGLE_SERVER_KEY = "AIzaSyDA5dlLInMWVsJEUTIHV0u7maB82MCsZbU";
-    static final String MESSAGE_KEY = "message";	
+    static final String MESSAGE_KEY = "message";
 
     /*
-    public MobileSend() {
-	super();
-    }
-    */
-
+     public MobileSend() {
+     super();
+     }
+     */
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -62,10 +56,10 @@ public class MobileSend extends HttpServlet {
      * @throws IOException if an I/O error occurs
      *
      * db -> 3 sender_invalid -> 0 recipient_invalid -> 4 success -> ?
-     * 
-     * Da ServerProxy.java: response.code == 4 recipientException
-     *                      response.code != 0 errore server
-     * 
+     *
+     * Da ServerProxy.java: response.code == 4 recipientException response.code
+     * != 0 errore server
+     *
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -74,8 +68,7 @@ public class MobileSend extends HttpServlet {
         String phone_number = request.getParameter("phone_number");
         String recipient = request.getParameter("recipient");
         String message = request.getParameter("message");
-        String output = null;
-
+        String output;
 
         if (priv_key == null) {
             output = "priv_key";
@@ -112,45 +105,41 @@ public class MobileSend extends HttpServlet {
                     //altrimenti estrai info: SELECT `device_type`, `device_id` FROM `phone_numbers` WHERE `phone_number
                     //a seconda del device invia push notif  ----> (RESTful service?)
                     output = "success";
-                    
-                } 
-        } catch (Exception e) {
-            output = "db";
-            System.err.println(e);
-        }
 
-        try{
-            // Put your Google API Server Key here
+                }
+            } catch (Exception e) {
+                output = "db";
+                System.err.println(e);
+            }
 
-            Result result = null;
+            try {
+                // Put your Google API Server Key here
 
+                Result result = null;
 
-            // GCM RegId of Android device to send push notification
-            String regId = priv_key;
+                // GCM RegId of Android device to send push notification
+                String regId = priv_key;
             //request.setAttribute("pushStatus", "GCM RegId Received.(priv_key)");
-            //request.getRequestDispatcher("index.jsp").forward(request, response);
+                //request.getRequestDispatcher("index.jsp").forward(request, response);
 
-            Sender sender = new Sender(GOOGLE_SERVER_KEY);
-            Message messageGcm = new Message.Builder().timeToLive(30)
-                                                    .delayWhileIdle(true).addData(MESSAGE_KEY, message).build();
+                Sender sender = new Sender(GOOGLE_SERVER_KEY);
+                Message messageGcm = new Message.Builder().timeToLive(30)
+                        .delayWhileIdle(true).addData(MESSAGE_KEY, message).build();
 
-            System.out.println("regId: " + regId);
+                System.out.println("regId: " + regId);
 
-            result = sender.send(messageGcm, regId, 1);
-            request.setAttribute("pushStatus", result.toString());
+                result = sender.send(messageGcm, regId, 1);
+                request.setAttribute("pushStatus", result.toString());
 
+            } catch (Exception e) {
+                e.printStackTrace();
+                request.setAttribute("pushStatus", e.toString());
+            }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            request.setAttribute("pushStatus", e.toString());
-        }
-			
         //request.getRequestDispatcher("index.jsp").forward(request, response);
-		
         }
-                 
 
-        Map map = MobileResponse.createResponse(output);
+        Map map = MobileResponse.createResponse(output, null);
         request.setAttribute("data", map);
         request.getRequestDispatcher("/json").include(request, response);
 
@@ -196,6 +185,3 @@ public class MobileSend extends HttpServlet {
     }// </editor-fold>
 
 }
-
-
-

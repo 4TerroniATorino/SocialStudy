@@ -8,6 +8,7 @@ package web.mobile;
 import entity.PhoneNumbers;
 import entity.Utente;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import javax.ejb.EJB;
@@ -68,7 +69,8 @@ public class MobileRegister extends HttpServlet {
         String phone_number = request.getParameter("phone_number");
         String device_type = request.getParameter("device_type");
         String device_id = request.getParameter("device_id");
-        String output = null;
+        String output;
+        HashMap result = new HashMap();
 
 
         //Utente lorenzo = utenteFacade.find(6);
@@ -117,8 +119,9 @@ public class MobileRegister extends HttpServlet {
                         phoneNumber.setPrivateKey(UUID.randomUUID().toString().substring(0,32)); //genera una key per la entry nel db
                         phoneNumberFacade.create(phoneNumber);
                     }
-
+                    
                     output = "registered";
+                    result.put("private_key", phoneNumber.getPrivateKey());
 
                 } catch (Exception e) {
                     output = "db";
@@ -131,7 +134,7 @@ public class MobileRegister extends HttpServlet {
             }
         }
 
-        Map map = MobileResponse.createResponse(output);
+        Map map = MobileResponse.createResponse(output, result);
         request.setAttribute("data", map);
         request.getRequestDispatcher("/json").include(request, response);
     }

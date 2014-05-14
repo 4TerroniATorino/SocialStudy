@@ -8,6 +8,7 @@ package web.mobile;
 import entity.Messages;
 import entity.PhoneNumbers;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
@@ -58,6 +59,7 @@ public class MobileRetrieve extends HttpServlet {
         String phone_number = request.getParameter("phone_number"); //richiedente
 
         
+        HashMap result = new HashMap();
         String output;
 
         if (priv_key == null) {
@@ -83,10 +85,7 @@ public class MobileRetrieve extends HttpServlet {
 
                     //invia msg in json
                     output = "success";
-                    Map map = MobileResponse.createResponse(output, messages);
-                    request.setAttribute("data", output);
-                    request.getRequestDispatcher("/json").include(request, response);
-                    return;
+                    result.put("messages", messages);
 
                 } else {
                     output = "unregistered";
@@ -99,7 +98,7 @@ public class MobileRetrieve extends HttpServlet {
 
         }
 
-        Map map = MobileResponse.createResponse(output);
+        Map map = MobileResponse.createResponse(output,result);
         request.setAttribute("data", map);
         request.getRequestDispatcher("/json").include(request, response);
 
