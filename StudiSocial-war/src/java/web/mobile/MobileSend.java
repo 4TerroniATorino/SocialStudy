@@ -40,7 +40,7 @@ public class MobileSend extends HttpServlet {
     @EJB
     private MessagesFacadeLocal messagesFacade;
 
-    private static final String GOOGLE_SERVER_KEY = "AIzaSyDA5dlLInMWVsJEUTIHV0u7maB82MCsZbU";
+    private static final String GOOGLE_SERVER_KEY = "AIzaSyDq-8Oh4wFvSYYI5e4PYpFz2lyCRkXpEc4";
     private static final String MESSAGE_KEY = "message";
 
     /*
@@ -71,6 +71,7 @@ public class MobileSend extends HttpServlet {
         String recipient = request.getParameter("recipient");
         String message = request.getParameter("message");
         String output = null;
+        String regId = null;
 
         if (priv_key == null) {
             output = "priv_key";
@@ -107,6 +108,9 @@ public class MobileSend extends HttpServlet {
                     //altrimenti estrai info: SELECT `device_type`, `device_id` FROM `phone_numbers` WHERE `phone_number
                     //a seconda del device invia push notif  ----> (RESTful service?)
                     output = "success";
+                    
+                    regId = recipientPN.getDeviceId();
+
 
                 }
             } catch (Exception e) {
@@ -120,8 +124,8 @@ public class MobileSend extends HttpServlet {
                 Result result = null;
 
                 // GCM RegId of Android device to send push notification
-                String regId = priv_key;
-            //request.setAttribute("pushStatus", "GCM RegId Received.(priv_key)");
+                //String regId = priv_key;
+                //request.setAttribute("pushStatus", "GCM RegId Received.(priv_key)");
                 //request.getRequestDispatcher("index.jsp").forward(request, response);
 
                 Sender sender = new Sender(GOOGLE_SERVER_KEY);
@@ -132,6 +136,7 @@ public class MobileSend extends HttpServlet {
 
                 result = sender.send(messageGcm, regId, 1);
                 request.setAttribute("pushStatus", result.toString());
+
 
             } catch (Exception e) {
                 e.printStackTrace();
