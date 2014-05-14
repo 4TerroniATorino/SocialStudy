@@ -11,8 +11,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,7 +42,6 @@ public class Career extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ServletContext cxt = getServletContext();
         String action = request.getParameter("action");
         if (action.equalsIgnoreCase("riempilibretto")) {
             String id = request.getParameter("id");
@@ -94,7 +91,7 @@ public class Career extends HttpServlet {
         else if (action.equalsIgnoreCase("riempilibretto")) {
             String checkboxValues = request.getParameter("corso");
             String[] nomi = checkboxValues.split(",");
-                //Corso[] corsi = new Corso[nomi.length];
+            //Corso[] corsi = new Corso[nomi.length];
             //for (int i = 0; i < nomi.length; i++) {
             //    corsi[i] = gestoreCorso.find(nomi[i]);
             //}
