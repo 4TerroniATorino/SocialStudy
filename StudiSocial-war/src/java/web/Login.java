@@ -54,19 +54,21 @@ public class Login extends HttpServlet {
         if (data != null) {
             Gson gson = new Gson(); //???? Questa variabile non è usata
             JsonObject e = new JsonParser().parse(data).getAsJsonObject();
-            session.setAttribute("idUtente", e.get("id").getAsString());
+            String nome = e.get("name").getAsString();
+            String idlog = e.get("id").getAsString();
+            String email = e.get("email").getAsString();
+            
+            session.setAttribute("idUtente", idlog);
             
             response.setContentType("text/html;charset=UTF-8");
             //PrintWriter out = response.getWriter();
-            if (gestoreUtenti.find(e.get("id").getAsString()) != null
-                    || gestoreUtenti.getUserByEmail(e.get("email").getAsString()) != null) {
+            if (gestoreUtenti.findByIdlog(idlog) != null || gestoreUtenti.findByEmail(email) != null) {
 
                 // Metto in sessione l'utente corrente
-                currentUser = gestoreUtenti.find(e.get("id").getAsString()) == null
-                        ? gestoreUtenti.getUserByEmail(e.get("email").getAsString())
-                        : gestoreUtenti.find(e.get("id").getAsString());
+                currentUser = gestoreUtenti.findByIdlog(idlog) == null ?
+                        gestoreUtenti.findByEmail(email) : gestoreUtenti.findByIdlog(idlog);
+                
                 session.setAttribute("utente", currentUser);
-
                 response.sendRedirect("Home");
             } else {
                 
@@ -75,9 +77,9 @@ public class Login extends HttpServlet {
                     request.getSession().setAttribute("mobile", true);
                 }
                 
-                request.setAttribute("email", e.get("email").getAsString());
-                request.setAttribute("nome", e.get("name").getAsString().split(" ")[0]);
-                request.setAttribute("cognome", e.get("name").getAsString().split(" ")[1]);
+                request.setAttribute("email", email);
+                request.setAttribute("nome", nome.split(" ")[0]);
+                request.setAttribute("cognome", nome.split(" ")[1]);
                 RequestDispatcher rd = cxt.getRequestDispatcher("/register.jsp");
                 rd.forward(request, response);
                 //out.println(data); //Stampa il Json restituito dal Login in Python

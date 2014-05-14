@@ -16,8 +16,6 @@ import javax.ejb.Local;
  */
 @Local
 public interface UtenteFacadeLocal {
-    
-    public Utente getUserByEmail(String email);
 
     void create(Utente utente);
 
@@ -26,12 +24,14 @@ public interface UtenteFacadeLocal {
     void remove(Utente utente);
 
     Utente find(Object id);
-    
-    Utente find(String idlog);
 
     List<Utente> findAll();
 
     List<Utente> findRange(int[] range);
+    
+    public Utente findByEmail(String email);
+    
+    public Utente findByIdlog(String idlog);
 
     int count();
     

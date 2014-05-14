@@ -11,6 +11,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -20,18 +21,6 @@ import javax.persistence.PersistenceContext;
 public class UtenteFacade extends AbstractFacade<Utente> implements UtenteFacadeLocal {
     @PersistenceContext(unitName = "Studisocial")
     private EntityManager em;
-    
-    @Override
-    public Utente getUserByEmail(String email) {
-        List<Utente> l = findAll();
-        for (Utente u : l) {
-            if (u.getEmail().equals(email)) {
-                return u;
-            }
-        }
-        return null;
-        
-    }
 
     @Override
     protected EntityManager getEntityManager() {
@@ -41,16 +30,17 @@ public class UtenteFacade extends AbstractFacade<Utente> implements UtenteFacade
     public UtenteFacade() {
         super(Utente.class);
     }
-
+    
     @Override
-    public Utente find(String idlog) {
-        List<Utente> l = findAll();
-        for (Utente u : l) {
-            if (u.getIdlog() != null && u.getIdlog().equals(idlog)) {
-                return u;
-            }
-        }
-        return null;
+    public Utente findByEmail(String email) {
+        Query query = em.createNamedQuery("Utente.findByEmail").setParameter("email", email);
+        return (Utente) query.getSingleResult();
+    }
+    
+    @Override
+    public Utente findByIdlog(String idlog) {
+        Query query = em.createNamedQuery("Utente.findByIdlog").setParameter("idlog", idlog);
+        return (Utente) query.getSingleResult();
     }
     
 }

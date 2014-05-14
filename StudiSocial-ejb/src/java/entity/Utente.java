@@ -18,7 +18,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -36,7 +35,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Utente.findByEmail", query = "SELECT u FROM Utente u WHERE u.email = :email"),
     @NamedQuery(name = "Utente.findByIdlog", query = "SELECT u FROM Utente u WHERE u.idlog = :idlog"),
     @NamedQuery(name = "Utente.findByNome", query = "SELECT u FROM Utente u WHERE u.nome = :nome"),
-    @NamedQuery(name = "Utente.findByPassword", query = "SELECT u FROM Utente u WHERE u.password = :password"),
     @NamedQuery(name = "Utente.findByUsername", query = "SELECT u FROM Utente u WHERE u.username = :username"),
     @NamedQuery(name = "Utente.findByLibrettoId", query = "SELECT u FROM Utente u WHERE u.librettoId = :librettoId"),
     @NamedQuery(name = "Utente.findByPhoneNumber", query = "SELECT u FROM Utente u WHERE u.phoneNumber = :phoneNumber")})
@@ -50,23 +48,20 @@ public class Utente implements Serializable {
     @Size(max = 255)
     @Column(name = "COGNOME")
     private String cognome;
-    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "EMAIL")
     private String email;
-    @Size(max = 255)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
     @Column(name = "IDLOG")
     private String idlog;
     @Size(max = 255)
     @Column(name = "NOME")
     private String nome;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "PASSWORD")
-    private String password;
     @Size(max = 255)
     @Column(name = "USERNAME")
     private String username;
@@ -83,10 +78,10 @@ public class Utente implements Serializable {
         this.id = id;
     }
 
-    public Utente(Long id, String email, String password) {
+    public Utente(Long id, String email, String idlog) {
         this.id = id;
         this.email = email;
-        this.password = password;
+        this.idlog = idlog;
     }
 
     public Long getId() {
@@ -127,14 +122,6 @@ public class Utente implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getUsername() {
