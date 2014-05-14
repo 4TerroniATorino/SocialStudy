@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package session;
 
 import entity.Utente;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -19,6 +19,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class UtenteFacade extends AbstractFacade<Utente> implements UtenteFacadeLocal {
+
     @PersistenceContext(unitName = "Studisocial")
     private EntityManager em;
 
@@ -30,17 +31,25 @@ public class UtenteFacade extends AbstractFacade<Utente> implements UtenteFacade
     public UtenteFacade() {
         super(Utente.class);
     }
-    
+
     @Override
     public Utente findByEmail(String email) {
-        Query query = em.createNamedQuery("Utente.findByEmail").setParameter("email", email);
-        return (Utente) query.getSingleResult();
+        try {
+            Query query = em.createNamedQuery("Utente.findByEmail").setParameter("email", email);
+            return (Utente) query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
-    
+
     @Override
     public Utente findByIdlog(String idlog) {
-        Query query = em.createNamedQuery("Utente.findByIdlog").setParameter("idlog", idlog);
-        return (Utente) query.getSingleResult();
+        try {
+            Query query = em.createNamedQuery("Utente.findByIdlog").setParameter("idlog", idlog);
+            return (Utente) query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
-    
+
 }

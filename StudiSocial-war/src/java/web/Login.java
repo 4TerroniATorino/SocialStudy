@@ -62,11 +62,12 @@ public class Login extends HttpServlet {
             
             response.setContentType("text/html;charset=UTF-8");
             //PrintWriter out = response.getWriter();
-            if (gestoreUtenti.findByIdlog(idlog) != null || gestoreUtenti.findByEmail(email) != null) {
+            Utente fromIdlog = gestoreUtenti.findByIdlog(idlog);
+            Utente fromEmail = gestoreUtenti.findByEmail(email);
+            if (fromIdlog != null || fromEmail  != null) {
 
                 // Metto in sessione l'utente corrente
-                currentUser = gestoreUtenti.findByIdlog(idlog) == null ?
-                        gestoreUtenti.findByEmail(email) : gestoreUtenti.findByIdlog(idlog);
+                currentUser = fromIdlog == null ? fromEmail : fromIdlog;
                 
                 session.setAttribute("utente", currentUser);
                 response.sendRedirect("Home");
