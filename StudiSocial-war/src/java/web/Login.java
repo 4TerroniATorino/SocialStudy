@@ -55,10 +55,7 @@ public class Login extends HttpServlet {
             Gson gson = new Gson(); //???? Questa variabile non è usata
             JsonObject e = new JsonParser().parse(data).getAsJsonObject();
             session.setAttribute("idUtente", e.get("id").getAsString());
-            String ua = request.getHeader("User-Agent");
-            if (ua.contains("mobileSocialStudy")) {
-                request.getSession().setAttribute("mobile", true);
-            }
+            
             response.setContentType("text/html;charset=UTF-8");
             //PrintWriter out = response.getWriter();
             if (gestoreUtenti.find(e.get("id").getAsString()) != null
@@ -73,6 +70,11 @@ public class Login extends HttpServlet {
                 response.sendRedirect("Home");
             } else {
 
+                String ua = request.getHeader("User-Agent");
+                if (ua.contains("mobileSocialStudy")) {
+                    request.getSession().setAttribute("mobile", true);
+                }
+                
                 request.setAttribute("email", e.get("email").getAsString());
                 request.setAttribute("nome", e.get("name").getAsString().split(" ")[0]);
                 request.setAttribute("cognome", e.get("name").getAsString().split(" ")[1]);

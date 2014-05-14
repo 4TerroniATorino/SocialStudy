@@ -41,10 +41,10 @@ public class Home extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         // controllo se l'utente è mobile o desktop
-//        String ua = request.getHeader("User-Agent");
-//        if (ua.contains("mobileSocialStudy")) {
-//            request.getSession().setAttribute("mobile", true);
-//        }
+        String ua = request.getHeader("User-Agent");
+        if (ua.contains("mobileSocialStudy")) {
+            request.getSession().setAttribute("mobile", true);
+        }
 
         // controllo se l'utente è già loggato (sessione aperta)
         Utente currentUser = (Utente) request.getSession().getAttribute("utente");
