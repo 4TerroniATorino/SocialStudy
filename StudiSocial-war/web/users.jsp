@@ -10,7 +10,7 @@
         <%--  creazione libretto se il profilo è tuo--%>
         <%@page import="entity.Utente"%>
         <%
-            if(request.getAttribute("utente")!=null) {
+            if(request.getAttribute("person")!=null) {
                 out.print("utente");
             }
             else if (request.getAttribute("users")!=null) {

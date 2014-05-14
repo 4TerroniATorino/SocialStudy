@@ -38,11 +38,9 @@ public class Users extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String id = request.getParameter("id");
-        System.out.println("id: "+id);
         if (id != null) {
-            System.out.println("c'è l'id!");
-            Utente user = gestoreUtente.find(id);
-            request.setAttribute("utente", user);
+            Utente user = findUtente(id);
+            request.setAttribute("person", user);
         } else {
             List<Utente> users = gestoreUtente.findAll();
             request.setAttribute("users", users);
@@ -89,5 +87,14 @@ public class Users extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private Utente findUtente(String id) {
+        List<Utente> list = gestoreUtente.findAll();
+        for(int i=0;i<list.size();i++){
+            if (list.get(i).getId().equals(Long.parseLong(id)))
+                return list.get(i);
+        }
+        return null;
+    }
 
 }
