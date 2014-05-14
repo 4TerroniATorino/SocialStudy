@@ -31,6 +31,8 @@ public interface UtenteFacadeLocal {
     
     public Utente findByEmail(String email);
     
+    public Utente findByPhoneNumber(String phoneNumber);
+    
     public Utente findByIdlog(String idlog);
 
     int count();

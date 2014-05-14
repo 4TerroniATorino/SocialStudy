@@ -32,19 +32,25 @@ public class UtenteFacade extends AbstractFacade<Utente> implements UtenteFacade
     }
 
     @Override
+    public Utente findByPhoneNumber(String phoneNumber) {
+        Query query = em.createNamedQuery("Utente.findByPhoneNumber").setParameter("phoneNumber", phoneNumber);
+        return findByQuery(query);
+    }
+
+    @Override
     public Utente findByEmail(String email) {
-        try {
-            Query query = em.createNamedQuery("Utente.findByEmail").setParameter("email", email);
-            return (Utente) query.getSingleResult();
-        } catch (NoResultException e) {
-            return null;
-        }
+        Query query = em.createNamedQuery("Utente.findByEmail").setParameter("email", email);
+        return findByQuery(query);
     }
 
     @Override
     public Utente findByIdlog(String idlog) {
+        Query query = em.createNamedQuery("Utente.findByIdlog").setParameter("idlog", idlog);
+        return findByQuery(query);
+    }
+
+    private Utente findByQuery(Query query) {
         try {
-            Query query = em.createNamedQuery("Utente.findByIdlog").setParameter("idlog", idlog);
             return (Utente) query.getSingleResult();
         } catch (NoResultException e) {
             return null;

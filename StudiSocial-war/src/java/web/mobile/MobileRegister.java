@@ -86,7 +86,7 @@ public class MobileRegister extends HttpServlet {
         } else {
             
             //controlla la mail nel db: si->loggato, no->errore
-            Utente utente = (Utente)request.getSession().getAttribute("utente");
+            Utente utente = utenteFacade.findByPhoneNumber(phone_number);
 
             /*try {
                 utente = utenteFacade.getUserByEmail(email);
