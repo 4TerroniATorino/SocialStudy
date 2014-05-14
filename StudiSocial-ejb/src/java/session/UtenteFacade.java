@@ -6,7 +6,6 @@
 package session;
 
 import entity.Utente;
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;

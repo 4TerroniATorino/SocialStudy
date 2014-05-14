@@ -6,28 +6,29 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <div class="jumbotron">
     <div class="container">
-        <h2>Pagina utente</h2>
-        <h3></h3>
-        <%--  creazione libretto se il profilo è tuo--%>
-        <%@page import="entity.Utente"%>
-        <%
-            if(request.getAttribute("person")!=null) {
-                out.print("utente");
-                //<c:out value="${person.nome} ${person.cognome}"/c:out>;
-            }
-            else if (request.getAttribute("users")!=null) {
-                out.print("lista utenti");
-            }
-            Utente usr = (Utente) session.getAttribute("utente");
-            if (usr.getLibrettoId() == null && usr.getId() == request.getAttribute("idUtente")) {
-                out.print("<form method=\"get\" action=\"Career\">"
-                    + "<input type=\"hidden\" name=\"id\" value=\"request.getAttribute(\"idUtente\")\">"
-                    + "<input type=\"hidden\" name=\"op\" value=\"crealibretto\">"
-                    + "<input type=\"submit\" class=\"btn btn-primary btn-lg\" value=\"Inserisci piano di studi\">"
-                    + "</form>");
-            }
-        %>
+        
+        <%-- Lista di tutti gli utenti --%>
+        <c:if test="${empty param.id}">
+            <h2>Lista utenti</h2>
+            <c:forEach var="user" items="${users}" end="10">
+                <p><a href="Users?id=${user.id}">${user.nome} ${user.cognome}</a></p>
+            </c:forEach>
+        </c:if>
+                
+        <%-- Profilo unico --%>
+        <c:if test="${not empty param.id}">
+            <h2>Pagina utente</h2>
+            <p>${user.nome} ${user.cognome}</p>
+            <c:if test="${empty user.librettoId && user.id eq sessionScope.utente.id}">
+                <form method="POST" action="Career">
+                    <input type="hidden" name="id" value="${user.id}">
+                    <input type="hidden" name="op" value="crealibretto">
+                    <input type="submit" class="btn btn-primary btn-lg" value="Inserisci piano di studi">
+                </form>
+            </c:if>
+        </c:if>
     </div>
 </div>
