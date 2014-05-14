@@ -41,6 +41,7 @@ public class Users extends HttpServlet {
         if (id != null) {
             Utente user = findUtente(id);
             request.setAttribute("person", user);
+            request.setAttribute("idUtente", user.getId());
         } else {
             List<Utente> users = gestoreUtente.findAll();
             request.setAttribute("users", users);
