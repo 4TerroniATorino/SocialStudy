@@ -6,7 +6,7 @@
 
 <div class="jumbotron">
     <div class="container">
-        <h1>Ultime notizie</h1>
+        <h2>Ultime notizie</h2>
         <h3>SocialStudy parteciperà all'hackUnito</h3>
         <h3>SocialStudy creato</h3>
     </div>

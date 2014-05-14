@@ -25,7 +25,7 @@
                 out.print("<form method=\"get\" action=\"Career\">"
                     + "<input type=\"hidden\" name=\"id\" value=\"request.getAttribute(\"idUtente\")\">"
                     + "<input type=\"hidden\" name=\"op\" value=\"crealibretto\">"
-                    + "<input type=\"submit\" value=\"Inserisci piano di studi\">"
+                    + "<input type=\"submit\" class=\"btn btn-primary btn-lg\" value=\"Inserisci piano di studi\">"
                     + "</form>");
             }
         %>

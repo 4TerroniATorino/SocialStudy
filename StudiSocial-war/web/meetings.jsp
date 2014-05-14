@@ -5,7 +5,7 @@
 --%>
 <div class="jumbotron">
     <div class="container">
-        <h1>Incontro</h1>
+        <h2>Incontro</h2>
         <%
             if (request.getAttribute("incontro") != null) {
                 out.print("incontro");
@@ -16,12 +16,12 @@
         %>
         <form method="post" action ="Meetings">
             <input type="hidden" name="op" value="modMeeting">
-            <input type="submit" value="Modifica">
+            <input type="submit" class="btn btn-primary btn-lg" value="Modifica">
         </form>
         <form method="post" action ="Meetings">
             <input type="hidden" name="id" value="${incontro.id}%>">
             <input type="hidden" name="op" value="delMeeting">
-            <input type="submit" value="Cancella">
+            <input type="submit" class="btn btn-primary btn-lg" value="Cancella">
         </form>
     </div>
 </div>

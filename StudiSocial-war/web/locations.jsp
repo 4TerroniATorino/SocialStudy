@@ -6,7 +6,7 @@
 
 <div class="jumbotron">
     <div class="container">
-        <h2>Location</h2>
+        <h2>Pagina location</h2>
         <%
             if(request.getAttribute("location")!=null) {
                 out.print("location");
