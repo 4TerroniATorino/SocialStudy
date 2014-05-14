@@ -20,38 +20,41 @@
         var xhrObj = setXMLHttpRequest();
 
         function getCorsi(corso) {
-            var url = "Career?op=getcorsi&corso="+corso.value;
+            var url = "Career?action=getcorsi&corso=" + corso.value;
             xhrObj.open("GET", url, true);
             xhrObj.onreadystatechange = updateRis;
             xhrObj.send(null);
         }
-        
+
         function updateRis() {
-	if(xhrObj.readyState==4) {
-            var risp = xhrObj.responseText;
-            document.getElementById("divRes").innerHTML=risp;
-	}
-}
+            if (xhrObj.readyState == 4) {
+                var risp = xhrObj.responseText;
+                document.getElementById("corsi").innerHTML = risp;
+            }
+        }
 
     </script>
     <head>
         <jsp:include page="includes.jsp"></jsp:include>
-    </head>
-    <body>
-        <div class="jumbotron">
-            <div class="container">
-                <h1>Carriera</h1>
-                <h2>Inserisci piano di studi</h2>
-                <form method="post" action ="Career">
-                    Corso di studi <select name="corsostudi" onchange="getCorsi(this)"><br>
-                    <% String [] corsi = (String[])request.getAttribute("elenco");
-                    for (int i = 0; i < corsi.length; i++) {%>
-                        <option><%=corsi[i]%></option>
-                    <%}%>
-                    </select>
-                    <input type="hidden" name="idLib" value="<%request.getAttribute("idLibretto")%>">
-                </form>
-            </div>
+        </head>
+        <body>
+            <div class="jumbotron">
+                <div class="container">
+                    <h1>Carriera</h1>
+                    <h2>Inserisci piano di studi</h2>
+                    <div id="corsostudi">
+                        <form method="post" action ="Career">
+                            Corso di studi <select name="corsostudi" onchange="getCorsi(this)"><br>
+                            <% String[] corsi = (String[]) request.getAttribute("elenco");
+                            for (int i = 0; i < corsi.length; i++) {%>
+                                <option><%=corsi[i]%></option>
+                            <%}%>
+                            </select>
+                        </form>
+                    </div>
+                    <div id="corsi">
+                    </div>
+                </div>
             <div class="divRes">
             </div>
         </div>

@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,13 +44,9 @@ public class Career extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        ServletContext cxt = getServletContext();
         String action = request.getParameter("action");
         if (action.equalsIgnoreCase("riempilibretto")) {
-            String id = request.getParameter("id");
-            Libretto lib = gestoreLibretto.find(id);
-            request.setAttribute("libretto", lib);
-        } 
-        else if (action.equalsIgnoreCase("crealibretto")) {
             List<Corso> corsi = gestoreCorso.findAll();
             List<String> corsodistudi = new ArrayList();
             for (Corso c : corsi) {
@@ -63,6 +61,8 @@ public class Career extends HttpServlet {
             }
             //Arrays.sort(corsidistudi);
             request.setAttribute("elenco", corsidistudi);
+            RequestDispatcher rd = cxt.getRequestDispatcher("/career.jsp");
+            rd.forward(request, response);
         }
         else if (action.equalsIgnoreCase("getcorsi")) {
             String corsostudi = request.getParameter("corso");
@@ -79,11 +79,11 @@ public class Career extends HttpServlet {
                     i++;
                 }
             }
-            request.setAttribute("elenco", nomi);
+            request.setAttribute("corsi", nomi);
             String code = "<form method=\"post\" action=\"Career\">"
                     + "<% for (int i = 0; i < request.getAttribute(\"elenco\"); i++) {%>"
                     + "<input type=\"checkbox\" name=\"corso\" value=\"<%= ((String[]) request.getAttribute(\"elenco\"))[i]%>\"><br><%}%>"
-                    + "<input type=\"hidden\" name=\"op\" value=\"riempilibretto\">"
+                    + "<input type=\"hidden\" name=\"action\" value=\"riempilibretto\">"
                     + "<input type=\"submit\" value=\"Confema\">"
                     + "</form>";
             request.setAttribute("code", code);
