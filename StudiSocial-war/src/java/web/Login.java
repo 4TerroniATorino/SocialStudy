@@ -69,7 +69,7 @@ public class Login extends HttpServlet {
 
                 response.sendRedirect("Home");
             } else {
-
+                
                 String ua = request.getHeader("User-Agent");
                 if (ua.contains("mobileSocialStudy")) {
                     request.getSession().setAttribute("mobile", true);

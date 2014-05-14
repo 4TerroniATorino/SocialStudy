@@ -5,7 +5,11 @@
 --%>
 
 <html class="no-js"> <!--<![endif]-->
-    <script>
+    <head>
+        <title>Registrazione</title>
+        <meta name="description" content="">
+        <jsp:include page="includes.jsp"></jsp:include>
+        <script>
         function checkForm() {
             f = document.regForm;
             if (f.nome.value == null || f.cognome.value == null || f.numero.value == null || f.username.value == null || f.password.value == null || f.email.value == null
@@ -16,18 +20,14 @@
             else
                 return true;
         }
-    </script>
-    <head>
-        <title>Registrazione</title>
-        <meta name="description" content="">
-        <jsp:include page="includes.jsp"></jsp:include>
+        </script>
         </head>
         <body>
             <div class="jumbotron">
                 <div class="container">
                     <h1>Registrazione</h1>
-                <% HttpSession s = request.getSession();
-                    if (!s.isNew()) {
+                <% 
+                    if (request.getSession().getAttribute("utente")!=null) {
                         String redirectURL = "/index.jsp";
                         response.sendRedirect(redirectURL);
                     }
