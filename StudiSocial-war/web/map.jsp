@@ -53,7 +53,7 @@
             }
             
             infoWindowContent = '<div id="content">';
-            infoWindowContent += '<h3><a href="Location?id='+ ${location.id} +'">${fn:escapeXml(location.descrizione)}</a></h3>';
+            infoWindowContent += '<h3><a href="Locations?id='+ ${location.id} +'">${fn:escapeXml(location.descrizione)}</a></h3>';
             infoWindowContent += '<p>Indirizzo: <b>${fn:escapeXml(location.indirizzo)}</b></p>';
             infoWindowContent += '</div>';
             

@@ -6,7 +6,7 @@
 
 <div class="jumbotron">
     <div class="container">
-        <h1>Gruppo</h1>
+        <h2>Pagina del gruppo</h2>
         <h3><%request.getAttribute("elenco");%></h3>
     </div>
 </div>
