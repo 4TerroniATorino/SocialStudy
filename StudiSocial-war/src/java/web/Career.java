@@ -49,9 +49,7 @@ public class Career extends HttpServlet {
         if (action.equalsIgnoreCase("riempilibretto")) {
             String id = request.getParameter("id");
             Libretto lib = gestoreLibretto.find(id);
-            request.setAttribute("idLibretto", id);
-            RequestDispatcher rd = cxt.getRequestDispatcher("/career.jsp");
-            rd.forward(request, response);
+            request.setAttribute("libretto", lib);
         } 
         else if (action.equalsIgnoreCase("crealibretto")) {
             List<Corso> corsi = gestoreCorso.findAll();
@@ -68,8 +66,6 @@ public class Career extends HttpServlet {
             }
             //Arrays.sort(corsidistudi);
             request.setAttribute("elenco", corsidistudi);
-            RequestDispatcher rd = cxt.getRequestDispatcher("/career.jsp");
-            rd.forward(request, response);
         }
         else if (action.equalsIgnoreCase("getcorsi")) {
             String corsostudi = request.getParameter("corso");
@@ -106,9 +102,9 @@ public class Career extends HttpServlet {
             Libretto libretto = new Libretto();
             libretto.setVoti(voti);
             //gestoreLibretto.createLibretto(corsi, voti); perchè i corsi sono un array di byte????
-            RequestDispatcher rd = cxt.getRequestDispatcher("/profile.jsp");
-            rd.forward(request, response);
         }
+        request.setAttribute("page", "career");
+        request.getRequestDispatcher("/Home").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
