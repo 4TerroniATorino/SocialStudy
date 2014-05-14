@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -48,33 +49,30 @@ public class Meetings extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ServletContext cxt = getServletContext();
-        HttpSession session = request.getSession();
-        String op = request.getParameter("op");
-        if (op.equalsIgnoreCase("show")) {
+        String action = request.getParameter("action");
+        if (action.equalsIgnoreCase("show")) {
             String id = request.getParameter("id");
-            Incontro inc = gestoreIncontri.find(id);
-            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-            Date date = (Date) inc.getDataincontro();
-            String out = df.format(date)+"\n";
-            out += gestoreGruppi.find(inc.getGruppoId()).getNome()+"\n";
-            out += gestoreLocation.find(inc.getLocationId()).getDescrizione();
-            request.setAttribute("elenco", out);
-            RequestDispatcher rd = cxt.getRequestDispatcher("/meetings.jsp");
-            rd.forward(request, response);
+            if(id!=null) {
+                Incontro incontro = gestoreIncontri.find(id);
+                request.setAttribute("incontro", incontro);
+            }
+            else {
+                List<Incontro> incontri = gestoreIncontri.findAll();
+                request.setAttribute("incontri", incontri);
+            }
         }
-        else if (op.equalsIgnoreCase("modMeeting")) {
+        else if (action.equalsIgnoreCase("modMeeting")) {
             String id = request.getParameter("id");
             Incontro inc = gestoreIncontri.find(id);
             //inc.setDataincontro(request.getParameter("date"));
             //inc.setLocationId(request.getParameter("locId"));
-            RequestDispatcher rd = cxt.getRequestDispatcher("/meetings.jsp");
-            rd.forward(request, response);
         }
-        else if (op.equalsIgnoreCase("delMeeting")) {
+        else if (action.equalsIgnoreCase("delMeeting")) {
             String id = request.getParameter("id");
             gestoreIncontri.remove(gestoreIncontri.find(id));
         }
+        request.setAttribute("page", "meetings");
+        request.getRequestDispatcher("/Home").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

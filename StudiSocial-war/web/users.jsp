@@ -21,7 +21,6 @@
                 out.print("lista utenti");
             }
             Utente usr = (Utente) session.getAttribute("utente");
-            System.out.println("confronto: "+usr.getId()+" con "+request.getAttribute("idUtente"));
             if (usr.getLibrettoId() == null && usr.getId() == request.getAttribute("idUtente")) {
                 out.print("<form method=\"get\" action=\"Career\">"
                     + "<input type=\"hidden\" name=\"id\" value=\"request.getAttribute(\"idUtente\")\">"

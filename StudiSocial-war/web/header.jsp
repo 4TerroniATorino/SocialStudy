@@ -72,7 +72,7 @@
                         <li><a href="Groups?action=show">Altro...</a></li>
                     </ul>
                 </li>
-                <li><a href="Meetings">Incontri</a></li>
+                <li><a href="Meetings?action=show">Incontri</a></li>
                 <li><a href="Map?action=show">Mappa</a></li>
             </ul>
             <% Utente usr = (Utente)session.getAttribute("utente"); %> 
