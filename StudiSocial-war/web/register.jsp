@@ -21,6 +21,20 @@
                 return true;
         }
         </script>
+        
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
+        <script src="http://malsup.github.com/jquery.form.js"></script> 
+ 
+        <script> 
+        // wait for the DOM to be loaded 
+        $(document).ready(function() { 
+            // bind 'myForm' and provide a simple callback function 
+            $('#myForm').ajaxForm(function() { 
+                alert("Thank you and enjoy with SocialStudy!"); 
+            }); 
+        }); 
+        </script>
+        
         </head>
         <body>
             <div class="jumbotron">
@@ -33,7 +47,7 @@
                     }
                 %>
                 <h3> Non sei un utente registrato, compila tutti i campi e clicca su "registrati"</h3>
-                <form method="post" name="regForm" action="Registration" onkeypress="noEnter(event)" onSubmit="return(checkForm());">
+                <form id="myForm" method="post" name="regForm" action="Registration" onkeypress="noEnter(event)" onSubmit="return(checkForm());">
                     Inserisci nome <input type="text" name="nome" value="<%= request.getAttribute("nome")%>"><br>
                     Inserisci cognome <input type="text" name="cognome" value="<%= request.getAttribute("cognome")%>"><br>
                     Inserisci numero di telefono +39<input type="text" name="numero"><br>
