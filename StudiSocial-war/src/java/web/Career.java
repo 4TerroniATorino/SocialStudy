@@ -46,7 +46,7 @@ public class Career extends HttpServlet {
             throws ServletException, IOException {
         ServletContext cxt = getServletContext();
         String action = request.getParameter("action");
-        if (action.equalsIgnoreCase("riempilibretto")) {
+        if (action.equalsIgnoreCase("crealibretto")) {
             List<Corso> corsi = gestoreCorso.findAll();
             List<String> corsodistudi = new ArrayList();
             for (Corso c : corsi) {
@@ -61,8 +61,8 @@ public class Career extends HttpServlet {
             }
             //Arrays.sort(corsidistudi);
             request.setAttribute("elenco", corsidistudi);
-            RequestDispatcher rd = cxt.getRequestDispatcher("/career.jsp");
-            rd.forward(request, response);
+            request.setAttribute("page", "career");
+            request.getRequestDispatcher("/Home").forward(request, response);
         }
         else if (action.equalsIgnoreCase("getcorsi")) {
             String corsostudi = request.getParameter("corso");
@@ -87,8 +87,7 @@ public class Career extends HttpServlet {
                     + "<input type=\"submit\" value=\"Confema\">"
                     + "</form>";
             request.setAttribute("code", code);
-            request.setAttribute("page", "career");
-            request.getRequestDispatcher("/Home").forward(request, response);
+            request.getRequestDispatcher("/career.jsp").forward(request, response);
         }
         else if (action.equalsIgnoreCase("riempilibretto")) {
             String checkboxValues = request.getParameter("corso");

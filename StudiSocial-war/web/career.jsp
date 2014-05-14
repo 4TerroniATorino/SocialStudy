@@ -40,11 +40,11 @@
         <body>
             <div class="jumbotron">
                 <div class="container">
-                    <h1>Carriera</h1>
-                    <h2>Inserisci piano di studi</h2>
+                    <h2>Carriera</h2>
+                    <h3>Inserisci piano di studi</h3>
                     <div id="corsostudi">
                         <form method="post" action ="Career">
-                            Corso di studi <select name="corsostudi" onchange="getCorsi(this)"><br>
+                            Corso di studi <select name="corsostudi" onchange="getCorsi(corsostudi)"><br>
                             <% String[] corsi = (String[]) request.getAttribute("elenco");
                             for (int i = 0; i < corsi.length; i++) {%>
                                 <option><%=corsi[i]%></option>

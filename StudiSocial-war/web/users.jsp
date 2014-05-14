@@ -23,9 +23,8 @@
             <h2>Pagina utente</h2>
             <p>${user.nome} ${user.cognome}</p>
             <c:if test="${empty user.librettoId && user.id eq sessionScope.utente.id}">
-                <form method="POST" action="Career">
+                <form method="POST" action="Career?action=crealibretto">
                     <input type="hidden" name="id" value="${user.id}">
-                    <input type="hidden" name="action" value="crealibretto">
                     <input type="submit" class="btn btn-primary btn-lg" value="Inserisci piano di studi">
                 </form>
             </c:if>
