@@ -35,11 +35,13 @@ public class MobileSend extends HttpServlet {
     final String pattern_phNumber = "^[0-9\\-\\+]{9,15}$";
     final String pattern_devId = "/^\\S{5,255}$/";
 
-    @EJB private PhoneNumbersFacadeLocal phoneNumberFacade;
-    @EJB private MessagesFacadeLocal messagesFacade;
+    @EJB
+    private PhoneNumbersFacadeLocal phoneNumberFacade;
+    @EJB
+    private MessagesFacadeLocal messagesFacade;
 
     private static final String GOOGLE_SERVER_KEY = "AIzaSyDA5dlLInMWVsJEUTIHV0u7maB82MCsZbU";
-    static final String MESSAGE_KEY = "message";
+    private static final String MESSAGE_KEY = "message";
 
     /*
      public MobileSend() {
@@ -68,7 +70,7 @@ public class MobileSend extends HttpServlet {
         String phone_number = request.getParameter("phone_number");
         String recipient = request.getParameter("recipient");
         String message = request.getParameter("message");
-        String output;
+        String output = null;
 
         if (priv_key == null) {
             output = "priv_key";
