@@ -55,12 +55,9 @@ public class Career extends HttpServlet {
                     corsodistudi.add(corsost);
                 }
             }
-            String[] corsidistudi = new String[corsodistudi.size()];
-            for (int i = 0; i < corsodistudi.size(); i++) {
-                corsidistudi[i] = corsodistudi.get(i);
-            }
             //Arrays.sort(corsidistudi);
-            request.setAttribute("elenco", corsidistudi);
+            request.setAttribute("corsi", corsi);
+            request.setAttribute("corsiDiStudi", corsodistudi);
             request.setAttribute("page", "career");
             request.getRequestDispatcher("/Home").forward(request, response);
         }
@@ -87,7 +84,7 @@ public class Career extends HttpServlet {
                     + "<input type=\"submit\" value=\"Confema\">"
                     + "</form>";
             request.setAttribute("code", code);
-            request.getRequestDispatcher("/career.jsp").forward(request, response);
+            request.getRequestDispatcher("/???????.jsp").forward(request, response);
         }
         else if (action.equalsIgnoreCase("riempilibretto")) {
             String checkboxValues = request.getParameter("corso");
