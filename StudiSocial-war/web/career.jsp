@@ -10,10 +10,13 @@
 <script>
 
     function updateCorsi() {
-        $("#corsi").children().each(function() {
-            var selectedCdS = $('#corsostudi').find(":selected").text();
-            var toShow = !($(this).attr('class') === selectedCdS);
-            $(this).prop('disabled', toShow);
+        var selectedCdS = $('#corsostudi').find(":selected").text();
+        $("#corsi input").each(function() {
+            var toShow = ($(this).attr('class') === selectedCdS);
+            if (toShow)
+                $(this).closest("div").show();
+            else
+                $(this).closest("div").hide();
         });
     }
 
@@ -21,34 +24,32 @@
         updateCorsi();
     });
 </script>
-<style>
-    select option[disabled] {
-        display: none;
-    }
-</style>
 
 <div class="jumbotron">
     <div class="container">
         <h2>Carriera</h2>
         <h3>Inserisci piano di studi</h3>
         <div>
-            <form method="post" action ="Career">
                 Corso di studi <select id="corsostudi" onchange="updateCorsi()"><br>
                     <option>---</option>
                     <c:forEach var="corsoDiStudi" items="${corsiDiStudi}">
                         <option>${corsoDiStudi}</option>
                     </c:forEach>
                 </select>
-            </form>
         </div>
-        <div>
-            <select id="corsi">
-                <option>---</option>
+        <form method="POST" action="Career?action=riempilibretto">
+            <div id="corsi">
                 <c:forEach var="corso" items="${corsi}">
-                    <option class="${corso.corsodistudi}">${corso.nome}</option>
+                    <div>
+                        <label>
+                            <input type="checkbox" name="corsiselezionati" value="${corso.id}" class="${corso.corsodistudi}">${corso.nome}
+                        </label>
+                        <br>
+                    </div>
                 </c:forEach>
-            </select>
-        </div>
+            </div>
+            <input type="submit" class="btn btn-primary btn-lg" value="Conferma">
+        </form>
     </div>
     <div class="divRes">
     </div>

@@ -44,7 +44,6 @@ public class Career extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ServletContext cxt = getServletContext();
         String action = request.getParameter("action");
         if (action.equalsIgnoreCase("crealibretto")) {
             List<Corso> corsi = gestoreCorso.findAll();
@@ -55,45 +54,19 @@ public class Career extends HttpServlet {
                     corsodistudi.add(corsost);
                 }
             }
-            //Arrays.sort(corsidistudi);
             request.setAttribute("corsi", corsi);
             request.setAttribute("corsiDiStudi", corsodistudi);
             request.setAttribute("page", "career");
             request.getRequestDispatcher("/Home").forward(request, response);
         }
-        else if (action.equalsIgnoreCase("getcorsi")) {
-            String corsostudi = request.getParameter("corso");
-            int len = 0;
-            List<Corso> corsi = gestoreCorso.findAll();
-            for (Corso c : corsi) {
-                len++;
-            }
-            String[] nomi = new String[len];
-            int i = 0;
-            for (Corso c : corsi) {
-                if (c.getCorsodistudi().equalsIgnoreCase(corsostudi)) {
-                    nomi[i] = c.getNome();
-                    i++;
-                }
-            }
-            request.setAttribute("corsi", nomi);
-            String code = "<form method=\"post\" action=\"Career\">"
-                    + "<% for (int i = 0; i < request.getAttribute(\"elenco\"); i++) {%>"
-                    + "<input type=\"checkbox\" name=\"corso\" value=\"<%= ((String[]) request.getAttribute(\"elenco\"))[i]%>\"><br><%}%>"
-                    + "<input type=\"hidden\" name=\"action\" value=\"riempilibretto\">"
-                    + "<input type=\"submit\" value=\"Confema\">"
-                    + "</form>";
-            request.setAttribute("code", code);
-            request.getRequestDispatcher("/???????.jsp").forward(request, response);
-        }
         else if (action.equalsIgnoreCase("riempilibretto")) {
-            String checkboxValues = request.getParameter("corso");
-            String[] nomi = checkboxValues.split(",");
-            //Corso[] corsi = new Corso[nomi.length];
-            //for (int i = 0; i < nomi.length; i++) {
-            //    corsi[i] = gestoreCorso.find(nomi[i]);
-            //}
-            byte[] voti = new byte[nomi.length];
+            String[] checkboxValues = request.getParameterValues("corsiselezionati");
+            Corso[] corsi = new Corso[checkboxValues.length];
+            for (int i = 0; i < checkboxValues.length; i++) {
+                corsi[i] = gestoreCorso.find(Long.parseLong(checkboxValues[i]));
+            }
+            
+            byte[] voti = new byte[checkboxValues.length];
             Libretto libretto = new Libretto();
             libretto.setVoti(voti);
             //gestoreLibretto.createLibretto(corsi, voti); perchè i corsi sono un array di byte????
