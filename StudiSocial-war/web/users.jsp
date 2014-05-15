@@ -20,9 +20,9 @@
 
         <%-- Profilo unico --%>
         <c:if test="${not empty param.id}">
-            <h2>Pagina utente</h2>
-            <p>${user.nome} ${user.cognome}</p>
             <c:if test="${user.id eq sessionScope.utente.id}">
+                <h2>Il mio profilo</h2>
+                <p>${user.nome} ${user.cognome}</p>
                 <form method="POST" action="Groups?action=addGroup">
                     <input type="hidden" name="id" value="${user.id}">
                     <input type="submit" class="btn btn-primary btn-lg" value="Crea gruppo di studio">
@@ -33,6 +33,10 @@
                         <input type="submit" class="btn btn-primary btn-lg" value="Inserisci piano di studi">
                     </form>
                 </c:if>
+            </c:if>
+            <c:if test="${user.id ne sessionScope.utente.id}">
+                <h2>Pagina utente</h2>
+                <p>${user.nome} ${user.cognome}</p>
             </c:if>
         </c:if>
     </div>
