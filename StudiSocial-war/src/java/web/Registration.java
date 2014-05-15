@@ -46,7 +46,7 @@ public class Registration extends HttpServlet {
             if(num.startsWith("+39")){
                 num = num.substring(3);
             }
-            utente.setPhoneNumber(num);
+            utente.setPhoneNumber("+39"+num);
             utente.setNome(request.getParameter("nome"));
             utente.setCognome(request.getParameter("cognome"));
             utente.setUsername(request.getParameter("username"));

@@ -21,11 +21,9 @@
         <c:if test="${not empty param.id}">
             <h2>Pagina location</h2>
             <p>${location.descrizione} ${location.indirizzo} ${location.type}</p>
-            <form method="POST" action="Map">
-                <input type="hidden" name="id" value="${location.id}">
-                <input type="hidden" name="action" value="showInMap">
+            <a href="Map?action=showInMap&id=${location.id}">
                 <input type="submit" class="btn btn-primary btn-lg" value="Visualizza su mappa">
-            </form>
+            </a>
         </c:if>
     </div>
 </div>

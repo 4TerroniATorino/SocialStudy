@@ -5,6 +5,7 @@
  */
 package web;
 
+import entity.Location;
 import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.util.HashMap;
@@ -45,6 +46,10 @@ public class Map extends HttpServlet {
         if (action == null || action.equalsIgnoreCase("show")){
             List<entity.Location> locations = this.locationsManager.findAll();
             map.put("locations", locations);
+        } else if (action.equalsIgnoreCase("showInMap")) {
+            Long locId = Long.parseLong(request.getParameter("id"));
+            Location location = this.locationsManager.find(locId);
+            map.put("location", location);
         }
         /*else if (action.equalsIgnoreCase("add")) {
             String type = request.getParameter("type");
