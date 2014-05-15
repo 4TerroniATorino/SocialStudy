@@ -11,7 +11,6 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -27,7 +26,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Libretto.findAll", query = "SELECT l FROM Libretto l"),
-    @NamedQuery(name = "Libretto.findById", query = "SELECT l FROM Libretto l WHERE l.id = :id")})
+    @NamedQuery(name = "Libretto.findById", query = "SELECT l FROM Libretto l WHERE l.id = :id"),
+    @NamedQuery(name = "Libretto.findByIdUtente", query = "SELECT l FROM Libretto l WHERE l.idUtente = :idUtente"),
+    @NamedQuery(name = "Libretto.findByCorsi", query = "SELECT l FROM Libretto l WHERE l.corsi = :corsi"),
+    @NamedQuery(name = "Libretto.findByVoti", query = "SELECT l FROM Libretto l WHERE l.voti = :voti")})
 public class Libretto implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -35,18 +37,28 @@ public class Libretto implements Serializable {
     @NotNull
     @Column(name = "ID")
     private Long id;
-    @Lob
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "ID_UTENTE")
+    private long idUtente;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "CORSI")
-    private byte[] corsi;
-    @Lob
+    private long corsi;
     @Column(name = "VOTI")
-    private byte[] voti;
+    private Short voti;
 
     public Libretto() {
     }
 
     public Libretto(Long id) {
         this.id = id;
+    }
+
+    public Libretto(Long id, long idUtente, long corsi) {
+        this.id = id;
+        this.idUtente = idUtente;
+        this.corsi = corsi;
     }
 
     public Long getId() {
@@ -57,19 +69,27 @@ public class Libretto implements Serializable {
         this.id = id;
     }
 
-    public byte[] getCorsi() {
+    public long getIdUtente() {
+        return idUtente;
+    }
+
+    public void setIdUtente(long idUtente) {
+        this.idUtente = idUtente;
+    }
+
+    public long getCorsi() {
         return corsi;
     }
 
-    public void setCorsi(byte[] corsi) {
+    public void setCorsi(long corsi) {
         this.corsi = corsi;
     }
 
-    public byte[] getVoti() {
+    public Short getVoti() {
         return voti;
     }
 
-    public void setVoti(byte[] voti) {
+    public void setVoti(Short voti) {
         this.voti = voti;
     }
 
