@@ -3,11 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package web.mobile;
 
+import com.google.android.gcm.server.Message;
+import com.google.android.gcm.server.Result;
+import com.google.android.gcm.server.Sender;
 import entity.Messages;
 import entity.PhoneNumbers;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.Map;
 import javax.ejb.EJB;
@@ -18,16 +23,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import session.MessagesFacadeLocal;
 import session.PhoneNumbersFacadeLocal;
-import static web.mobile.MobileRegister.pregMatch;
 import web.utils.MobileResponse;
-
-import com.google.android.gcm.server.Message;
-import com.google.android.gcm.server.Result;
-import com.google.android.gcm.server.Sender;
 
 /**
  *
- * @author fase
+ * @author Michele
  */
 @WebServlet(name = "MobileSend", urlPatterns = {"/MobileSend"})
 public class MobileSend extends HttpServlet {
@@ -63,7 +63,7 @@ public class MobileSend extends HttpServlet {
      * != 0 errore server
      *
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String priv_key = request.getParameter("private_key");
@@ -190,5 +190,9 @@ public class MobileSend extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    public static boolean pregMatch(String pattern, String content) {
+        return content.matches(pattern);
+    }
 
 }
