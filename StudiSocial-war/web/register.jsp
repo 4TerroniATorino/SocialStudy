@@ -53,16 +53,34 @@
                           </div>
                         </div>
                         <div class="form-group">
-                          <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                          <label for="inputNome3" class="col-sm-2 control-label">Nome</label>
                           <div class="col-sm-10">
-                            <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                            <input type="email" class="form-control" id="inputPassword3" placeholder="Nome">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputCognome3" class="col-sm-2 control-label">Cognome</label>
+                          <div class="col-sm-10">
+                            <input type="email" class="form-control" id="inputPassword3" placeholder="Cognome">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputUsername3" class="col-sm-2 control-label">Username</label>
+                          <div class="col-sm-10">
+                            <input type="email" class="form-control" id="inputPassword3" placeholder="Username">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputNumero3" class="col-sm-2 control-label">Numero</label>
+                          <div class="col-sm-10">
+                            <input type="email" class="form-control" id="inputPassword3" placeholder="Numero">
                           </div>
                         </div>
                         <div class="form-group">
                           <div class="col-sm-offset-2 col-sm-10">
                             <div class="checkbox">
         <label>
-          <input type="checkbox"> Remember me
+          <input type="checkbox"> Accetto qualunque tipo di uso legale :)
         </label>
       </div>
     </div>
@@ -70,6 +88,9 @@
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <button type="submit" class="btn btn-default">Sign in</button>
+                    <input type="hidden" name="deviceType" value="android">
+                    <input type="hidden" name="op" value="reg">
+                    <input type="submit" value="Registrati">
     </div>
   </div>
 </form>
