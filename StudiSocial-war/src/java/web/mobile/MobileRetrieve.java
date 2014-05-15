@@ -8,8 +8,11 @@ package web.mobile;
 import entity.Messages;
 import entity.PhoneNumbers;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -28,6 +31,7 @@ import web.utils.MobileResponse;
 @WebServlet(name = "MobileRetrieve", urlPatterns = {"/MobileRetrieve"})
 public class MobileRetrieve extends HttpServlet {
 
+    private static final SimpleDateFormat DATEFORMATTER = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss Z", Locale.US);
     final String pattern_phNumber = "^[0-9\\-\\+]{9,15}$";
 
     @EJB
@@ -58,7 +62,6 @@ public class MobileRetrieve extends HttpServlet {
         String priv_key = request.getParameter("private_key");
         String phone_number = request.getParameter("phone_number"); //richiedente
 
-        
         HashMap result = new HashMap();
         String output;
 
@@ -78,14 +81,27 @@ public class MobileRetrieve extends HttpServlet {
                     //cerca i msg nel db e restituisci un array
                     List<Messages> messages = messagesFacade.findAllByRecipient(phoneNumber);
 
-                    //segna come letti
+                    List<JsonMessage> jsonMessages = new ArrayList();
+                    
+                    
                     for (Messages m : messages) {
+                        //segna come letti
                         messagesFacade.remove(m);
+                        
+                        //creiamo un jsonMessage
+                        JsonMessage jm = new JsonMessage();
+                        jm.id=m.getId().toString();
+                        jm.message=m.getMessage();
+                        jm.recipient=m.getRecipient().getPhoneNumber();
+                        jm.sender=m.getSender().getPhoneNumber();
+                        jm.ts_sent=DATEFORMATTER.format(m.getTsSent());
+                        
+                        jsonMessages.add(jm);
                     }
 
                     //invia msg in json
                     output = "success";
-                    result.put("messages", messages);
+                    result.put("messages", jsonMessages);
 
                 } else {
                     output = "unregistered";
@@ -98,7 +114,7 @@ public class MobileRetrieve extends HttpServlet {
 
         }
 
-        Map map = MobileResponse.createResponse(output,result);
+        Map map = MobileResponse.createResponse(output, result);
         request.setAttribute("data", map);
         request.getRequestDispatcher("/json").include(request, response);
 
@@ -143,4 +159,12 @@ public class MobileRetrieve extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    private static class JsonMessage {
+
+        public String id;
+        public String sender;
+        public String recipient;
+        public String message;
+        public String ts_sent;
+    }
 }
