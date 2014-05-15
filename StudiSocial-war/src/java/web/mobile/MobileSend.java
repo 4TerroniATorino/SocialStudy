@@ -154,11 +154,12 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
     try {
                 Result result = sender.send(msg, notificationToken, retries);
 
-                if (result.getErrorCodeName().isEmpty()){
+                if (result != null || result.getErrorCodeName()==null || result.getErrorCodeName().isEmpty() ){
                     System.out.println("GCM Notification is sent successfully");
                 }
-                else
+                else {
                     System.out.println("Error occurred while sending push notification :" + result.getErrorCodeName());
+                }
     } catch (InvalidRequestException e) {
                 System.out.println("Invalid Request: "+e.getDescription());
                 
