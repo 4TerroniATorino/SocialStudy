@@ -157,8 +157,8 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
                 if (result.getErrorCodeName().isEmpty()){
                     System.out.println("GCM Notification is sent successfully");
                 }
-
-                System.out.println("Error occurred while sending push notification :" + result.getErrorCodeName());
+                else
+                    System.out.println("Error occurred while sending push notification :" + result.getErrorCodeName());
     } catch (InvalidRequestException e) {
                 System.out.println("Invalid Request: "+e.getDescription());
                 
