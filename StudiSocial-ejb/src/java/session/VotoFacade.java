@@ -6,7 +6,7 @@
 
 package session;
 
-import entity.Libretto;
+import entity.Voto;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,7 +16,7 @@ import javax.persistence.PersistenceContext;
  * @author oneiros
  */
 @Stateless
-public class LibrettoFacade extends AbstractFacade<Libretto> implements LibrettoFacadeLocal {
+public class VotoFacade extends AbstractFacade<Voto> implements VotoFacadeLocal {
     @PersistenceContext(unitName = "Studisocial")
     private EntityManager em;
 
@@ -25,8 +25,8 @@ public class LibrettoFacade extends AbstractFacade<Libretto> implements Libretto
         return em;
     }
 
-    public LibrettoFacade() {
-        super(Libretto.class);
+    public VotoFacade() {
+        super(Voto.class);
     }
     
 }

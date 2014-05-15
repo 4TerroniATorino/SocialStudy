@@ -22,15 +22,15 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author oneiros
  */
 @Entity
-@Table(name = "LIBRETTO")
+@Table(name = "VOTO")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Libretto.findAll", query = "SELECT l FROM Libretto l"),
-    @NamedQuery(name = "Libretto.findById", query = "SELECT l FROM Libretto l WHERE l.id = :id"),
-    @NamedQuery(name = "Libretto.findByIdUtente", query = "SELECT l FROM Libretto l WHERE l.idUtente = :idUtente"),
-    @NamedQuery(name = "Libretto.findByCorsi", query = "SELECT l FROM Libretto l WHERE l.corsi = :corsi"),
-    @NamedQuery(name = "Libretto.findByVoti", query = "SELECT l FROM Libretto l WHERE l.voti = :voti")})
-public class Libretto implements Serializable {
+    @NamedQuery(name = "Voto.findAll", query = "SELECT v FROM Voto v"),
+    @NamedQuery(name = "Voto.findById", query = "SELECT v FROM Voto v WHERE v.id = :id"),
+    @NamedQuery(name = "Voto.findByIdUtente", query = "SELECT v FROM Voto v WHERE v.idUtente = :idUtente"),
+    @NamedQuery(name = "Voto.findByCorso", query = "SELECT v FROM Voto v WHERE v.corso = :corso"),
+    @NamedQuery(name = "Voto.findByVoti", query = "SELECT v FROM Voto v WHERE v.voti = :voti")})
+public class Voto implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -43,22 +43,22 @@ public class Libretto implements Serializable {
     private long idUtente;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "CORSI")
-    private long corsi;
+    @Column(name = "CORSO")
+    private long corso;
     @Column(name = "VOTI")
     private Short voti;
 
-    public Libretto() {
+    public Voto() {
     }
 
-    public Libretto(Long id) {
+    public Voto(Long id) {
         this.id = id;
     }
 
-    public Libretto(Long id, long idUtente, long corsi) {
+    public Voto(Long id, long idUtente, long corso) {
         this.id = id;
         this.idUtente = idUtente;
-        this.corsi = corsi;
+        this.corso = corso;
     }
 
     public Long getId() {
@@ -77,12 +77,12 @@ public class Libretto implements Serializable {
         this.idUtente = idUtente;
     }
 
-    public long getCorsi() {
-        return corsi;
+    public long getCorso() {
+        return corso;
     }
 
-    public void setCorsi(long corsi) {
-        this.corsi = corsi;
+    public void setCorso(long corso) {
+        this.corso = corso;
     }
 
     public Short getVoti() {
@@ -103,10 +103,10 @@ public class Libretto implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Libretto)) {
+        if (!(object instanceof Voto)) {
             return false;
         }
-        Libretto other = (Libretto) object;
+        Voto other = (Voto) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -115,7 +115,7 @@ public class Libretto implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Libretto[ id=" + id + " ]";
+        return "entity.Voto[ id=" + id + " ]";
     }
     
 }

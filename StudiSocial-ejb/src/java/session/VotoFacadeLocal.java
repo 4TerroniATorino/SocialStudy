@@ -6,7 +6,7 @@
 
 package session;
 
-import entity.Libretto;
+import entity.Voto;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -15,19 +15,19 @@ import javax.ejb.Local;
  * @author oneiros
  */
 @Local
-public interface LibrettoFacadeLocal {
+public interface VotoFacadeLocal {
 
-    void create(Libretto libretto);
+    void create(Voto voto);
 
-    void edit(Libretto libretto);
+    void edit(Voto voto);
 
-    void remove(Libretto libretto);
+    void remove(Voto voto);
 
-    Libretto find(Object id);
+    Voto find(Object id);
 
-    List<Libretto> findAll();
+    List<Voto> findAll();
 
-    List<Libretto> findRange(int[] range);
+    List<Voto> findRange(int[] range);
 
     int count();
     
