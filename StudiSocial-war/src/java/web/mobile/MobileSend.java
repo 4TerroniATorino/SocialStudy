@@ -142,6 +142,7 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
                 
                 request.setAttribute("pushStatus", result.toString());
 
+                System.out.println("pushstatus: " + result.toString());
 
             } catch (Exception e) {
                 e.printStackTrace();
