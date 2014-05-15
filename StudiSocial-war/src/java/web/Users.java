@@ -6,6 +6,7 @@
 package web;
 
 import entity.Utente;
+import entity.Voto;
 import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import session.UtenteFacadeLocal;
+import session.VotoFacadeLocal;
 
 /**
  *
@@ -25,6 +27,8 @@ public class Users extends HttpServlet {
 
     @EJB
     private UtenteFacadeLocal gestoreUtente;
+    @EJB
+    private VotoFacadeLocal gestoreLibretto;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,7 +44,9 @@ public class Users extends HttpServlet {
         String id = request.getParameter("id");
         if (id != null) {
             Utente user = findUtente(id);
+            List<Voto> voti = gestoreLibretto.findByUser(user);
             request.setAttribute("user", user);
+            request.setAttribute("libretto", voti.size() > 0);
         } else {
             List<Utente> users = gestoreUtente.findAll();
             request.setAttribute("users", users);
@@ -90,9 +96,10 @@ public class Users extends HttpServlet {
 
     private Utente findUtente(String id) {
         List<Utente> list = gestoreUtente.findAll();
-        for(int i=0;i<list.size();i++){
-            if (list.get(i).getId().equals(Long.parseLong(id)))
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getId().equals(Long.parseLong(id))) {
                 return list.get(i);
+            }
         }
         return null;
     }

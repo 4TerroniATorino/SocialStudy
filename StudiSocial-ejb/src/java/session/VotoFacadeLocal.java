@@ -6,6 +6,7 @@
 
 package session;
 
+import entity.Utente;
 import entity.Voto;
 import java.util.List;
 import javax.ejb.Local;
@@ -26,6 +27,8 @@ public interface VotoFacadeLocal {
     Voto find(Object id);
 
     List<Voto> findAll();
+    
+    List<Voto> findByUser(Utente utente);
 
     List<Voto> findRange(int[] range);
 

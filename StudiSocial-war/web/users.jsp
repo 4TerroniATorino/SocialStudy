@@ -22,13 +22,12 @@
         <c:if test="${not empty param.id}">
             <h2>Pagina utente</h2>
             <p>${user.nome} ${user.cognome}</p>
-            <c:if test="${empty user.librettoId && user.id eq sessionScope.utente.id}">
-                <form method="POST" action="Career?action=crealibretto">
+            <c:if test="${user.id eq sessionScope.utente.id}">
+                <form method="POST" action="Groups?action=addGroup">
                     <input type="hidden" name="id" value="${user.id}">
-                    <input type="submit" class="btn btn-primary btn-lg" value="Inserisci piano di studi">
+                    <input type="submit" class="btn btn-primary btn-lg" value="Crea gruppo di studio">
                 </form>
-
-                <c:if test="${empty user.librettoId && user.id eq sessionScope.utente.id}">
+                <c:if test="${not libretto}">
                     <form method="POST" action="Career?action=crealibretto">
                         <input type="hidden" name="id" value="${user.id}">
                         <input type="submit" class="btn btn-primary btn-lg" value="Inserisci piano di studi">
