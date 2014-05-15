@@ -69,7 +69,7 @@
                         <div class="form-group">
                           <label for="inputNumero3" class="col-sm-2 control-label">Numero</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" id="inputNumero3" placeholder="Numero +39">
+                            <input name="numero" type="text" class="form-control" id="inputNumero3" placeholder="Numero +39">
                           </div>
                         </div>
                           

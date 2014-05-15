@@ -49,13 +49,6 @@
                     
             <!-- calendario -->
             <div class="col-sm-6">
-             <div class="codrops-top clearfix">
-				<a href="http://tympanus.net/Development/Stapel/"><strong>&laquo; Previous Demo: </strong>Adaptive Thumbnail Pile Effect</a>
-				<span class="right">
-                                    <a href="http://tympanus.net/codrops/?p=12416"><strong>Back to the Codrops Article</strong></a>
-				</span>
-			</div><!--/ Codrops top bar -->
-			
 			<section class="main">
 				<div class="custom-calendar-wrap">
 					<div id="custom-inner" class="custom-inner">
