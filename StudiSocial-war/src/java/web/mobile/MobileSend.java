@@ -6,6 +6,7 @@
 
 package web.mobile;
 
+import com.google.android.gcm.server.InvalidRequestException;
 import com.google.android.gcm.server.Message;
 import com.google.android.gcm.server.Result;
 import com.google.android.gcm.server.Sender;
@@ -122,7 +123,7 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
             try {
                 // Put your Google API Server Key here
 
-                Result result = null;
+    /*            Result result = null;
 
                 // GCM RegId of Android device to send push notification
                 //String regId = priv_key;
@@ -143,6 +144,27 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
                 request.setAttribute("pushStatus", result.toString());
 
                 System.out.println("pushstatus: " + result.toString());
+         */       
+    final String GCM_API_KEY = "AIzaSyDq-8Oh4wFvSYYI5e4PYpFz2lyCRkXpEc4";
+    final int retries = 3;
+    final String notificationToken = regId;
+    Sender sender = new Sender(GCM_API_KEY);
+    Message msg = new Message.Builder().build();
+
+    try {
+                Result result = sender.send(msg, notificationToken, retries);
+
+                if (result.getErrorCodeName().isEmpty()){
+                    System.out.println("GCM Notification is sent successfully");
+                }
+
+                System.out.println("Error occurred while sending push notification :" + result.getErrorCodeName());
+    } catch (InvalidRequestException e) {
+                System.out.println("Invalid Request: "+e.getDescription());
+                
+    } catch (IOException ioe) {
+                System.out.println("IO Exception: "+ioe.getMessage());
+    }
 
             } catch (Exception e) {
                 e.printStackTrace();
