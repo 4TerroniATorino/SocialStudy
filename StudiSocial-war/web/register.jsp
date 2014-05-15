@@ -44,6 +44,8 @@
                     <input type="hidden" name="op" value="reg">
                     <input type="submit" value="Registrati">
                 </form>
+                    
+                    
             </div>
         </div>
         <hr>
