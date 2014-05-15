@@ -6,20 +6,19 @@
 package web;
 
 import entity.Corso;
-import entity.Libretto;
+import entity.Utente;
+import entity.Voto;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import session.CorsoFacadeLocal;
-import session.LibrettoFacadeLocal;
+import session.VotoFacadeLocal;
 
 /**
  *
@@ -29,7 +28,7 @@ import session.LibrettoFacadeLocal;
 public class Career extends HttpServlet {
 
     @EJB
-    private LibrettoFacadeLocal gestoreLibretto;
+    private VotoFacadeLocal gestoreLibretto;
     @EJB
     private CorsoFacadeLocal gestoreCorso;
 
@@ -58,20 +57,20 @@ public class Career extends HttpServlet {
             request.setAttribute("corsiDiStudi", corsodistudi);
             request.setAttribute("page", "career");
             request.getRequestDispatcher("/Home").forward(request, response);
-        }
-        else if (action.equalsIgnoreCase("riempilibretto")) {
+        } else if (action.equalsIgnoreCase("riempilibretto")) {
             String[] checkboxValues = request.getParameterValues("corsiselezionati");
-            Corso[] corsi = new Corso[checkboxValues.length];
+            Utente currentUser = (Utente) request.getSession().getAttribute("utente");
             for (int i = 0; i < checkboxValues.length; i++) {
-                corsi[i] = gestoreCorso.find(Long.parseLong(checkboxValues[i]));
+                Corso corso = gestoreCorso.find(Long.parseLong(checkboxValues[i]));
+                Voto voto = new Voto();
+                voto.setCorso(corso.getId());
+                voto.setIdUtente(currentUser.getId());
+                voto.setVoti((short) 0);
+                gestoreLibretto.create(voto);
             }
-            
-            byte[] voti = new byte[checkboxValues.length];
-            Libretto libretto = new Libretto();
-            libretto.setVoti(voti);
-            //gestoreLibretto.createLibretto(corsi, voti); perchè i corsi sono un array di byte????
+            response.sendRedirect("Users?id=" + currentUser.getId());
         }
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

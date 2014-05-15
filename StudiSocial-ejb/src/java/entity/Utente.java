@@ -7,7 +7,6 @@
 package entity;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author oneiros
+ * @author Daniele
  */
 @Entity
 @Table(name = "UTENTE")
@@ -36,7 +35,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Utente.findByIdlog", query = "SELECT u FROM Utente u WHERE u.idlog = :idlog"),
     @NamedQuery(name = "Utente.findByNome", query = "SELECT u FROM Utente u WHERE u.nome = :nome"),
     @NamedQuery(name = "Utente.findByUsername", query = "SELECT u FROM Utente u WHERE u.username = :username"),
-    @NamedQuery(name = "Utente.findByLibrettoId", query = "SELECT u FROM Utente u WHERE u.librettoId = :librettoId"),
     @NamedQuery(name = "Utente.findByPhoneNumber", query = "SELECT u FROM Utente u WHERE u.phoneNumber = :phoneNumber")})
 public class Utente implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -65,8 +63,6 @@ public class Utente implements Serializable {
     @Size(max = 255)
     @Column(name = "USERNAME")
     private String username;
-    @Column(name = "LIBRETTO_ID")
-    private BigInteger librettoId;
     @Size(max = 20)
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
@@ -130,14 +126,6 @@ public class Utente implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public BigInteger getLibrettoId() {
-        return librettoId;
-    }
-
-    public void setLibrettoId(BigInteger librettoId) {
-        this.librettoId = librettoId;
     }
 
     public String getPhoneNumber() {

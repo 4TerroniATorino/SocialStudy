@@ -9,7 +9,7 @@
 
 <div class="jumbotron">
     <div class="container">
-        
+
         <%-- Lista di tutti gli utenti --%>
         <c:if test="${empty param.id}">
             <h2>Lista utenti</h2>
@@ -17,7 +17,7 @@
                 <p><a href="Users?id=${user.id}">${user.nome} ${user.cognome}</a></p>
             </c:forEach>
         </c:if>
-                
+
         <%-- Profilo unico --%>
         <c:if test="${not empty param.id}">
             <h2>Pagina utente</h2>
@@ -27,6 +27,13 @@
                     <input type="hidden" name="id" value="${user.id}">
                     <input type="submit" class="btn btn-primary btn-lg" value="Inserisci piano di studi">
                 </form>
+
+                <c:if test="${empty user.librettoId && user.id eq sessionScope.utente.id}">
+                    <form method="POST" action="Career?action=crealibretto">
+                        <input type="hidden" name="id" value="${user.id}">
+                        <input type="submit" class="btn btn-primary btn-lg" value="Inserisci piano di studi">
+                    </form>
+                </c:if>
             </c:if>
         </c:if>
     </div>
