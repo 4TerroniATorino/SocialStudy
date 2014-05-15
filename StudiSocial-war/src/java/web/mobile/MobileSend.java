@@ -147,7 +147,7 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
          */       
     final String GCM_API_KEY = "AIzaSyDq-8Oh4wFvSYYI5e4PYpFz2lyCRkXpEc4";
     final int retries = 3;
-    final String notificationToken = regId;
+    final String notificationToken = priv_key;
     Sender sender = new Sender(GCM_API_KEY);
     Message msg = new Message.Builder().build();
 
