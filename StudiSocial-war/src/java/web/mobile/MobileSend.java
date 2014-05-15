@@ -139,6 +139,7 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
                 System.out.println("regId: " + regId);
 
                 result = sender.send(messageGcm, regId, 1);
+                
                 request.setAttribute("pushStatus", result.toString());
 
 
