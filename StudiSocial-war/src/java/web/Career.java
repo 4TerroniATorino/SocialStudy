@@ -60,8 +60,8 @@ public class Career extends HttpServlet {
         } else if (action.equalsIgnoreCase("riempilibretto")) {
             String[] checkboxValues = request.getParameterValues("corsiselezionati");
             Utente currentUser = (Utente) request.getSession().getAttribute("utente");
-            for (int i = 0; i < checkboxValues.length; i++) {
-                Corso corso = gestoreCorso.find(Long.parseLong(checkboxValues[i]));
+            for (String checkboxValue : checkboxValues) {
+                Corso corso = gestoreCorso.find(Long.parseLong(checkboxValue));
                 Voto voto = new Voto();
                 voto.setCorso(corso.getId());
                 voto.setIdUtente(currentUser.getId());

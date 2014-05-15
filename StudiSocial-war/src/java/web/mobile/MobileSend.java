@@ -130,8 +130,11 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
                 //request.getRequestDispatcher("index.jsp").forward(request, response);
 
                 Sender sender = new Sender(GOOGLE_SERVER_KEY);
-                Message messageGcm = new Message.Builder().timeToLive(30)
-                        .delayWhileIdle(true).addData(MESSAGE_KEY, message).build();
+                Message messageGcm = new Message.Builder()
+                        .addData(MESSAGE_KEY, message)
+                        .timeToLive(30)
+                        .delayWhileIdle(true)
+                        .build();
 
                 System.out.println("regId: " + regId);
 

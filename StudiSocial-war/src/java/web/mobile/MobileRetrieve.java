@@ -82,20 +82,19 @@ public class MobileRetrieve extends HttpServlet {
                     List<Messages> messages = messagesFacade.findAllByRecipient(phoneNumber);
 
                     List<JsonMessage> jsonMessages = new ArrayList();
-                    
-                    
+
                     for (Messages m : messages) {
                         //segna come letti
                         messagesFacade.remove(m);
-                        
+
                         //creiamo un jsonMessage
                         JsonMessage jm = new JsonMessage();
-                        jm.id=m.getId().toString();
-                        jm.message=m.getMessage();
-                        jm.recipient=m.getRecipient().getPhoneNumber();
-                        jm.sender=m.getSender().getPhoneNumber();
-                        jm.ts_sent=DATEFORMATTER.format(m.getTsSent());
-                        
+                        jm.id = m.getId().toString();
+                        jm.message = m.getMessage();
+                        jm.recipient = m.getRecipient().getPhoneNumber();
+                        jm.sender = m.getSender().getPhoneNumber();
+                        jm.ts_sent = DATEFORMATTER.format(m.getTsSent());
+
                         jsonMessages.add(jm);
                     }
 
