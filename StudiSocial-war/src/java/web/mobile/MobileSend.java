@@ -97,8 +97,60 @@ public class MobileSend extends HttpServlet {
 
                 } else {
 
+                    Result result = null;
+                    regId = recipientPN.getDeviceId();
+
+
+                    try {
+                        // Put your Google API Server Key here
+
+                        // GCM RegId of Android device to send push notification
+                        //String regId = priv_key;
+                        //request.setAttribute("pushStatus", "GCM RegId Received.(priv_key)");
+                        //request.getRequestDispatcher("index.jsp").forward(request, response);
+                        Sender sender = new Sender(GOOGLE_SERVER_KEY);
+                        Message messageGcm = new Message.Builder()
+                                .addData(MESSAGE_KEY, message)
+                                .timeToLive(30)
+                                .delayWhileIdle(true)
+                                .build();
+
+                        System.out.println("regId: " + regId);
+
+                        result = sender.send(messageGcm, regId, 1);
+                        
+                        request.setAttribute("pushStatus", result.toString());
+
+                        System.out.println("pushstatus: " + result.toString());
+
+                        /*final String GCM_API_KEY = "AIzaSyDq-8Oh4wFvSYYI5e4PYpFz2lyCRkXpEc4";
+                         final int retries = 3;
+                         final String notificationToken = regId;
+                         Sender sender = new Sender(GCM_API_KEY);
+                         Message msg = new Message.Builder().build();
+
+                         try {
+                         Result result = sender.send(msg, notificationToken, retries);
+
+                         if (result != null || result.getErrorCodeName() == null || result.getErrorCodeName().isEmpty()) {
+                         System.out.println("GCM Notification is sent successfully");
+                         } else {
+                         System.out.println("Error occurred while sending push notification :" + result.getErrorCodeName());
+                         }
+                         } catch (InvalidRequestException e) {
+                         System.out.println("Invalid Request: " + e.getDescription());
+
+                         } catch (IOException ioe) {
+                         System.out.println("IO Exception: " + ioe.getMessage());
+                         }*/
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        request.setAttribute("pushStatus", e.toString());
+                    }
+
                     //salva il msg nel db e memorizza l'id del msg
                     Messages m = new Messages();
+                    m.setMessageId(result.getMessageId());
                     m.setMessage(message);
                     m.setRecipient(recipientPN);
                     m.setSender(senderPN);
@@ -109,63 +161,11 @@ public class MobileSend extends HttpServlet {
                     //a seconda del device invia push notif  ----> (RESTful service?)
                     output = "success";
 
-                    regId = recipientPN.getDeviceId();
-
+                    
                 }
             } catch (Exception e) {
                 output = "db";
                 System.err.println(e);
-            }
-
-            try {
-                // Put your Google API Server Key here
-
-                          Result result = null;
-
-                 // GCM RegId of Android device to send push notification
-                 //String regId = priv_key;
-                 //request.setAttribute("pushStatus", "GCM RegId Received.(priv_key)");
-                 //request.getRequestDispatcher("index.jsp").forward(request, response);
-
-                 Sender sender = new Sender(GOOGLE_SERVER_KEY);
-                 Message messageGcm = new Message.Builder()
-                 .addData(MESSAGE_KEY, message)
-                 .timeToLive(30)
-                 .delayWhileIdle(true)
-                 .build();
-
-                 System.out.println("regId: " + regId);
-
-                 result = sender.send(messageGcm, regId, 1);
-                
-                 request.setAttribute("pushStatus", result.toString());
-
-                 System.out.println("pushstatus: " + result.toString());
-                 
-                /*final String GCM_API_KEY = "AIzaSyDq-8Oh4wFvSYYI5e4PYpFz2lyCRkXpEc4";
-                final int retries = 3;
-                final String notificationToken = regId;
-                Sender sender = new Sender(GCM_API_KEY);
-                Message msg = new Message.Builder().build();
-
-                try {
-                    Result result = sender.send(msg, notificationToken, retries);
-
-                    if (result != null || result.getErrorCodeName() == null || result.getErrorCodeName().isEmpty()) {
-                        System.out.println("GCM Notification is sent successfully");
-                    } else {
-                        System.out.println("Error occurred while sending push notification :" + result.getErrorCodeName());
-                    }
-                } catch (InvalidRequestException e) {
-                    System.out.println("Invalid Request: " + e.getDescription());
-
-                } catch (IOException ioe) {
-                    System.out.println("IO Exception: " + ioe.getMessage());
-                }*/
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                request.setAttribute("pushStatus", e.toString());
             }
 
             //request.getRequestDispatcher("index.jsp").forward(request, response);

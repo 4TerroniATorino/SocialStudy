@@ -89,7 +89,7 @@ public class MobileRetrieve extends HttpServlet {
 
                         //creiamo un jsonMessage
                         JsonMessage jm = new JsonMessage();
-                        jm.id = m.getId().toString();
+                        jm.id = m.getMessageId();
                         jm.message = m.getMessage();
                         jm.recipient = m.getRecipient().getPhoneNumber();
                         jm.sender = m.getSender().getPhoneNumber();
