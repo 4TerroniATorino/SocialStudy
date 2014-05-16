@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package web.mobile;
 
 import com.google.android.gcm.server.InvalidRequestException;
@@ -64,10 +63,9 @@ public class MobileSend extends HttpServlet {
      * != 0 errore server
      *
      */
-protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-    
         String priv_key = request.getParameter("private_key");
         String phone_number = request.getParameter("phone_number");
         String recipient = request.getParameter("recipient");
@@ -110,9 +108,8 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
                     //altrimenti estrai info: SELECT `device_type`, `device_id` FROM `phone_numbers` WHERE `phone_number
                     //a seconda del device invia push notif  ----> (RESTful service?)
                     output = "success";
-                    
-                    regId = recipientPN.getDeviceId();
 
+                    regId = recipientPN.getDeviceId();
 
                 }
             } catch (Exception e) {
@@ -123,56 +120,55 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
             try {
                 // Put your Google API Server Key here
 
-    /*            Result result = null;
+                          Result result = null;
 
-                // GCM RegId of Android device to send push notification
-                //String regId = priv_key;
-                //request.setAttribute("pushStatus", "GCM RegId Received.(priv_key)");
-                //request.getRequestDispatcher("index.jsp").forward(request, response);
+                 // GCM RegId of Android device to send push notification
+                 //String regId = priv_key;
+                 //request.setAttribute("pushStatus", "GCM RegId Received.(priv_key)");
+                 //request.getRequestDispatcher("index.jsp").forward(request, response);
 
-                Sender sender = new Sender(GOOGLE_SERVER_KEY);
-                Message messageGcm = new Message.Builder()
-                        .addData(MESSAGE_KEY, message)
-                        .timeToLive(30)
-                        .delayWhileIdle(true)
-                        .build();
+                 Sender sender = new Sender(GOOGLE_SERVER_KEY);
+                 Message messageGcm = new Message.Builder()
+                 .addData(MESSAGE_KEY, message)
+                 .timeToLive(30)
+                 .delayWhileIdle(true)
+                 .build();
 
-                System.out.println("regId: " + regId);
+                 System.out.println("regId: " + regId);
 
-                result = sender.send(messageGcm, regId, 1);
+                 result = sender.send(messageGcm, regId, 1);
                 
-                request.setAttribute("pushStatus", result.toString());
+                 request.setAttribute("pushStatus", result.toString());
 
-                System.out.println("pushstatus: " + result.toString());
-         */       
-    final String GCM_API_KEY = "AIzaSyDq-8Oh4wFvSYYI5e4PYpFz2lyCRkXpEc4";
-    final int retries = 3;
-    final String notificationToken = priv_key;
-    Sender sender = new Sender(GCM_API_KEY);
-    Message msg = new Message.Builder().build();
+                 System.out.println("pushstatus: " + result.toString());
+                 
+                /*final String GCM_API_KEY = "AIzaSyDq-8Oh4wFvSYYI5e4PYpFz2lyCRkXpEc4";
+                final int retries = 3;
+                final String notificationToken = regId;
+                Sender sender = new Sender(GCM_API_KEY);
+                Message msg = new Message.Builder().build();
 
-    try {
-                Result result = sender.send(msg, notificationToken, retries);
+                try {
+                    Result result = sender.send(msg, notificationToken, retries);
 
-                if (result != null || result.getErrorCodeName()==null || result.getErrorCodeName().isEmpty() ){
-                    System.out.println("GCM Notification is sent successfully");
-                }
-                else {
-                    System.out.println("Error occurred while sending push notification :" + result.getErrorCodeName());
-                }
-    } catch (InvalidRequestException e) {
-                System.out.println("Invalid Request: "+e.getDescription());
-                
-    } catch (IOException ioe) {
-                System.out.println("IO Exception: "+ioe.getMessage());
-    }
+                    if (result != null || result.getErrorCodeName() == null || result.getErrorCodeName().isEmpty()) {
+                        System.out.println("GCM Notification is sent successfully");
+                    } else {
+                        System.out.println("Error occurred while sending push notification :" + result.getErrorCodeName());
+                    }
+                } catch (InvalidRequestException e) {
+                    System.out.println("Invalid Request: " + e.getDescription());
+
+                } catch (IOException ioe) {
+                    System.out.println("IO Exception: " + ioe.getMessage());
+                }*/
 
             } catch (Exception e) {
                 e.printStackTrace();
                 request.setAttribute("pushStatus", e.toString());
             }
 
-        //request.getRequestDispatcher("index.jsp").forward(request, response);
+            //request.getRequestDispatcher("index.jsp").forward(request, response);
         }
 
         Map map = MobileResponse.createResponse(output, null);
