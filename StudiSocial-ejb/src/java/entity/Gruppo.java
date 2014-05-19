@@ -7,22 +7,21 @@
 package entity;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author oneiros
+ * @author Daniele
  */
 @Entity
 @Table(name = "GRUPPO")
@@ -37,27 +36,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Gruppo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "ID")
     private Long id;
     @Size(max = 255)
     @Column(name = "ARGOMENTI")
     private String argomenti;
-    @Lob
-    @Column(name = "INCONTRI")
-    private byte[] incontri;
     @Size(max = 255)
     @Column(name = "NOME")
     private String nome;
-    @Lob
-    @Column(name = "UTENTI")
-    private byte[] utenti;
     @Column(name = "CORSO_ID")
-    private BigInteger corsoId;
-    @Size(max = 255)
+    private long corsoId;
     @Column(name = "FONDATORE_ID")
-    private String fondatoreId;
+    private long fondatoreId;
 
     public Gruppo() {
     }
@@ -82,14 +74,6 @@ public class Gruppo implements Serializable {
         this.argomenti = argomenti;
     }
 
-    public byte[] getIncontri() {
-        return incontri;
-    }
-
-    public void setIncontri(byte[] incontri) {
-        this.incontri = incontri;
-    }
-
     public String getNome() {
         return nome;
     }
@@ -98,27 +82,19 @@ public class Gruppo implements Serializable {
         this.nome = nome;
     }
 
-    public byte[] getUtenti() {
-        return utenti;
-    }
-
-    public void setUtenti(byte[] utenti) {
-        this.utenti = utenti;
-    }
-
-    public BigInteger getCorsoId() {
+    public long getCorsoId() {
         return corsoId;
     }
 
-    public void setCorsoId(BigInteger corsoId) {
+    public void setCorsoId(long corsoId) {
         this.corsoId = corsoId;
     }
 
-    public String getFondatoreId() {
+    public long getFondatoreId() {
         return fondatoreId;
     }
 
-    public void setFondatoreId(String fondatoreId) {
+    public void setFondatoreId(long fondatoreId) {
         this.fondatoreId = fondatoreId;
     }
 

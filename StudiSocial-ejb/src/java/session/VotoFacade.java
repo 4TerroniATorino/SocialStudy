@@ -11,7 +11,6 @@ import entity.Voto;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -35,7 +34,7 @@ public class VotoFacade extends AbstractFacade<Voto> implements VotoFacadeLocal 
     
     @Override
     public List<Voto> findByUser(Utente utente){
-         Query query = em.createNamedQuery("Voto.findByIdUtente").setParameter("idUtente", utente.getId());
+        Query query = em.createNamedQuery("Voto.findByIdUtente").setParameter("idUtente", utente.getId());
         return query.getResultList();
     }
     

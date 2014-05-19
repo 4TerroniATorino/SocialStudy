@@ -30,12 +30,12 @@
         <h2>Carriera</h2>
         <h3>Inserisci piano di studi</h3>
         <div>
-                Corso di studi <select id="corsostudi" onchange="updateCorsi()"><br>
-                    <option>---</option>
-                    <c:forEach var="corsoDiStudi" items="${corsiDiStudi}">
-                        <option>${corsoDiStudi}</option>
-                    </c:forEach>
-                </select>
+            Corso di studi <select id="corsostudi" onchange="updateCorsi()"><br>
+                <option>---</option>
+                <c:forEach var="corsoDiStudi" items="${corsiDiStudi}">
+                    <option>${corsoDiStudi}</option>
+                </c:forEach>
+            </select>
         </div>
         <form method="POST" action="Career?action=riempilibretto">
             <div id="corsi">

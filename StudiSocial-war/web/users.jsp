@@ -23,7 +23,7 @@
             <c:if test="${user.id eq sessionScope.utente.id}">
                 <h2>Il mio profilo</h2>
                 <p>${user.nome} ${user.cognome}</p>
-                <form method="POST" action="Groups?action=addGroup">
+                <form method="POST" action="Groups?action=createGroup">
                     <input type="hidden" name="id" value="${user.id}">
                     <input type="submit" class="btn btn-primary btn-lg" value="Crea gruppo di studio">
                 </form>

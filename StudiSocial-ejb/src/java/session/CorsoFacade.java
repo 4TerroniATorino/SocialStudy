@@ -9,7 +9,9 @@ package session;
 import entity.Corso;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -24,9 +26,23 @@ public class CorsoFacade extends AbstractFacade<Corso> implements CorsoFacadeLoc
     protected EntityManager getEntityManager() {
         return em;
     }
+    
+    @Override
+    public Corso findByNome(String nome) {
+        Query query = em.createNamedQuery("Corso.findByName").setParameter("nome", nome);
+        return findByQuery(query);
+    }
 
     public CorsoFacade() {
         super(Corso.class);
+    }
+    
+        private Corso findByQuery(Query query) {
+        try {
+            return (Corso) query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
     
 }

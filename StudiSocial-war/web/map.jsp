@@ -122,4 +122,3 @@
     }
 </script>
 <div id="map"></div>
-

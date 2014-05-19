@@ -24,6 +24,8 @@ public interface CorsoFacadeLocal {
     void remove(Corso corso);
 
     Corso find(Object id);
+    
+    Corso findByNome(String nome);
 
     List<Corso> findAll();
 
