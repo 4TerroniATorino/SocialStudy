@@ -99,6 +99,7 @@ public class MobileRetrieve extends HttpServlet {
 
                             jsonMessages.add(jm);
                             m.setIsRead(Boolean.TRUE);
+                            messagesFacade.edit(m);
                         }
                     }
 
