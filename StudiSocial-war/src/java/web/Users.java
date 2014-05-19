@@ -5,6 +5,7 @@
  */
 package web;
 
+import entity.Gruppo;
 import entity.Utente;
 import entity.Voto;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import session.GruppoFacadeLocal;
 import session.UtenteFacadeLocal;
 import session.VotoFacadeLocal;
 
@@ -29,6 +31,8 @@ public class Users extends HttpServlet {
     private UtenteFacadeLocal gestoreUtente;
     @EJB
     private VotoFacadeLocal gestoreLibretto;
+     @EJB
+    private GruppoFacadeLocal gestoreGruppo;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,8 +49,9 @@ public class Users extends HttpServlet {
         if (id != null) {
             Utente user = findUtente(id);
             List<Voto> voti = gestoreLibretto.findByUser(user);
+            //List<Gruppo> gruppi = gestoreGruppo.fi; TODO
             request.setAttribute("user", user);
-            request.setAttribute("libretto", voti.size() > 0);
+            request.setAttribute("libretto", voti);
         } else {
             List<Utente> users = gestoreUtente.findAll();
             request.setAttribute("users", users);

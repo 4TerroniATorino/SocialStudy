@@ -29,7 +29,7 @@
                 Inserisci argomenti <input class="form-control" type="text" name="argomenti"><br>
                 Corsi di riferimento (facoltativo)
                 <select name="corso" class="form-control">
-                    <option value="nessuno">Nessuno</option>
+                    <option value="-1">Nessuno</option>
                     <c:forEach var="corso" items="${libretto}">
                         <option value="${corso.id}">${corso.nome}</option>
                     </c:forEach>

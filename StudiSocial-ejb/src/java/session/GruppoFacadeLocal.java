@@ -7,6 +7,7 @@
 package session;
 
 import entity.Gruppo;
+import entity.Utente;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -28,6 +29,8 @@ public interface GruppoFacadeLocal {
     List<Gruppo> findAll();
 
     List<Gruppo> findRange(int[] range);
+    
+    List<Gruppo> findAllByFounder(Utente utente);
 
     int count();
     

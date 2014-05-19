@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -30,7 +32,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Voto.findAll", query = "SELECT v FROM Voto v"),
     @NamedQuery(name = "Voto.findById", query = "SELECT v FROM Voto v WHERE v.id = :id"),
     @NamedQuery(name = "Voto.findByIdUtente", query = "SELECT v FROM Voto v WHERE v.idUtente = :idUtente"),
-    @NamedQuery(name = "Voto.findByCorso", query = "SELECT v FROM Voto v WHERE v.corso = :corso"),
     @NamedQuery(name = "Voto.findByVoti", query = "SELECT v FROM Voto v WHERE v.voti = :voti")})
 public class Voto implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -43,12 +44,11 @@ public class Voto implements Serializable {
     @NotNull
     @Column(name = "ID_UTENTE")
     private long idUtente;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "CORSO")
-    private long corso;
     @Column(name = "VOTI")
     private Short voti;
+    @JoinColumn(name = "CORSO", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Corso corso;
 
     public Voto() {
     }
@@ -57,10 +57,9 @@ public class Voto implements Serializable {
         this.id = id;
     }
 
-    public Voto(Long id, long idUtente, long corso) {
+    public Voto(Long id, long idUtente) {
         this.id = id;
         this.idUtente = idUtente;
-        this.corso = corso;
     }
 
     public Long getId() {
@@ -79,20 +78,20 @@ public class Voto implements Serializable {
         this.idUtente = idUtente;
     }
 
-    public long getCorso() {
-        return corso;
-    }
-
-    public void setCorso(long corso) {
-        this.corso = corso;
-    }
-
     public Short getVoti() {
         return voti;
     }
 
     public void setVoti(Short voti) {
         this.voti = voti;
+    }
+
+    public Corso getCorso() {
+        return corso;
+    }
+
+    public void setCorso(Corso corso) {
+        this.corso = corso;
     }
 
     @Override

@@ -63,7 +63,7 @@ public class Career extends HttpServlet {
             for (String checkboxValue : checkboxValues) {
                 Corso corso = gestoreCorso.find(Long.parseLong(checkboxValue));
                 Voto voto = new Voto();
-                voto.setCorso(corso.getId());
+                voto.setCorso(corso);
                 voto.setIdUtente(currentUser.getId());
                 voto.setVoti((short) 0);
                 gestoreLibretto.create(voto);

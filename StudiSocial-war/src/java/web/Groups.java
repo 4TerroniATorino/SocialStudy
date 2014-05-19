@@ -70,8 +70,8 @@ public class Groups extends HttpServlet {
             String id = request.getParameter("id");
             if (id != null) {
                 Gruppo gruppo = gestoreGruppo.find(Long.parseLong(id));
-                Utente fondatore = gestoreUtente.find(gruppo.getFondatoreId());
-                Corso corso = gestoreCorso.find(gruppo.getCorsoId());
+                Utente fondatore = gruppo.getFondatore();
+                Corso corso = gruppo.getCorso();
                 map.put("gruppo", gruppo);
                 map.put("fondatore", fondatore);
                 map.put("corso", corso);
@@ -95,11 +95,11 @@ public class Groups extends HttpServlet {
             Gruppo gr = new Gruppo();
             gr.setNome(request.getParameter("nome"));
             gr.setArgomenti(request.getParameter("argomenti"));
-            String corso = request.getParameter("corso");
-            if (!corso.equalsIgnoreCase("nessuno"))
-                gr.setCorsoId(Long.parseLong(corso));
+            long corso = Long.parseLong(request.getParameter("corso"));
+            if (corso != -1)
+                gr.setCorso(gestoreCorso.find(corso));
             Utente currentUser = (Utente) request.getSession().getAttribute("utente");
-            gr.setFondatoreId(currentUser.getId());
+            gr.setFondatore(currentUser);
             gestoreGruppo.create(gr);
             response.sendRedirect("Groups?action=show&id="+gr.getId());
         } else if (action.equalsIgnoreCase("removeGroup")) {

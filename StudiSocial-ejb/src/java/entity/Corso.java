@@ -7,21 +7,26 @@
 package entity;
 
 import java.io.Serializable;
-import java.math.BigInteger;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author oneiros
+ * @author Daniele
  */
 @Entity
 @Table(name = "CORSO")
@@ -39,10 +44,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Corso.findBySemestre", query = "SELECT c FROM Corso c WHERE c.semestre = :semestre"),
     @NamedQuery(name = "Corso.findByLocationId", query = "SELECT c FROM Corso c WHERE c.locationId = :locationId")})
 public class Corso implements Serializable {
+    @OneToMany(mappedBy = "corso")
+    private Collection<Gruppo> gruppoCollection;
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "ID")
     private Long id;
     @Size(max = 255)
@@ -66,14 +73,23 @@ public class Corso implements Serializable {
     private Integer numIscritti;
     @Column(name = "SEMESTRE")
     private Integer semestre;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "LOCATION_ID")
-    private BigInteger locationId;
+    private long locationId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "corso")
+    private Collection<Voto> votoCollection;
 
     public Corso() {
     }
 
     public Corso(Long id) {
         this.id = id;
+    }
+
+    public Corso(Long id, long locationId) {
+        this.id = id;
+        this.locationId = locationId;
     }
 
     public Long getId() {
@@ -148,12 +164,21 @@ public class Corso implements Serializable {
         this.semestre = semestre;
     }
 
-    public BigInteger getLocationId() {
+    public long getLocationId() {
         return locationId;
     }
 
-    public void setLocationId(BigInteger locationId) {
+    public void setLocationId(long locationId) {
         this.locationId = locationId;
+    }
+
+    @XmlTransient
+    public Collection<Voto> getVotoCollection() {
+        return votoCollection;
+    }
+
+    public void setVotoCollection(Collection<Voto> votoCollection) {
+        this.votoCollection = votoCollection;
     }
 
     @Override
@@ -179,6 +204,15 @@ public class Corso implements Serializable {
     @Override
     public String toString() {
         return "entity.Corso[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Gruppo> getGruppoCollection() {
+        return gruppoCollection;
+    }
+
+    public void setGruppoCollection(Collection<Gruppo> gruppoCollection) {
+        this.gruppoCollection = gruppoCollection;
     }
     
 }

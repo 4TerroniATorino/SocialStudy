@@ -7,17 +7,23 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -30,9 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Gruppo.findAll", query = "SELECT g FROM Gruppo g"),
     @NamedQuery(name = "Gruppo.findById", query = "SELECT g FROM Gruppo g WHERE g.id = :id"),
     @NamedQuery(name = "Gruppo.findByArgomenti", query = "SELECT g FROM Gruppo g WHERE g.argomenti = :argomenti"),
-    @NamedQuery(name = "Gruppo.findByNome", query = "SELECT g FROM Gruppo g WHERE g.nome = :nome"),
-    @NamedQuery(name = "Gruppo.findByCorsoId", query = "SELECT g FROM Gruppo g WHERE g.corsoId = :corsoId"),
-    @NamedQuery(name = "Gruppo.findByFondatoreId", query = "SELECT g FROM Gruppo g WHERE g.fondatoreId = :fondatoreId")})
+    @NamedQuery(name = "Gruppo.findByNome", query = "SELECT g FROM Gruppo g WHERE g.nome = :nome")})
 public class Gruppo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -46,10 +50,17 @@ public class Gruppo implements Serializable {
     @Size(max = 255)
     @Column(name = "NOME")
     private String nome;
-    @Column(name = "CORSO_ID")
-    private long corsoId;
-    @Column(name = "FONDATORE_ID")
-    private long fondatoreId;
+    @JoinTable(name = "GRUPPO_ISCRITTI", joinColumns = {
+        @JoinColumn(name = "gruppo", referencedColumnName = "ID")}, inverseJoinColumns = {
+        @JoinColumn(name = "utente", referencedColumnName = "ID")})
+    @ManyToMany
+    private Collection<Utente> utenteCollection;
+    @JoinColumn(name = "FONDATORE", referencedColumnName = "ID")
+    @ManyToOne
+    private Utente fondatore;
+    @JoinColumn(name = "CORSO", referencedColumnName = "ID")
+    @ManyToOne
+    private Corso corso;
 
     public Gruppo() {
     }
@@ -82,20 +93,29 @@ public class Gruppo implements Serializable {
         this.nome = nome;
     }
 
-    public long getCorsoId() {
-        return corsoId;
+    @XmlTransient
+    public Collection<Utente> getUtenteCollection() {
+        return utenteCollection;
     }
 
-    public void setCorsoId(long corsoId) {
-        this.corsoId = corsoId;
+    public void setUtenteCollection(Collection<Utente> utenteCollection) {
+        this.utenteCollection = utenteCollection;
     }
 
-    public long getFondatoreId() {
-        return fondatoreId;
+    public Utente getFondatore() {
+        return fondatore;
     }
 
-    public void setFondatoreId(long fondatoreId) {
-        this.fondatoreId = fondatoreId;
+    public void setFondatore(Utente fondatore) {
+        this.fondatore = fondatore;
+    }
+
+    public Corso getCorso() {
+        return corso;
+    }
+
+    public void setCorso(Corso corso) {
+        this.corso = corso;
     }
 
     @Override
