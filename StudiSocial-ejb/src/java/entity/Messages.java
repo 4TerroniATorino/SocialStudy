@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Messages.findAll", query = "SELECT m FROM Messages m"),
     @NamedQuery(name = "Messages.findById", query = "SELECT m FROM Messages m WHERE m.id = :id"),
-    @NamedQuery(name = "Messages.findByMessageId", query = "SELECT m FROM Messages m WHERE m.messageId = :messageId"),
+    @NamedQuery(name = "Messages.findByRead", query = "SELECT m FROM Messages m WHERE m.read = :read"),
     @NamedQuery(name = "Messages.findByTsSent", query = "SELECT m FROM Messages m WHERE m.tsSent = :tsSent")})
     @NamedQuery(name = "Messages.findByRecipient", query = "SELECT m FROM Messages m WHERE m.recipient = :recipient")
 public class Messages implements Serializable {
@@ -46,11 +46,8 @@ public class Messages implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 60)
-    @Column(name = "messageId")
-    private String messageId;
+    @Column(name = "read")
+    private Boolean read;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ts_sent")
@@ -76,9 +73,8 @@ public class Messages implements Serializable {
         this.id = id;
     }
 
-    public Messages(Integer id, String messageId, Date tsSent, String message) {
+    public Messages(Integer id, Date tsSent, String message) {
         this.id = id;
-        this.messageId = messageId;
         this.tsSent = tsSent;
         this.message = message;
     }
@@ -91,12 +87,12 @@ public class Messages implements Serializable {
         this.id = id;
     }
 
-    public String getMessageId() {
-        return messageId;
+    public Boolean getRead() {
+        return read;
     }
 
-    public void setMessageId(String messageId) {
-        this.messageId = messageId;
+    public void setRead(Boolean read) {
+        this.read = read;
     }
 
     public Date getTsSent() {
