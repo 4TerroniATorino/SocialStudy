@@ -43,9 +43,7 @@ public class MobileSend extends HttpServlet {
     private static final String GOOGLE_SERVER_KEY = "AIzaSyDq-8Oh4wFvSYYI5e4PYpFz2lyCRkXpEc4";
     private static final String type = "message";
     
-    public MobileSend(){
-        super();
-    }
+
 
     /*
      public MobileSend() {
@@ -120,36 +118,11 @@ public class MobileSend extends HttpServlet {
                                 .build();
                         
                          
-                       
-
-                        System.out.println("regId: " + regId + "\n SERVERKEY: "+ GOOGLE_SERVER_KEY);
-
                         result = sender.send(messageGcm, regId, 1);
                         
                         request.setAttribute("pushStatus", result.toString());
 
-                        System.out.println("pushstatus: " + result.toString());
-
-                        /*final String GCM_API_KEY = "AIzaSyDq-8Oh4wFvSYYI5e4PYpFz2lyCRkXpEc4";
-                         final int retries = 3;
-                         final String notificationToken = regId;
-                         Sender sender = new Sender(GCM_API_KEY);
-                         Message msg = new Message.Builder().build();
-
-                         try {
-                         Result result = sender.send(msg, notificationToken, retries);
-
-                         if (result != null || result.getErrorCodeName() == null || result.getErrorCodeName().isEmpty()) {
-                         System.out.println("GCM Notification is sent successfully");
-                         } else {
-                         System.out.println("Error occurred while sending push notification :" + result.getErrorCodeName());
-                         }
-                         } catch (InvalidRequestException e) {
-                         System.out.println("Invalid Request: " + e.getDescription());
-
-                         } catch (IOException ioe) {
-                         System.out.println("IO Exception: " + ioe.getMessage());
-                         }*/
+                        
                     } catch (Exception e) {
                         e.printStackTrace();
                         request.setAttribute("pushStatus", e.toString());
@@ -170,10 +143,7 @@ public class MobileSend extends HttpServlet {
                     
                     System.out.println("MSG SALVATO NEL DB: per" + m.getRecipient().getDeviceId() + "  da: "+m.getSender() + " text: "+m.getMessage()+"\n\n");
 
-                    if(regId.equals(m.getRecipient().getDeviceId()))
-                    System.out.println("regid = recipient.deviceID");
-                            else
-                        System.out.println("Non sono uguali");
+                    
                 }
             } catch (Exception e) {
                 output = "db";
