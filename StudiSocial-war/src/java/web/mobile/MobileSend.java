@@ -115,7 +115,7 @@ public class MobileSend extends HttpServlet {
                                 .delayWhileIdle(true)
                                 .build();
 
-                        System.out.println("regId: " + regId);
+                        System.out.println("regId: " + regId + "\n SERVERKEY: "+ GOOGLE_SERVER_KEY);
 
                         result = sender.send(messageGcm, regId, 1);
                         
@@ -160,8 +160,13 @@ public class MobileSend extends HttpServlet {
                     //altrimenti estrai info: SELECT `device_type`, `device_id` FROM `phone_numbers` WHERE `phone_number
                     //a seconda del device invia push notif  ----> (RESTful service?)
                     output = "success";
-
                     
+                    System.out.println("MSG SALVATO NEL DB: per" + m.getRecipient().getDeviceId() + "  da: "+m.getSender() + " text: "+m.getMessage()+"\n\n");
+
+                    if(regId.equals(m.getRecipient().getDeviceId()))
+                    System.out.println("regid = recipient.deviceID");
+                            else
+                        System.out.println("Non sono uguali");
                 }
             } catch (Exception e) {
                 output = "db";
