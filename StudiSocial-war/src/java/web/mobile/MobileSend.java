@@ -110,10 +110,13 @@ public class MobileSend extends HttpServlet {
                         //request.getRequestDispatcher("index.jsp").forward(request, response);
                         Sender sender = new Sender(GOOGLE_SERVER_KEY);
                         Message messageGcm = new Message.Builder()
+                                .collapseKey("messaggggio")
                                 .addData(MESSAGE_KEY, message)
-                                .timeToLive(30)
                                 .delayWhileIdle(true)
                                 .build();
+                        
+                         
+                       
 
                         System.out.println("regId: " + regId + "\n SERVERKEY: "+ GOOGLE_SERVER_KEY);
 
