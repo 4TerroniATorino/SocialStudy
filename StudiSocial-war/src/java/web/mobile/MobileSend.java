@@ -130,7 +130,7 @@ public class MobileSend extends HttpServlet {
 
                     //salva il msg nel db e memorizza l'id del msg
                     Messages m = new Messages();
-                    m.setRead(Boolean.FALSE);
+                    m.setIsRead(Boolean.FALSE);
                     m.setMessage(message);
                     m.setRecipient(recipientPN);
                     m.setSender(senderPN);

@@ -36,9 +36,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Messages.findAll", query = "SELECT m FROM Messages m"),
     @NamedQuery(name = "Messages.findById", query = "SELECT m FROM Messages m WHERE m.id = :id"),
-    @NamedQuery(name = "Messages.findByRead", query = "SELECT m FROM Messages m WHERE m.read = :read"),
+    @NamedQuery(name = "Messages.findByIsRead", query = "SELECT m FROM Messages m WHERE m.isRead = :isRead"),
     @NamedQuery(name = "Messages.findByTsSent", query = "SELECT m FROM Messages m WHERE m.tsSent = :tsSent")})
-    @NamedQuery(name = "Messages.findByRecipient", query = "SELECT m FROM Messages m WHERE m.recipient = :recipient")
 public class Messages implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -46,8 +45,8 @@ public class Messages implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "read")
-    private Boolean read;
+    @Column(name = "isRead")
+    private Boolean isRead;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ts_sent")
@@ -87,12 +86,12 @@ public class Messages implements Serializable {
         this.id = id;
     }
 
-    public Boolean getRead() {
-        return read;
+    public Boolean getIsRead() {
+        return isRead;
     }
 
-    public void setRead(Boolean read) {
-        this.read = read;
+    public void setIsRead(Boolean isRead) {
+        this.isRead = isRead;
     }
 
     public Date getTsSent() {
