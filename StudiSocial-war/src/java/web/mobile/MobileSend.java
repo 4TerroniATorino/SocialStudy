@@ -41,7 +41,11 @@ public class MobileSend extends HttpServlet {
     private MessagesFacadeLocal messagesFacade;
 
     private static final String GOOGLE_SERVER_KEY = "AIzaSyDq-8Oh4wFvSYYI5e4PYpFz2lyCRkXpEc4";
-    private static final String MESSAGE_KEY = "message";
+    private static final String type = "message";
+    
+    public MobileSend(){
+        super();
+    }
 
     /*
      public MobileSend() {
@@ -110,8 +114,8 @@ public class MobileSend extends HttpServlet {
                         //request.getRequestDispatcher("index.jsp").forward(request, response);
                         Sender sender = new Sender(GOOGLE_SERVER_KEY);
                         Message messageGcm = new Message.Builder()
-                                .collapseKey("messaggggio")
-                                .addData(MESSAGE_KEY, message)
+                                .collapseKey("message")
+                                .addData("type", "message")
                                 .delayWhileIdle(true)
                                 .build();
                         
