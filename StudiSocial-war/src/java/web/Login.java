@@ -57,6 +57,7 @@ public class Login extends HttpServlet {
             String nome = e.get("name").getAsString();
             String idlog = e.get("id").getAsString();
             String email = e.get("email").getAsString();
+            String picture = e.get("picture").getAsString()==null ? "http://graph.facebook.com/"+idlog+"/picture?type=large" : e.get("picture").getAsString();
             
             session.setAttribute("idUtente", idlog);
             
@@ -81,6 +82,7 @@ public class Login extends HttpServlet {
                 request.setAttribute("email", email);
                 request.setAttribute("nome", nome.split(" ")[0]);
                 request.setAttribute("cognome", nome.split(" ")[1]);
+                request.setAttribute("picture", picture);
                 RequestDispatcher rd = cxt.getRequestDispatcher("/register.jsp");
                 rd.forward(request, response);
                 //out.println(data); //Stampa il Json restituito dal Login in Python

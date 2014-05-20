@@ -88,6 +88,7 @@
                             <button type="submit" class="btn btn-default" value="Registrati">Sign in</button>
                             <input type="hidden" name="deviceType" value="android">
                             <input type="hidden" name="op" value="reg">
+                            <input type="hidden" name="picture" value="<%= request.getAttribute("picture")%>">
                           </div>
                         </div>
                         

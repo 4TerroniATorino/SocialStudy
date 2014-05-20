@@ -6,6 +6,7 @@
 
 package entity;
 
+import static entity.Corso_.gruppoCollection;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -25,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Daniele
+ * @author Michele
  */
 @Entity
 @Table(name = "UTENTE")
@@ -38,7 +39,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Utente.findByIdlog", query = "SELECT u FROM Utente u WHERE u.idlog = :idlog"),
     @NamedQuery(name = "Utente.findByNome", query = "SELECT u FROM Utente u WHERE u.nome = :nome"),
     @NamedQuery(name = "Utente.findByUsername", query = "SELECT u FROM Utente u WHERE u.username = :username"),
-    @NamedQuery(name = "Utente.findByPhoneNumber", query = "SELECT u FROM Utente u WHERE u.phoneNumber = :phoneNumber")})
+    @NamedQuery(name = "Utente.findByPhoneNumber", query = "SELECT u FROM Utente u WHERE u.phoneNumber = :phoneNumber"),
+    @NamedQuery(name = "Utente.findByPicture", query = "SELECT u FROM Utente u WHERE u.picture = :picture")})
 public class Utente implements Serializable {
     @ManyToMany(mappedBy = "utenteCollection")
     private Collection<Gruppo> gruppoCollection;
@@ -71,6 +73,9 @@ public class Utente implements Serializable {
     @Size(max = 20)
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
+    @Size(max = 100)
+    @Column(name = "PICTURE")
+    private String picture;
 
     public Utente() {
     }
@@ -141,6 +146,14 @@ public class Utente implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -165,11 +178,11 @@ public class Utente implements Serializable {
     public String toString() {
         return "entity.Utente[ id=" + id + " ]";
     }
-
+    
     @XmlTransient
     public Collection<Gruppo> getGruppoCollection() {
         return gruppoCollection;
-    }
+}
 
     public void setGruppoCollection(Collection<Gruppo> gruppoCollection) {
         this.gruppoCollection = gruppoCollection;

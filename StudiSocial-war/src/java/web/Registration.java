@@ -51,6 +51,7 @@ public class Registration extends HttpServlet {
             utente.setCognome(request.getParameter("cognome"));
             utente.setUsername(request.getParameter("username"));
             utente.setEmail(request.getParameter("email"));
+            utente.setPicture(request.getParameter("picture"));
             gestoreUtenti.create(utente);
             session.setAttribute("utente", utente);
         }
