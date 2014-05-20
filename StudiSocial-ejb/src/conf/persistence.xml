@@ -3,7 +3,7 @@
   <persistence-unit name="Studisocial" transaction-type="JTA">
     <jta-data-source>java:jboss/datasources/MySQLDS</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties>
+    <properties>   
     </properties>
   </persistence-unit>
 </persistence>
