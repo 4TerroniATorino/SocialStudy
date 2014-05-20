@@ -84,8 +84,6 @@ public class MobileRetrieve extends HttpServlet {
                     List<JsonMessage> jsonMessages = new ArrayList();
 
                     for (Messages m : messages) {
-                        //segna come letti
-                        messagesFacade.remove(m);
 
                         //System.out.println(m.getMessage()+" "+m.getIsRead());
                         //if(!m.getIsRead()){
@@ -98,6 +96,8 @@ public class MobileRetrieve extends HttpServlet {
                             jm.ts_sent = DATEFORMATTER.format(m.getTsSent());
 
                             jsonMessages.add(jm);
+                            //segna come letti
+                            messagesFacade.remove(m);
                             //m.setIsRead(Boolean.TRUE);
                             //messagesFacade.edit(m);
                         //}
