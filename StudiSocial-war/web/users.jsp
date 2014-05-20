@@ -19,15 +19,8 @@
         </c:if>
 
         <%-- Profilo unico --%>
-        <c:if test="${not empty param.id}">
-            <h2>${user.nome} ${user.cognome} (${user.username})</h2>
-            <div id="profile-info">
-                <img src="data/users/${user.id}.jpg" class="profile-picture"/>
-                <c:if test="${user.id eq sessionScope.utente.id}">
-                    <p>E-mail:${user.email}</p>
-                    <p>Numero: ${user.phoneNumber}</p>
-                </c:if>
-            </div>
+                                    <c:if test="${not empty param.id}">
+
             <div style="clear: both"></div>
             <c:if test="${user.id eq sessionScope.utente.id}">
                 <br><br>
@@ -63,3 +56,108 @@
         </c:if>
     </div>
 </div>
+
+        
+        
+
+<div class="container">
+    <div class="jumbotron">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<div class="row clearfix">
+				<div class="col-md-8 column">
+					<h3>
+						Carrer Bar
+					</h3>
+					<div class="progress">
+						<div class="progress-bar progress-success">
+						</div>
+					</div>
+					<ul class="nav nav-pills">
+						<li class="active">
+							 <a href="#"> <span class="badge pull-right">42</span> Amici</a>
+						</li>
+						<li>
+							 <a href="#"> <span class="badge pull-right">16</span> Gruppi</a>
+						</li>
+					</ul>
+				</div>
+				<div class="col-md-4 column">
+                                    <c:if test="${not empty param.id}">
+                                        <h2>${user.nome} ${user.cognome} (${user.username})</h2>
+                                        <div id="profile-info">
+                                            <c:if test="${user.id eq sessionScope.utente.id}">
+                                                <p>E-mail:${user.email}</p>
+                                                <p>Numero: ${user.phoneNumber}</p>
+                                                <p><a class="btn" href="#">View details »</a></p>
+                                                <img alt="140x140" src="data/users/${user.id}.jpg" class="img-circle">
+                                            </c:if>
+                                        </div>
+                                    </c:if>
+				</div>
+			</div>
+                                        
+			<blockquote>
+				<p>
+					Buongiorno...
+				</p> <small>A Michele <cite>lorenzo e Daniele</cite></small>
+			</blockquote>
+		</div>
+	</div>
+        </div>                                
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<div class="alert alert-dismissable alert-success">
+				 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+				<h4>
+					Alert!
+				</h4> <strong>Warning!</strong> Notizie e consigli dall'agente. <a href="#" class="alert-link">alert link</a>
+			</div>
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-2 column">
+			<h3 class="text-center text-primary">
+				h3. Lorem ipsum dolor sit amet.
+			</h3>
+			<div class="btn-group">
+				 <button class="btn btn-default" type="button"><em class="glyphicon glyphicon-align-left"></em> Left</button> <button class="btn btn-default" type="button"><em class="glyphicon glyphicon-align-center"></em> Center</button> <button class="btn btn-default" type="button"><em class="glyphicon glyphicon-align-right"></em> Right</button> <button class="btn btn-default" type="button"><em class="glyphicon glyphicon-align-justify"></em> Justify</button>
+			</div>
+		</div>
+		<div class="col-md-6 column">
+		</div>
+		<div class="col-md-4 column">
+			<div class="list-group">
+				 <a href="#" class="list-group-item active">Home</a>
+				<div class="list-group-item">
+					List header
+				</div>
+				<div class="list-group-item">
+					<h4 class="list-group-item-heading">
+						List group item heading
+					</h4>
+					<p class="list-group-item-text">
+						...
+					</p>
+				</div>
+				<div class="list-group-item">
+					<span class="badge">14</span>Help
+				</div> <a class="list-group-item active"><span class="badge">14</span>Help</a>
+			</div>
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-6 column">
+			<h3 class="text-left">
+				h3. Lorem ipsum dolor sit amet.
+			</h3>
+			<div class="btn-group btn-group-sm">
+				 <button class="btn btn-default" type="button"><em class="glyphicon glyphicon-align-left"></em> Left</button> <button class="btn btn-default" type="button"><em class="glyphicon glyphicon-align-center"></em> Center</button> <button class="btn btn-default" type="button"><em class="glyphicon glyphicon-align-right"></em> Right</button> <button class="btn btn-default" type="button"><em class="glyphicon glyphicon-align-justify"></em> Justify</button>
+			</div>
+		</div>
+		<div class="col-md-6 column">
+		</div>
+	</div>
+</div>
+
+

@@ -11,7 +11,6 @@
 <html class="no-js"> <!--<![endif]-->
     <head>
         <title>Home Page</title>
-        <meta name="description" content="">
         <jsp:include page="includes.jsp"></jsp:include>
     </head>
     <body>
@@ -21,3 +20,6 @@
         <jsp:include page="footer.jsp"></jsp:include>
     </body>
 </html>
+
+
+
