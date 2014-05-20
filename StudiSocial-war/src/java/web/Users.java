@@ -5,7 +5,6 @@
  */
 package web;
 
-import entity.Gruppo;
 import entity.Utente;
 import entity.Voto;
 import java.io.IOException;
