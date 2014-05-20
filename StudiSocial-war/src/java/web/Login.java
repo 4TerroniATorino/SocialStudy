@@ -57,7 +57,7 @@ public class Login extends HttpServlet {
             String nome = e.get("name").getAsString();
             String idlog = e.get("id").getAsString();
             String email = e.get("email").getAsString();
-            String picture = e.get("picture").getAsString()==null ? "http://graph.facebook.com/"+idlog+"/picture?type=large" : e.get("picture").getAsString();
+            String picture = e.get("picture")==null ? "http://graph.facebook.com/"+idlog+"/picture?type=large" : e.get("picture").getAsString();
             
             session.setAttribute("idUtente", idlog);
             
@@ -69,8 +69,9 @@ public class Login extends HttpServlet {
 
                 // Metto in sessione l'utente corrente
                 currentUser = fromIdlog == null ? fromEmail : fromIdlog;
-                
+                currentUser.setPicture(picture);
                 session.setAttribute("utente", currentUser);
+                gestoreUtenti.edit(currentUser);
                 response.sendRedirect("Home");
             } else {
                 

@@ -87,7 +87,7 @@ public class MobileRetrieve extends HttpServlet {
                         //segna come letti
                         //messagesFacade.remove(m);
 
-                        
+                        System.out.println(m.getMessage()+" "+m.getIsRead());
                         if(!m.getIsRead()){
                         //creiamo un jsonMessage
                             JsonMessage jm = new JsonMessage();
