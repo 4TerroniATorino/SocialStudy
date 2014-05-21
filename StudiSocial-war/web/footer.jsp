@@ -5,6 +5,6 @@
 
 <div class="container">
     <footer>
-        <p>Realizzato da Barresi Daniele, Cataudella Michele, Siciliano Gianvito, Valente Lorenzo  @4TerroniATorino</p>
+        <p>Realizzato da Barresi Daniele, Cataudella Michele, Siciliano Gianvito, Valente Lorenzo</p>
     </footer>
 </div>
