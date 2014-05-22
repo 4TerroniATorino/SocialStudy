@@ -6,12 +6,13 @@
 
 package entity;
 
-import static entity.Corso_.gruppoCollection;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,6 +21,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -42,7 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Utente.findByPhoneNumber", query = "SELECT u FROM Utente u WHERE u.phoneNumber = :phoneNumber"),
     @NamedQuery(name = "Utente.findByPicture", query = "SELECT u FROM Utente u WHERE u.picture = :picture")})
 public class Utente implements Serializable {
-    @ManyToMany(mappedBy = "utenteCollection")
+    @ManyToMany(mappedBy = "utenteCollection", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<Gruppo> gruppoCollection;
     private static final long serialVersionUID = 1L;
     @Id
@@ -53,7 +55,7 @@ public class Utente implements Serializable {
     @Size(max = 255)
     @Column(name = "COGNOME")
     private String cognome;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
@@ -168,10 +170,7 @@ public class Utente implements Serializable {
             return false;
         }
         Utente other = (Utente) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override

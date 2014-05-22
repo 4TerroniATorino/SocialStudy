@@ -50,9 +50,9 @@ public class Gruppo implements Serializable {
     @Size(max = 255)
     @Column(name = "NOME")
     private String nome;
-    @JoinTable(name = "GRUPPO_ISCRITTI", joinColumns = {
-        @JoinColumn(name = "gruppo", referencedColumnName = "ID")}, inverseJoinColumns = {
-        @JoinColumn(name = "utente", referencedColumnName = "ID")})
+    @JoinTable(name = "GRUPPO_ISCRITTI",
+        joinColumns = {@JoinColumn(name = "gruppo", referencedColumnName = "ID")},
+        inverseJoinColumns = {@JoinColumn(name = "utente", referencedColumnName = "ID")})
     @ManyToMany
     private Collection<Utente> utenteCollection;
     @JoinColumn(name = "FONDATORE", referencedColumnName = "ID")
@@ -132,10 +132,7 @@ public class Gruppo implements Serializable {
             return false;
         }
         Gruppo other = (Gruppo) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override

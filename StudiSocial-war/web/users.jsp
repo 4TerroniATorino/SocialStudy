@@ -119,6 +119,13 @@
                 <div class="row clearfix">
                     <div class="col-md-6 column">
                         <h3 class="text-left">Gruppi di studio</h3>
+                        <c:if test="${gruppi.size() ne 0}">
+                            <table class="table table-striped table-bordered">
+                                <c:forEach var="gruppo" items="${gruppi}">
+                                    <tr><td><a href="Groups?action=show&id=${gruppo.id}">${gruppo.nome}</a></td></tr>
+                                </c:forEach>
+                            </table>
+                        </c:if>
                         <div class="btn-group btn-group-sm">
                             <button class="btn btn-default" type="button"><em class="glyphicon glyphicon-align-left"></em> Left</button>
                             <button class="btn btn-default" type="button"><em class="glyphicon glyphicon-align-center"></em> Center</button>
@@ -127,13 +134,6 @@
                         </div>
                     </div>
                     <div class="col-md-6 column">
-                        <c:if test="${gruppi.size() ne 0}">
-                            <table class="table table-striped table-bordered">
-                                <c:forEach var="gruppo" items="${gruppi}">
-                                    <tr><td><a href="Groups?action=show&id=${gruppo.id}">${gruppo.nome}</a></td></tr>
-                                </c:forEach>
-                            </table>
-                        </c:if>
                         <form method="POST" action="Groups?action=createGroup">
                             <input type="hidden" name="id" value="${user.id}">
                             <input type="submit" class="btn btn-primary btn-lg" value="Crea gruppo di studio">

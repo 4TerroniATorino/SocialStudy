@@ -5,9 +5,11 @@
  */
 package web;
 
+import entity.Gruppo;
 import entity.Utente;
 import entity.Voto;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -42,15 +44,16 @@ public class Users extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
         if (id != null) {
-            Utente user = findUtente(id);
-            List<Voto> voti = gestoreLibretto.findByUser(user);
-            //List<Gruppo> gruppi = gestoreGruppo.fi; TODO
+            Utente user = gestoreUtente.find(Long.parseLong(id));
+            Collection<Voto> voti = gestoreLibretto.findByUser(user);
+            Collection<Gruppo> gruppi = user.getGruppoCollection();
+            
             request.setAttribute("user", user);
             request.setAttribute("libretto", voti);
+            request.setAttribute("gruppi", gruppi);
         } else {
             List<Utente> users = gestoreUtente.findAll();
             request.setAttribute("users", users);
@@ -97,15 +100,5 @@ public class Users extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    private Utente findUtente(String id) {
-        List<Utente> list = gestoreUtente.findAll();
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getId().equals(Long.parseLong(id))) {
-                return list.get(i);
-            }
-        }
-        return null;
-    }
 
 }
