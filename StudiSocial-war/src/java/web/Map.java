@@ -50,8 +50,7 @@ public class Map extends HttpServlet {
             Long locId = Long.parseLong(request.getParameter("id"));
             Location location = this.locationsManager.find(locId);
             map.put("location", location);
-        }
-        /*else if (action.equalsIgnoreCase("add")) {
+        } else if (action.equalsIgnoreCase("add")) {
             String type = request.getParameter("type");
             String address = request.getParameter("address");
             Point2D.Float coords = getCurrentLocation(request);
@@ -101,8 +100,7 @@ public class Map extends HttpServlet {
             attuale.setCoordinate(getCurrentLocation(request));        
             List<entity.Location> announces = locationsManager.findCloseAnnounces(attuale);
             map.put("closeAnnounces", announces);
-        } */
-        else {
+        } else {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Not recognized action");
             return;
         }
@@ -110,8 +108,7 @@ public class Map extends HttpServlet {
         if (output != null && output.equalsIgnoreCase("json")){
             request.setAttribute("data", map);
             request.getRequestDispatcher("/json").include(request, response);
-        } 
-        else {
+        }  else {
             for (String s : map.keySet()){
                 request.setAttribute(s, map.get(s));
             }

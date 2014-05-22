@@ -5,10 +5,10 @@
     id="SocialStudy" version="3.0">
     <display-name>SocialStudy</display-name>
     <welcome-file-list>
-            <welcome-file>/Home</welcome-file>
+        <welcome-file>/Home</welcome-file>
     </welcome-file-list>
     <error-page>
         <error-code>404</error-code>
-        <location>/error/404.jsp</location>
+        <location>/Home</location>
     </error-page>
 </web-app>
