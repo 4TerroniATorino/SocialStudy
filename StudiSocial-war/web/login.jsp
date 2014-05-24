@@ -13,20 +13,49 @@
         <title>Login</title>
         <meta name="description" content="">
         <jsp:include page="includes.jsp"></jsp:include>
+        <link rel="stylesheet" href="css/typica-login.css">
+        <link rel="stylesheet" href="css/social-login-buttons.css">
     </head>
     <body>
-        <div class="jumbotron">
-            <div class="container">
-                <h1>Benvenuto in SocialStudy</h1>
-                <p>Entra con:</p>
-                 <p>
-                    <a href="https://studisocial.appspot.com/auth/google" class="btn btn-primary btn-lg">Google</a>
-                    <a href="https://studisocial.appspot.com/auth/facebook" class="btn btn-primary btn-lg">Facebook</a>
-                </p>
+
+        <div class="container">
+
+            <div id="login-wraper">
+                <form class="form login-form">
+                    <h1>Social Study</h1><br>
+                    <p><em>Il network intelligente per la tua università</em><p><br><br>
+                    <div>
+                        <a href="https://studisocial.appspot.com/auth/facebook" class='btn fb reverse'>
+                            Accedi <span>con facebook</span>
+                        </a>
+                        <a href="https://studisocial.appspot.com/auth/google" class='btn gp reverse'>
+                            Accedi <span>con google+</span>
+                        </a>
+                    </div>
+
+                </form>
             </div>
+
         </div>
 
-        <hr>
-        <jsp:include page="footer.jsp"></jsp:include>
+
+        <!-- Le javascript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="js/backstretch.min.js"></script>
+        <script>
+            jQuery(document).ready(function($) {
+
+                $.backstretch([
+                    "img/login/bg1.png",
+                    "img/login/bg2.png"
+                ], {duration: 3000, fade: 750});
+
+            });
+        </script>
+
+        <div class="backstretch" style="left: 0px; top: 0px; overflow: hidden; margin: 0px; padding: 0px; height: 725px; width: 1440px; z-index: -999999; position: fixed;">
+            <img src="img/login/bg1.png" style="position: absolute; margin: 0px; padding: 0px; border: none; width: 1440px; height: 809.6046852122987px; max-width: none; z-index: -999999; left: 0px; top: -67.30234260614935px;">
+        </div>
     </body>
 </html>
