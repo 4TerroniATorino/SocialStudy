@@ -75,7 +75,10 @@
 
                 $.backstretch([
                     "img/login/bg1.jpg",
-                    "img/login/bg2.jpg"
+                    "img/login/bg2.jpg",
+                    "img/login/bg3.jpg",
+                    "img/login/bg4.jpg",
+                    "img/login/bg5.jpg"
                 ], {duration: 3000, fade: 750});
 
             });
