@@ -65,9 +65,7 @@
 
         </div>
 
-        <div class="backstretch">
-            <img id="login-bg" src="img/login/bg1.jpg" alt="">
-        </div>
+        <div class="backstretch"></div>
 
         <script src="js/backstretch.min.js"></script>
         <script>
