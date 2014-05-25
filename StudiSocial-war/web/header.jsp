@@ -69,6 +69,8 @@
                             <li><a href="Groups?action=show&id=${group.id}">${group.nome}</a></li>
                         </c:forEach>
                         <li class="divider"></li>
+                        <li><a href="Groups?action=createGroup">Crea nuovo gruppo</a></li>
+                        <li class="divider"></li>
                         <li><a href="Groups?action=show">Altro...</a></li>
                     </ul>
                 </li>

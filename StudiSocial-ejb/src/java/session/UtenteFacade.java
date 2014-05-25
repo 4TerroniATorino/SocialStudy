@@ -5,7 +5,13 @@
  */
 package session;
 
+import entity.Corso;
 import entity.Utente;
+import entity.Voto;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -21,6 +27,8 @@ public class UtenteFacade extends AbstractFacade<Utente> implements UtenteFacade
 
     @PersistenceContext(unitName = "Studisocial")
     private EntityManager em;
+    
+    @EJB private VotoFacadeLocal gestoreLibretto;
 
     @Override
     protected EntityManager getEntityManager() {

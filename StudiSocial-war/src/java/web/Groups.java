@@ -37,16 +37,11 @@ import session.VotoFacadeLocal;
 @WebServlet(name = "Groups", urlPatterns = {"/Groups"})
 public class Groups extends HttpServlet {
 
-    @EJB
-    private GruppoFacadeLocal gestoreGruppo;
-    @EJB
-    private IncontroFacadeLocal gestoreIncontro;
-    @EJB
-    private CorsoFacadeLocal gestoreCorso;
-    @EJB
-    private UtenteFacadeLocal gestoreUtente;
-    @EJB
-    private VotoFacadeLocal gestoreLibretto;
+    @EJB private GruppoFacadeLocal gestoreGruppo;
+    @EJB private IncontroFacadeLocal gestoreIncontro;
+    @EJB private CorsoFacadeLocal gestoreCorso;
+    @EJB private UtenteFacadeLocal gestoreUtente;
+    @EJB private VotoFacadeLocal gestoreLibretto;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -58,10 +53,12 @@ public class Groups extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        Utente currentUser = (Utente) request.getSession().getAttribute("utente");
+        
         String action = request.getParameter("action");
         String output = request.getParameter("output");
         HashMap<String, Object> map = new HashMap<>();
-        map.put("page", "groups");
 
         if (action == null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "You must provide an action");
@@ -70,27 +67,28 @@ public class Groups extends HttpServlet {
             String id = request.getParameter("id");
             if (id != null) {
                 Gruppo gruppo = gestoreGruppo.find(Long.parseLong(id));
-                Utente fondatore = gruppo.getFondatore();
-                Corso corso = gruppo.getCorso();
                 map.put("gruppo", gruppo);
-                map.put("fondatore", fondatore);
-                map.put("corso", corso);
-                
+                int adminLevel = 0;
+                if (gruppo.getFondatore().equals(currentUser)){
+                    adminLevel = 2;
+                } else if (gruppo.getUtenteCollection().contains(currentUser)){
+                    adminLevel = 1;
+                }
+                map.put("adminLevel", adminLevel);
+                map.put("page", "group");
             } else {
                 List<Gruppo> gruppi = gestoreGruppo.findAll();
                 map.put("gruppi", gruppi);
+                map.put("page", "groups");
             }
         } else if (action.equalsIgnoreCase("createGroup")) {
-            String id = request.getParameter("id");
-            Utente user = findUtente(id);
-            List<Voto> voti = gestoreLibretto.findByUser(user);
+            List<Voto> voti = gestoreLibretto.findByUser(currentUser);
             List<Corso> corsi = new ArrayList();
             for (Voto v : voti) {
-                corsi.add(gestoreCorso.find(v.getCorso()));
+                corsi.add(v.getCorso());
             }
-            map.put("user", user);
             map.put("libretto", corsi);
-            map.put("crea", true);
+            map.put("page", "group_create");
         } else if (action.equalsIgnoreCase("addGroup")) {
             Gruppo gr = new Gruppo();
             gr.setNome(request.getParameter("nome"));
@@ -98,7 +96,6 @@ public class Groups extends HttpServlet {
             long corso = Long.parseLong(request.getParameter("corso"));
             if (corso != -1)
                 gr.setCorso(gestoreCorso.find(corso));
-            Utente currentUser = (Utente) request.getSession().getAttribute("utente");
             gr.setFondatore(currentUser);
             gestoreGruppo.create(gr);
             response.sendRedirect("Groups?action=show&id="+gr.getId());
@@ -144,16 +141,6 @@ public class Groups extends HttpServlet {
             request.getRequestDispatcher("/Home").forward(request, response);
         }
 
-    }
-    
-     private Utente findUtente(String id) {
-        List<Utente> list = gestoreUtente.findAll();
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getId().equals(Long.parseLong(id))) {
-                return list.get(i);
-            }
-        }
-        return null;
     }
 
     private Date parseDate(String s) {

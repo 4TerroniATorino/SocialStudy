@@ -9,7 +9,7 @@ html {
 
 /* line 13, ../sass/typica-login.scss */
 body {
-  background: url(../img/login/bg1.jpg) no-repeat center center fixed;
+  background: darkgray;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

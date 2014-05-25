@@ -10,7 +10,7 @@
 <!--[if gt IE 8]><!-->
 <html class="no-js"> <!--<![endif]-->
     <head>
-        <title>Home Page</title>
+        <title>Social Study - ${page}</title>
         <jsp:include page="includes.jsp"></jsp:include>
     </head>
     <body>

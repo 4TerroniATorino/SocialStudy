@@ -135,7 +135,6 @@
                     </div>
                     <div class="col-md-6 column">
                         <form method="POST" action="Groups?action=createGroup">
-                            <input type="hidden" name="id" value="${user.id}">
                             <input type="submit" class="btn btn-primary btn-lg" value="Crea gruppo di studio">
                         </form>
                         <form method="POST" action="Groups?action=inviteGroup">
