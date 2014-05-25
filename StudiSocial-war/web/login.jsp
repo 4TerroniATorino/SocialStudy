@@ -15,6 +15,33 @@
         <jsp:include page="includes.jsp"></jsp:include>
         <link rel="stylesheet" href="css/typica-login.css">
         <link rel="stylesheet" href="css/social-login-buttons.css">
+        <style type="text/css">
+
+            .backstretch{
+                left: 0px;
+                top: 0px;
+                overflow: hidden;
+                margin: 0px;
+                padding: 0px;
+                height: 725px;
+                width: 1440px;
+                z-index: -999999;
+                position: fixed;
+            }
+
+            #login-bg{
+                position: absolute;
+                margin: 0px;
+                padding: 0px;
+                border: none;
+                width: 1440px;
+                height: 809.6046852122987px;
+                max-width: none;
+                z-index: -999999;
+                left: 0px;
+                top: -67.30234260614935px;
+            }
+        </style>
     </head>
     <body>
 
@@ -38,24 +65,20 @@
 
         </div>
 
+        <div class="backstretch">
+            <img id="login-bg" src="img/login/bg1.jpg" alt="">
+        </div>
 
-        <!-- Le javascript
-        ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
         <script src="js/backstretch.min.js"></script>
         <script>
             jQuery(document).ready(function($) {
 
                 $.backstretch([
-                    "img/login/bg1.png",
-                    "img/login/bg2.png"
+                    "img/login/bg1.jpg",
+                    "img/login/bg2.jpg"
                 ], {duration: 3000, fade: 750});
 
             });
         </script>
-
-        <div class="backstretch" style="left: 0px; top: 0px; overflow: hidden; margin: 0px; padding: 0px; height: 725px; width: 1440px; z-index: -999999; position: fixed;">
-            <img src="img/login/bg1.png" style="position: absolute; margin: 0px; padding: 0px; border: none; width: 1440px; height: 809.6046852122987px; max-width: none; z-index: -999999; left: 0px; top: -67.30234260614935px;">
-        </div>
     </body>
 </html>
