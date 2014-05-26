@@ -43,8 +43,8 @@ public class Registration extends HttpServlet {
             Utente utente = new Utente();
             utente.setIdlog((String) session.getAttribute("idUtente"));
             String num = request.getParameter("numero");
-            if(num.startsWith("+39")){
-                num = num.substring(3);
+            if(num.contains("\\W?\\+39\\W?")){
+                num = num.replace("\\W?\\+39\\W?", "");
             }
             utente.setPhoneNumber("+39"+num);
             utente.setNome(request.getParameter("nome"));
