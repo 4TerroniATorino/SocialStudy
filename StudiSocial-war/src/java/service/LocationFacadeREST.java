@@ -9,17 +9,10 @@ package service;
 import entity.Location;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.jws.WebMethod;
-import javax.jws.WebService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 /**
@@ -28,23 +21,30 @@ import javax.ws.rs.Produces;
  */
 @Stateless
 @Path("location")
-public class LocationFacadeREST extends AbstractFacade<Location> {
+public class LocationFacadeREST {
     @PersistenceContext(unitName = "Studisocial")
     private EntityManager em;
 
-    public LocationFacadeREST() {
-        super(Location.class);
+    private final Class<Location> entityClass = Location.class;
+    
+    @GET
+    @Path(value="list/xml")
+    @Produces("application/xml")
+    public List<Location> findAllXML() {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        return getEntityManager().createQuery(cq).getResultList();
     }
     
     @GET
-    @Override
-    @Path(value="list")
-    @Produces({"application/xml", "application/json"})
-    public List<Location> findAll() {
-        return super.findAll();
+    @Path(value="list/json")
+    @Produces("application/json")
+    public List<Location> findAllJSON() {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        return getEntityManager().createQuery(cq).getResultList();
     }
 
-    @Override
     protected EntityManager getEntityManager() {
         return em;
     }
