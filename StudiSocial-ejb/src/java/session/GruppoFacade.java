@@ -34,7 +34,7 @@ public class GruppoFacade extends AbstractFacade<Gruppo> implements GruppoFacade
 
     @Override
     public List<Gruppo> findAllByFounder(Utente utente) {
-        Query query = em.createNamedQuery("Gruppo.findByFondatoreId").setParameter("fondatore", utente);
+        Query query = em.createNamedQuery("Gruppo.findByFondatore").setParameter("fondatore", utente);
         return query.getResultList();
     }
 

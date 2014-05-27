@@ -50,10 +50,12 @@ public class Users extends HttpServlet {
             Utente user = gestoreUtente.find(Long.parseLong(id));
             Collection<Voto> voti = gestoreLibretto.findByUser(user);
             Collection<Gruppo> gruppi = user.getGruppoCollection();
+            Collection<Gruppo> gruppiFondati = gestoreGruppo.findAllByFounder(user);
             
             request.setAttribute("user", user);
             request.setAttribute("libretto", voti);
             request.setAttribute("gruppi", gruppi);
+            request.setAttribute("gruppiFondati", gruppiFondati);
         } else {
             List<Utente> users = gestoreUtente.findAll();
             request.setAttribute("users", users);

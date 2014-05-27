@@ -42,9 +42,10 @@
                         </div>
 
                         <div class="col-md-5 column">
-                            <h2>${user.nome} ${user.cognome} (${user.username})</h2>
-                            <img alt="140x140" src="${user.picture}" class="img-circle">
-                            <br><br>
+                            <h2>${user.nome} ${user.cognome} (${user.username})</h2>                      
+                            <div class="clearfix">
+                            <img alt="140x140" src="${user.picture}" class="img-circle profile-picture">
+                            </div>
                             <c:if test="${user.id eq sessionScope.utente.id}">
                                 <p>E-mail: ${user.email}</p>
                                 <p>Numero: ${user.phoneNumber}</p>
@@ -73,7 +74,7 @@
 
             <div class="jumbotron">                                
                 <div class="row clearfix">
-                    <div class="col-md-4 column">
+                    <div class="col-md-6 column">
                         <h3 class="text-center text-primary">Libretto</h3>
                         <div class="btn-group">
                             <c:if test="${libretto.size() eq 0}">
@@ -90,57 +91,39 @@
                                     </c:forEach>
                                 </table>
                             </c:if>
-                            <button class="btn btn-default" type="button">Create</button>
-                            <button class="btn btn-default" type="button"> View</button>
                             <button class="btn btn-default" type="button"> Add</button>
                             <button class="btn btn-default" type="button"> Delete</button>
                         </div>
                     </div>
-                    <div class="col-md-4 column">
+                    <div class="col-md-6 column">
                         ...
-                    </div>
-                    <div class="col-md-4 column">
-                        <div class="list-group">
-                            <a href="#" class="list-group-item active">Materie</a>
-                            <div class="list-group-item">Lista Materie</div>
-                            <div class="list-group-item">
-                                <h4 class="list-group-item-heading">Materia</h4>
-                                <p class="list-group-item-text">Argomenti</p>
-                            </div>
-                            <div class="list-group-item">
-                                <span class="badge">14</span>List
-                            </div> <a class="list-group-item active"><span class="badge">14</span>List</a>
-                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="jumbotron">
                 <div class="row clearfix">
-                    <div class="col-md-6 column">
-                        <h3 class="text-left">Gruppi di studio</h3>
-                        <c:if test="${gruppi.size() ne 0}">
-                            <table class="table table-striped table-bordered">
-                                <c:forEach var="gruppo" items="${gruppi}">
-                                    <tr><td><a href="Groups?action=show&id=${gruppo.id}">${gruppo.nome}</a></td></tr>
+                    <div class="tabbable">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#tab2" data-toggle="tab">Gruppi Creati</a></li>
+                            <li><a href="#tab3" data-toggle="tab">Partecipante</a></li>
+                            <li><a href="#tab4" data-toggle="tab">Inviti</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <br>
+                            <div class="tab-pane active" id="tab2">
+                                <c:forEach var="gruppo" items="${gruppiFondati}">
+                                    <p><a href="Groups?action=show&id=${gruppo.id}">${gruppo.nome}</a></p>
                                 </c:forEach>
-                            </table>
-                        </c:if>
-                        <div class="btn-group btn-group-sm">
-                            <button class="btn btn-default" type="button"><em class="glyphicon glyphicon-align-left"></em> Left</button>
-                            <button class="btn btn-default" type="button"><em class="glyphicon glyphicon-align-center"></em> Center</button>
-                            <button class="btn btn-default" type="button"><em class="glyphicon glyphicon-align-right"></em> Right</button>
-                            <button class="btn btn-default" type="button"><em class="glyphicon glyphicon-align-justify"></em> Justify</button>
+                            </div>
+                            <div class="tab-pane" id="tab3">
+                                <c:forEach var="gruppo" items="${gruppi}">
+                                    <p><a href="Groups?action=show&id=${gruppo.id}">${gruppo.nome}</a></p>
+                                </c:forEach>
+                            </div>
+                            <div class="tab-pane" id="tab4">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-6 column">
-                        <form method="POST" action="Groups?action=createGroup">
-                            <input type="submit" class="btn btn-primary btn-lg" value="Crea gruppo di studio">
-                        </form>
-                        <form method="POST" action="Groups?action=inviteGroup">
-                            <input type="hidden" name="id" value="${user.id}">
-                            <input type="submit" class="btn btn-primary btn-lg" value="Invita ad gruppo di studio">
-                        </form>    
                     </div>
                 </div>
             </div>
