@@ -80,7 +80,7 @@ public class Meetings extends HttpServlet {
             
             List<Location> locations = gestoreLocation.findAll();
             
-            request.setAttribute("idGruppo", request.getParameter("idGruppo"));
+            request.setAttribute("gruppo", request.getParameter("gruppo"));
             request.setAttribute("locations", locations);
 
                         request.setAttribute("page", "meeting_create");

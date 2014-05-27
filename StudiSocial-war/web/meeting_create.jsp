@@ -30,7 +30,7 @@
             <div class="col-md-12 column">
                 <div class="row clearfix">
                     <div class="col-md-12 column">
-                        <h2>Crea nuovo incontro nel gruppo ${idGruppo}</h2>
+                        <h2>Crea nuovo incontro nel gruppo ${gruppo.nome}</h2>
                         <form id="myForm" method="post" name="createForm" action="Meetings?action=addIncontro" onkeypress="noEnter(event)" onSubmit="return(checkForm());">
                             Inserisci data <input class="form-control" type="text" name="data"><br>
                             Inserisci argomento <input class="form-control" type="text" name="argomento"><br>

@@ -76,7 +76,7 @@
                 <div class="col-md-6 column">
                     <form method="POST" action="Meetings?action=createMeeting">
                             <input type="submit" class="btn btn-primary btn-lg btn-block" value="Crea incontro">
-                            <input type="hidden" name="idGruppo" value="${gruppo.id}" />
+                            <input type="hidden" name="gruppo" value="${gruppo}" />
                     </form>
                 </div>
             </div>
