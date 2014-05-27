@@ -10,6 +10,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Daniele
+ * @author oneiros
  */
 @Entity
 @Table(name = "VOTO")
@@ -47,7 +48,7 @@ public class Voto implements Serializable {
     @Column(name = "VOTI")
     private Short voti;
     @JoinColumn(name = "CORSO", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Corso corso;
 
     public Voto() {

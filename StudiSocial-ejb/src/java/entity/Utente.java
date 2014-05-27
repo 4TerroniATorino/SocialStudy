@@ -9,7 +9,6 @@ package entity;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,16 +18,16 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Michele
+ * @author oneiros
  */
 @Entity
 @Table(name = "UTENTE")
@@ -44,8 +43,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Utente.findByPhoneNumber", query = "SELECT u FROM Utente u WHERE u.phoneNumber = :phoneNumber"),
     @NamedQuery(name = "Utente.findByPicture", query = "SELECT u FROM Utente u WHERE u.picture = :picture")})
 public class Utente implements Serializable {
-    @ManyToMany(mappedBy = "utenteCollection", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Collection<Gruppo> gruppoCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,7 +52,7 @@ public class Utente implements Serializable {
     @Size(max = 255)
     @Column(name = "COGNOME")
     private String cognome;
-    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
@@ -78,6 +75,10 @@ public class Utente implements Serializable {
     @Size(max = 100)
     @Column(name = "PICTURE")
     private String picture;
+    @ManyToMany(mappedBy = "utenteCollection", fetch = FetchType.EAGER)
+    private Collection<Gruppo> gruppoCollection;
+    @OneToMany(mappedBy = "fondatore", fetch = FetchType.EAGER)
+    private Collection<Gruppo> gruppoCollection1;
 
     public Utente() {
     }
@@ -156,6 +157,24 @@ public class Utente implements Serializable {
         this.picture = picture;
     }
 
+    @XmlTransient
+    public Collection<Gruppo> getGruppoCollection() {
+        return gruppoCollection;
+    }
+
+    public void setGruppoCollection(Collection<Gruppo> gruppoCollection) {
+        this.gruppoCollection = gruppoCollection;
+    }
+
+    @XmlTransient
+    public Collection<Gruppo> getGruppoCollection1() {
+        return gruppoCollection1;
+    }
+
+    public void setGruppoCollection1(Collection<Gruppo> gruppoCollection1) {
+        this.gruppoCollection1 = gruppoCollection1;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -170,21 +189,15 @@ public class Utente implements Serializable {
             return false;
         }
         Utente other = (Utente) object;
-        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
         return "entity.Utente[ id=" + id + " ]";
-    }
-    
-    @XmlTransient
-    public Collection<Gruppo> getGruppoCollection() {
-        return gruppoCollection;
-}
-
-    public void setGruppoCollection(Collection<Gruppo> gruppoCollection) {
-        this.gruppoCollection = gruppoCollection;
     }
     
 }

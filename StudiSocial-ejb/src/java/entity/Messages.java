@@ -11,6 +11,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,7 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Michele
+ * @author oneiros
  */
 @Entity
 @Table(name = "messages")
@@ -59,12 +60,12 @@ public class Messages implements Serializable {
     @Size(min = 1, max = 65535)
     @Column(name = "message")
     private String message;
-    @JoinColumn(name = "recipient", referencedColumnName = "phone_number")
-    @ManyToOne(optional = false)
-    private PhoneNumbers recipient;
     @JoinColumn(name = "sender", referencedColumnName = "phone_number")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private PhoneNumbers sender;
+    @JoinColumn(name = "recipient", referencedColumnName = "phone_number")
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private PhoneNumbers recipient;
 
     public Messages() {
     }
@@ -111,20 +112,20 @@ public class Messages implements Serializable {
         this.message = message;
     }
 
-    public PhoneNumbers getRecipient() {
-        return recipient;
-    }
-
-    public void setRecipient(PhoneNumbers recipient) {
-        this.recipient = recipient;
-    }
-
     public PhoneNumbers getSender() {
         return sender;
     }
 
     public void setSender(PhoneNumbers sender) {
         this.sender = sender;
+    }
+
+    public PhoneNumbers getRecipient() {
+        return recipient;
+    }
+
+    public void setRecipient(PhoneNumbers recipient) {
+        this.recipient = recipient;
     }
 
     @Override

@@ -7,11 +7,9 @@ package web;
 
 import entity.Corso;
 import entity.Gruppo;
-import entity.Incontro;
 import entity.Utente;
 import entity.Voto;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -112,7 +110,7 @@ public class Groups extends HttpServlet {
         } else if (action.equalsIgnoreCase("list")) {
             List<Gruppo> gruppi = gestoreGruppo.findAll();
             map.put("groups", gruppi);
-        } else if (action.equalsIgnoreCase("addIncontro")) {
+        } /*else if (action.equalsIgnoreCase("addIncontro")) {
             Incontro incontro = new Incontro();
             incontro.setGruppoId(new BigInteger(request.getParameter("idGruppo")));
             incontro.setLocationId(new BigInteger(request.getParameter("idLocation")));
@@ -126,7 +124,7 @@ public class Groups extends HttpServlet {
         } else if (action.equalsIgnoreCase("listIncontri")) {
             List<Incontro> incontri = gestoreIncontro.findAll();
             map.put("incontri", incontri);
-        } else {
+        }*/ else {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Not recognized action");
             return;
         }

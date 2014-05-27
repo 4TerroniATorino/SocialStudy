@@ -8,18 +8,22 @@ package entity;
 
 import java.awt.geom.Point2D;
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -59,6 +63,8 @@ public class Location implements Serializable {
     @Size(max = 255)
     @Column(name = "TYPE")
     private String type;
+    @OneToMany(mappedBy = "location", fetch = FetchType.EAGER)
+    private Collection<Incontro> incontroCollection;
 
     public Location() {
     }
@@ -84,16 +90,6 @@ public class Location implements Serializable {
         return lat;
     }
 
-    public void setCoordinate(Point2D.Float coordinata) {
-        this.setLat(coordinata.x);
-        this.setLng(coordinata.y);
-    }
-
-    public Point2D.Float getCoordinate() {
-        return new Point2D.Float(this.lat, this.lng);
-    }
-    
-
     public void setLat(Float lat) {
         this.lat = lat;
     }
@@ -104,6 +100,15 @@ public class Location implements Serializable {
 
     public void setLng(float lng) {
         this.lng = lng;
+    }
+
+    public Point2D.Float getCoordinate() {
+        return new Point2D.Float(this.lng, this.lat);
+    }
+
+    public void setCoordinate(Point2D.Float coordinata) {
+        this.lat = coordinata.y;
+        this.lng = coordinata.x;
     }
 
     public String getDescrizione() {
@@ -130,6 +135,15 @@ public class Location implements Serializable {
         this.type = type;
     }
 
+    @XmlTransient
+    public Collection<Incontro> getIncontroCollection() {
+        return incontroCollection;
+    }
+
+    public void setIncontroCollection(Collection<Incontro> incontroCollection) {
+        this.incontroCollection = incontroCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -154,4 +168,5 @@ public class Location implements Serializable {
     public String toString() {
         return "entity.Location[ id=" + id + " ]";
     }
+    
 }

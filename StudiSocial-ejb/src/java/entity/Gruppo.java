@@ -21,6 +21,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -28,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Daniele
+ * @author oneiros
  */
 @Entity
 @Table(name = "GRUPPO")
@@ -52,17 +53,19 @@ public class Gruppo implements Serializable {
     @Size(max = 255)
     @Column(name = "NOME")
     private String nome;
-    @JoinTable(name = "GRUPPO_ISCRITTI",
-        joinColumns = {@JoinColumn(name = "gruppo", referencedColumnName = "ID")},
-        inverseJoinColumns = {@JoinColumn(name = "utente", referencedColumnName = "ID")})
+    @JoinTable(name = "GRUPPO_ISCRITTI", joinColumns = {
+        @JoinColumn(name = "gruppo", referencedColumnName = "ID")}, inverseJoinColumns = {
+        @JoinColumn(name = "utente", referencedColumnName = "ID")})
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Utente> utenteCollection;
     @JoinColumn(name = "FONDATORE", referencedColumnName = "ID")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Utente fondatore;
     @JoinColumn(name = "CORSO", referencedColumnName = "ID")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Corso corso;
+    @OneToMany(mappedBy = "gruppo", fetch = FetchType.EAGER)
+    private Collection<Incontro> incontroCollection;
 
     public Gruppo() {
     }
@@ -120,6 +123,15 @@ public class Gruppo implements Serializable {
         this.corso = corso;
     }
 
+    @XmlTransient
+    public Collection<Incontro> getIncontroCollection() {
+        return incontroCollection;
+    }
+
+    public void setIncontroCollection(Collection<Incontro> incontroCollection) {
+        this.incontroCollection = incontroCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -134,7 +146,10 @@ public class Gruppo implements Serializable {
             return false;
         }
         Gruppo other = (Gruppo) object;
-        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
     }
 
     @Override

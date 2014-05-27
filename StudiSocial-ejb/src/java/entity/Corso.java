@@ -12,6 +12,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Daniele
+ * @author oneiros
  */
 @Entity
 @Table(name = "CORSO")
@@ -44,8 +45,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Corso.findBySemestre", query = "SELECT c FROM Corso c WHERE c.semestre = :semestre"),
     @NamedQuery(name = "Corso.findByLocationId", query = "SELECT c FROM Corso c WHERE c.locationId = :locationId")})
 public class Corso implements Serializable {
-    @OneToMany(mappedBy = "corso")
-    private Collection<Gruppo> gruppoCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,16 +68,20 @@ public class Corso implements Serializable {
     @Size(max = 255)
     @Column(name = "NOME")
     private String nome;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "NUM_ISCRITTI")
-    private Integer numIscritti;
+    private int numIscritti;
     @Column(name = "SEMESTRE")
     private Integer semestre;
     @Basic(optional = false)
     @NotNull
     @Column(name = "LOCATION_ID")
     private long locationId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "corso")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "corso", fetch = FetchType.EAGER)
     private Collection<Voto> votoCollection;
+    @OneToMany(mappedBy = "corso", fetch = FetchType.EAGER)
+    private Collection<Gruppo> gruppoCollection;
 
     public Corso() {
     }
@@ -87,8 +90,9 @@ public class Corso implements Serializable {
         this.id = id;
     }
 
-    public Corso(Long id, long locationId) {
+    public Corso(Long id, int numIscritti, long locationId) {
         this.id = id;
+        this.numIscritti = numIscritti;
         this.locationId = locationId;
     }
 
@@ -148,11 +152,11 @@ public class Corso implements Serializable {
         this.nome = nome;
     }
 
-    public Integer getNumIscritti() {
+    public int getNumIscritti() {
         return numIscritti;
     }
 
-    public void setNumIscritti(Integer numIscritti) {
+    public void setNumIscritti(int numIscritti) {
         this.numIscritti = numIscritti;
     }
 
@@ -181,6 +185,15 @@ public class Corso implements Serializable {
         this.votoCollection = votoCollection;
     }
 
+    @XmlTransient
+    public Collection<Gruppo> getGruppoCollection() {
+        return gruppoCollection;
+    }
+
+    public void setGruppoCollection(Collection<Gruppo> gruppoCollection) {
+        this.gruppoCollection = gruppoCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -204,15 +217,6 @@ public class Corso implements Serializable {
     @Override
     public String toString() {
         return "entity.Corso[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public Collection<Gruppo> getGruppoCollection() {
-        return gruppoCollection;
-    }
-
-    public void setGruppoCollection(Collection<Gruppo> gruppoCollection) {
-        this.gruppoCollection = gruppoCollection;
     }
     
 }

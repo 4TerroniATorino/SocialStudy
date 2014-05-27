@@ -7,18 +7,21 @@
 package entity;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -31,9 +34,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Incontro.findAll", query = "SELECT i FROM Incontro i"),
     @NamedQuery(name = "Incontro.findById", query = "SELECT i FROM Incontro i WHERE i.id = :id"),
-    @NamedQuery(name = "Incontro.findByDataincontro", query = "SELECT i FROM Incontro i WHERE i.dataincontro = :dataincontro"),
-    @NamedQuery(name = "Incontro.findByGruppoId", query = "SELECT i FROM Incontro i WHERE i.gruppoId = :gruppoId"),
-    @NamedQuery(name = "Incontro.findByLocationId", query = "SELECT i FROM Incontro i WHERE i.locationId = :locationId")})
+    @NamedQuery(name = "Incontro.findByData", query = "SELECT i FROM Incontro i WHERE i.data = :data"),
+    @NamedQuery(name = "Incontro.findByArgomento", query = "SELECT i FROM Incontro i WHERE i.argomento = :argomento")})
 public class Incontro implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,19 +43,31 @@ public class Incontro implements Serializable {
     @NotNull
     @Column(name = "ID")
     private Long id;
-    @Column(name = "DATAINCONTRO")
+    @Column(name = "DATA")
     @Temporal(TemporalType.DATE)
-    private Date dataincontro;
-    @Column(name = "GRUPPO_ID")
-    private BigInteger gruppoId;
-    @Column(name = "LOCATION_ID")
-    private BigInteger locationId;
+    private Date data;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 1000)
+    @Column(name = "ARGOMENTO")
+    private String argomento;
+    @JoinColumn(name = "LOCATION", referencedColumnName = "ID")
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Location location;
+    @JoinColumn(name = "GRUPPO", referencedColumnName = "ID")
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Gruppo gruppo;
 
     public Incontro() {
     }
 
     public Incontro(Long id) {
         this.id = id;
+    }
+
+    public Incontro(Long id, String argomento) {
+        this.id = id;
+        this.argomento = argomento;
     }
 
     public Long getId() {
@@ -64,28 +78,36 @@ public class Incontro implements Serializable {
         this.id = id;
     }
 
-    public Date getDataincontro() {
-        return dataincontro;
+    public Date getData() {
+        return data;
     }
 
-    public void setDataincontro(Date dataincontro) {
-        this.dataincontro = dataincontro;
+    public void setData(Date data) {
+        this.data = data;
     }
 
-    public BigInteger getGruppoId() {
-        return gruppoId;
+    public String getArgomento() {
+        return argomento;
     }
 
-    public void setGruppoId(BigInteger gruppoId) {
-        this.gruppoId = gruppoId;
+    public void setArgomento(String argomento) {
+        this.argomento = argomento;
     }
 
-    public BigInteger getLocationId() {
-        return locationId;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setLocationId(BigInteger locationId) {
-        this.locationId = locationId;
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public Gruppo getGruppo() {
+        return gruppo;
+    }
+
+    public void setGruppo(Gruppo gruppo) {
+        this.gruppo = gruppo;
     }
 
     @Override

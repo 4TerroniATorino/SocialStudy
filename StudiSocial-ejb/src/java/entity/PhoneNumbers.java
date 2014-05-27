@@ -12,6 +12,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -58,9 +59,9 @@ public class PhoneNumbers implements Serializable {
     @Size(min = 1, max = 32)
     @Column(name = "private_key")
     private String privateKey;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sender")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sender", fetch = FetchType.EAGER)
     private Collection<Messages> messagesCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipient")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipient", fetch = FetchType.EAGER)
     private Collection<Messages> messagesCollection1;
 
     public PhoneNumbers() {
