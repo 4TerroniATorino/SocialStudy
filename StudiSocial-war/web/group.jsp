@@ -88,7 +88,7 @@
                 <ul id="discussion" class="media-list">
                     <li class="media">
                         <a class="pull-left" href="#">
-                            <img class="media-object" src="data/users/${gruppo.fondatore.id}.jpg" alt="">
+                            <img class="media-object" src="${gruppo.fondatore.picture}" alt="">
                         </a>
                         <div class="media-body">
                             <h4 class="media-heading">Creazione del gruppo</h4>
@@ -98,7 +98,7 @@
                     <c:forEach var="component" items="${gruppo.utenteCollection}">
                         <li class="media">
                             <a class="pull-left" href="#">
-                                <img class="media-object" src="data/users/${component.id}.jpg" alt="">
+                                <img class="media-object" src="${component.picture}" alt="">
                             </a>
                             <div class="media-body">
                                 <h4 class="media-heading">Iscrizione al gruppo</h4>

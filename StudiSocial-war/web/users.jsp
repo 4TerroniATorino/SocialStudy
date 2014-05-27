@@ -43,7 +43,7 @@
 
                         <div class="col-md-5 column">
                             <h2>${user.nome} ${user.cognome} (${user.username})</h2>
-                            <img alt="140x140" src="data/users/${user.id}.jpg" class="img-circle">
+                            <img alt="140x140" src="${user.picture}" class="img-circle">
                             <br><br>
                             <c:if test="${user.id eq sessionScope.utente.id}">
                                 <p>E-mail: ${user.email}</p>

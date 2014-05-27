@@ -57,15 +57,15 @@ public class Login extends HttpServlet {
             String nome = e.get("name").getAsString();
             String idlog = e.get("id").getAsString();
             String email = e.get("email").getAsString();
-            String picture = e.get("picture")==null ? "http://graph.facebook.com/"+idlog+"/picture?type=large" : e.get("picture").getAsString();
-            
+            String picture = e.get("picture") == null ? "http://graph.facebook.com/" + idlog + "/picture?type=large" : e.get("picture").getAsString();
+
             session.setAttribute("idUtente", idlog);
-            
+
             response.setContentType("text/html;charset=UTF-8");
             //PrintWriter out = response.getWriter();
             Utente fromIdlog = gestoreUtenti.findByIdlog(idlog);
             Utente fromEmail = gestoreUtenti.findByEmail(email);
-            if (fromIdlog != null || fromEmail  != null) {
+            if (fromIdlog != null || fromEmail != null) {
 
                 // Metto in sessione l'utente corrente
                 currentUser = fromIdlog == null ? fromEmail : fromIdlog;
@@ -74,12 +74,12 @@ public class Login extends HttpServlet {
                 gestoreUtenti.edit(currentUser);
                 response.sendRedirect("Home");
             } else {
-                
+
                 String ua = request.getHeader("User-Agent");
                 if (ua.contains("mobileSocialStudy")) {
                     request.getSession().setAttribute("mobile", true);
                 }
-                
+
                 request.setAttribute("email", email);
                 request.setAttribute("nome", nome.split(" ")[0]);
                 request.setAttribute("cognome", nome.split(" ")[1]);
