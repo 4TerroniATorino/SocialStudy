@@ -6,6 +6,7 @@
 
 package web;
 
+import entity.Gruppo;
 import entity.Incontro;
 import entity.Location;
 import entity.Utente;
@@ -77,13 +78,13 @@ public class Meetings extends HttpServlet {
         }
         
         else if (action.equalsIgnoreCase("createMeeting")) {
-            
+            Long idgruppo = Long.parseLong(request.getParameter("idGruppo"));
             List<Location> locations = gestoreLocation.findAll();
-            
-            request.setAttribute("gruppo", request.getParameter("gruppo"));
+            Gruppo gruppo = gestoreGruppi.find(idgruppo);
+            request.setAttribute("gruppo", gruppo);
             request.setAttribute("locations", locations);
 
-                        request.setAttribute("page", "meeting_create");
+            request.setAttribute("page", "meeting_create");
 
         
         }
@@ -107,13 +108,23 @@ public class Meetings extends HttpServlet {
         else if (action.equalsIgnoreCase("addMeeting")){
             Incontro newIncontro = new Incontro();
             
-            /*newIncontro.setDataincontro(request.getParameter("data"));
-            newIncontro.setGruppoId(request.getParameter("idGruppo"));
-            newIncontro.setLocationId(request.getParameter("location"));
-            newIncontro.setArgomento(request.getParameter("argomento"));*/
+            Long idgruppo = Long.parseLong(request.getParameter("idGruppo"));
+            Gruppo gruppo = gestoreGruppi.find(idgruppo);
+            newIncontro.setGruppo(gruppo);
+            
+            Long idlocation = Long.parseLong(request.getParameter("idLocation"));
+            if(idlocation!=-1){
+                Location loc = gestoreLocation.find(idlocation);
+                newIncontro.setLocation(loc);
+            }
+            
+            newIncontro.setArgomento(request.getParameter("argomento"));
+            /*newIncontro.setDataincontro(request.getParameter("data"));*/
+
             
             gestoreIncontri.create(newIncontro);
-                    request.setAttribute("page", "meetings");
+            
+            request.setAttribute("page", "meetings");
 
         }
         

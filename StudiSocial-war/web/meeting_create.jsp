@@ -31,11 +31,11 @@
                 <div class="row clearfix">
                     <div class="col-md-12 column">
                         <h2>Crea nuovo incontro nel gruppo ${gruppo.nome}</h2>
-                        <form id="myForm" method="post" name="createForm" action="Meetings?action=addIncontro" onkeypress="noEnter(event)" onSubmit="return(checkForm());">
+                        <form id="myForm" method="post" name="createForm" action="Meetings?action=addMeeting" onkeypress="noEnter(event)" onSubmit="return(checkForm());">
                             Inserisci data <input class="form-control" type="text" name="data"><br>
                             Inserisci argomento <input class="form-control" type="text" name="argomento"><br>
                             Location (facoltativo)
-                            <select name="location" class="form-control">
+                            <select name="idLocation" class="form-control">
                                 <option value="-1">Nessuno</option>
                                 <c:forEach var="location" items="${locations}">
                                     <option value="${location.id}">${location.descrizione}</option>
@@ -43,7 +43,7 @@
                             </select>
                             <br>
                             <input type="hidden" name="deviceType" value="android">
-                            <input type="hidden" name="idGruppo" value="${idGruppo}">
+                            <input type="hidden" name="idGruppo" value="${gruppo.id}">
                             <input type="submit" class="btn btn-primary btn-lg" value="Crea incontro">
                         </form>
                     </div>
