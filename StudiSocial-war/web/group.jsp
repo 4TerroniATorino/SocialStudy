@@ -67,14 +67,17 @@
         </div>
     </div>
 
-    <c:if test="${adminLevel gt 1}">
+    <c:if test="${adminLevel gt 0}">
         <div class="jumbotron">
             <div class="row clearfix">
                 <div class="col-md-6 column">
                     <button type="button" class="btn btn-success btn-lg btn-block">Invita studente al gruppo</button>
                 </div>
                 <div class="col-md-6 column">
-                    <button type="button" class="btn btn-primary btn-lg btn-block">Stabilisci incontro</button>
+                    <form method="POST" action="Meetings?action=createMeeting">
+                            <input type="submit" class="btn btn-primary btn-lg btn-block" value="Crea incontro">
+                            <input type="hidden" name="idGruppo" value="${gruppo.id}" />
+                    </form>
                 </div>
             </div>
         </div>

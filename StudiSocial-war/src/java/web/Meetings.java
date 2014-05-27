@@ -7,6 +7,8 @@
 package web;
 
 import entity.Incontro;
+import entity.Location;
+import entity.Utente;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.DateFormat;
@@ -49,29 +51,72 @@ public class Meetings extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        Utente currentUser = (Utente) request.getSession().getAttribute("utente");
+        
         String action = request.getParameter("action");
-        if (action.equalsIgnoreCase("show")) {
-            String id = request.getParameter("id");
-            if(id!=null) {
-                Incontro incontro = gestoreIncontri.find(id);
+        
+        if (action == null) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "You must provide an action");
+            return;
+        }
+
+
+        else if (action.equalsIgnoreCase("show")) {
+            String idIncontro = request.getParameter("idIncontro");
+            if(idIncontro!=null) {
+                Incontro incontro = gestoreIncontri.find(idIncontro);
                 request.setAttribute("incontro", incontro);
             }
             else {
                 List<Incontro> incontri = gestoreIncontri.findAll();
                 request.setAttribute("incontri", incontri);
             }
+            request.setAttribute("page", "meetings");
+
         }
+        
+        else if (action.equalsIgnoreCase("createMeeting")) {
+            
+            List<Location> locations = gestoreLocation.findAll();
+            
+            request.setAttribute("idGruppo", request.getParameter("idGruppo"));
+            request.setAttribute("locations", locations);
+
+                        request.setAttribute("page", "meeting_create");
+
+        
+        }
+        
         else if (action.equalsIgnoreCase("modMeeting")) {
             String id = request.getParameter("id");
             Incontro inc = gestoreIncontri.find(id);
             //inc.setDataincontro(request.getParameter("date"));
             //inc.setLocationId(request.getParameter("locId"));
+                    request.setAttribute("page", "meetings");
+
         }
+        
         else if (action.equalsIgnoreCase("delMeeting")) {
             String id = request.getParameter("id");
             gestoreIncontri.remove(gestoreIncontri.find(id));
+                    request.setAttribute("page", "meetings");
+
         }
-        request.setAttribute("page", "meetings");
+        
+        else if (action.equalsIgnoreCase("addMeeting")){
+            Incontro newIncontro = new Incontro();
+            
+            /*newIncontro.setDataincontro(request.getParameter("data"));
+            newIncontro.setGruppoId(request.getParameter("idGruppo"));
+            newIncontro.setLocationId(request.getParameter("location"));
+            newIncontro.setArgomento(request.getParameter("argomento"));*/
+            
+            gestoreIncontri.create(newIncontro);
+                    request.setAttribute("page", "meetings");
+
+        }
+        
         request.getRequestDispatcher("/Home").forward(request, response);
     }
 
