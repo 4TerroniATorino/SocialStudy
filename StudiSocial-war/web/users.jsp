@@ -7,6 +7,22 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+<script>
+    $(function() {
+        
+        $("#rigaAggiungi").hide();
+        $("#addButton").click(function() {
+            $("#rigaAggiungi").show();
+            $("#addButton").hide();
+            $("#deleteButton").hide();
+            $("#addButton").after('<button id="confirmButton" class="btn btn-default" type="button"> Conferma</button>');
+            $("#confirmButton").click(function() {
+                $("addCorsoForm").submit();
+            });
+        });
+    });
+</script>
+
 <div class="container">
     <c:if test="${empty param.id}">
         <div class="jumbotron">
@@ -44,7 +60,7 @@
                         <div class="col-md-5 column">
                             <h2>${user.nome} ${user.cognome} (${user.username})</h2>                      
                             <div class="clearfix">
-                            <img alt="140x140" src="${user.picture}" class="img-circle profile-picture">
+                                <img alt="140x140" src="${user.picture}" class="img-circle profile-picture">
                             </div>
                             <c:if test="${user.id eq sessionScope.utente.id}">
                                 <p>E-mail: ${user.email}</p>
@@ -60,7 +76,7 @@
                 </div>
             </div>
         </div>
-                            
+
         <c:if test="${user.id eq sessionScope.utente.id}">
             <div class="row clearfix">
                 <div class="col-md-12 column">
@@ -74,29 +90,31 @@
 
             <div class="jumbotron">                                
                 <div class="row clearfix">
-                    <div class="col-md-6 column">
+                    <div class="col-md-12 column">
                         <h3 class="text-center text-primary">Libretto</h3>
-                        <div class="btn-group">
-                            <c:if test="${libretto.size() eq 0}">
-                                <form method="POST" action="Career?action=crealibretto">
-                                    <input type="hidden" name="id" value="${user.id}">
-                                    <input type="submit" class="btn btn-primary btn-lg" value="Inserisci piano di studi">
+                        <c:if test="${libretto.size() eq 0}">
+                            <form method="POST" action="Career?action=crealibretto">
+                                <input type="hidden" name="id" value="${user.id}">
+                                <input type="submit" class="btn btn-primary btn-lg" value="Inserisci piano di studi">
+                            </form>
+                        </c:if>
+                        <c:if test="${libretto.size() ne 0}">
+                            <table id="materieTable" class="table table-striped table-bordered">
+                                <tr><th>Materia</th><th>Voto</th></tr>
+                                <c:forEach var="voto" items="${libretto}">
+                                    <tr><td>${voto.corso.nome}</td><td>${voto.voti}</td></tr>
+                                </c:forEach>
+                                <form method="POST" action="Career?action=addCorso">
+                                    <tr id="rigaAggiungi"><td><select class="form-control" name="corso">
+                                        <c:forEach var="corso" items="${corsiNonInLibretto}">
+                                            <option value="${corso.id}">${corso.nome}</option>
+                                        </c:forEach>
+                                    </select></td><td>0</td></tr>
                                 </form>
-                            </c:if>
-                            <c:if test="${libretto.size() ne 0}">
-                                <table class="table table-striped table-bordered">
-                                    <tr><th>Materia</th><th>Voto</th></tr>
-                                            <c:forEach var="voto" items="${libretto}">
-                                        <tr><td>${voto.corso.nome}</td><td>${voto.voti}</td></tr>
-                                    </c:forEach>
-                                </table>
-                            </c:if>
-                            <button class="btn btn-default" type="button"> Add</button>
-                            <button class="btn btn-default" type="button"> Delete</button>
-                        </div>
-                    </div>
-                    <div class="col-md-6 column">
-                        ...
+                            </table>
+                        </c:if>
+                        <button id="addButton" class="btn btn-default" type="button"> Aggiungi corso</button>
+                        <button id="deleteButton" class="btn btn-default" type="button"> Elimina corso</button>
                     </div>
                 </div>
             </div>
@@ -114,12 +132,12 @@
                             <div class="tab-pane active" id="tab2">
                                 <c:forEach var="gruppo" items="${gruppiFondati}">
                                     <p><a href="Groups?action=show&id=${gruppo.id}">${gruppo.nome}</a></p>
-                                </c:forEach>
+                                    </c:forEach>
                             </div>
                             <div class="tab-pane" id="tab3">
                                 <c:forEach var="gruppo" items="${gruppi}">
                                     <p><a href="Groups?action=show&id=${gruppo.id}">${gruppo.nome}</a></p>
-                                </c:forEach>
+                                    </c:forEach>
                             </div>
                             <div class="tab-pane" id="tab4">
                             </div>

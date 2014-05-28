@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package session;
 
 import entity.Corso;
@@ -19,6 +18,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class CorsoFacade extends AbstractFacade<Corso> implements CorsoFacadeLocal {
+
     @PersistenceContext(unitName = "Studisocial")
     private EntityManager em;
 
@@ -26,7 +26,7 @@ public class CorsoFacade extends AbstractFacade<Corso> implements CorsoFacadeLoc
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
     @Override
     public Corso findByNome(String nome) {
         Query query = em.createNamedQuery("Corso.findByName").setParameter("nome", nome);
@@ -36,13 +36,13 @@ public class CorsoFacade extends AbstractFacade<Corso> implements CorsoFacadeLoc
     public CorsoFacade() {
         super(Corso.class);
     }
-    
-        private Corso findByQuery(Query query) {
+
+    private Corso findByQuery(Query query) {
         try {
             return (Corso) query.getSingleResult();
         } catch (NoResultException e) {
             return null;
         }
     }
-    
+
 }

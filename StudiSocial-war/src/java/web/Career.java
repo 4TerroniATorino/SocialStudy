@@ -69,8 +69,16 @@ public class Career extends HttpServlet {
                 gestoreLibretto.create(voto);
             }
             response.sendRedirect("Users?id=" + currentUser.getId());
+        } else if (action.equalsIgnoreCase("addCorso")) {
+            String corso = request.getParameter("corso");
+            Utente currentUser = (Utente) request.getSession().getAttribute("utente");
+            Voto voto = new Voto();
+            voto.setCorso(gestoreCorso.find(corso));
+            voto.setIdUtente(currentUser.getId());
+            voto.setVoti((short) 0);
+            gestoreLibretto.create(voto);
+            response.sendRedirect("Users?id=" + currentUser.getId());
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
