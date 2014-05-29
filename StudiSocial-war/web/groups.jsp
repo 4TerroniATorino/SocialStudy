@@ -54,15 +54,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <%--<div class="col-md-4 column">
-
-                        <ul class="nav nav-pills">
-                            <li class="active">
-                                <a href="#"> <span class="badge pull-right">42</span> TOT</a>
-                            </li>   
-                        </ul>
-                    </div>--%>
                 </div>
             </div>
         </div>

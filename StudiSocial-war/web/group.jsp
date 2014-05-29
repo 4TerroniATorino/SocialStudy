@@ -1,9 +1,3 @@
-<%-- 
-    Document   : group
-    Created on : 25-may-2014
-    Author     : Lorenzo
---%>
-
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -47,15 +41,15 @@
                 <p><strong>Corso di riferimento</strong>: ${gruppo.corso.nome}</p>
                 <p><strong>Partecipanti</strong>:</p>
                 <ul>
-                <li><small><a href="Users?id=${gruppo.fondatore.id}">
-                    ${gruppo.fondatore.nome} ${gruppo.fondatore.cognome} (${gruppo.fondatore.username})
-                </a> - Fondatore</small></li>
-                <c:forEach var="component" items="${gruppo.utenteCollection}">
-                    <li><small><a href="Users?id=${component.id}">
-                        ${component.nome} ${component.cognome} (${component.username})
-                    </a></small></li>
-                </c:forEach>
-                    </ul>
+                    <li><small><a href="Users?id=${gruppo.fondatore.id}">
+                        ${gruppo.fondatore.nome} ${gruppo.fondatore.cognome} (${gruppo.fondatore.username})
+                    </a> - Fondatore</small></li>
+                    <c:forEach var="component" items="${gruppo.utenteCollection}">
+                        <li><small><a href="Users?id=${component.id}">
+                            ${component.nome} ${component.cognome} (${component.username})
+                        </a></small></li>
+                    </c:forEach>
+                </ul>
                 <%--<p><a class="btn" href="#">View details »</a></p>--%>
             </div>
             <div class="col-md-5 column">
@@ -75,8 +69,8 @@
                 </div>
                 <div class="col-md-6 column">
                     <form method="POST" action="Meetings?action=createMeeting">
-                            <input type="submit" class="btn btn-primary btn-lg btn-block" value="Crea incontro">
-                            <input type="hidden" name="idGruppo" value="${gruppo.id}" />
+                        <input type="submit" class="btn btn-primary btn-lg btn-block" value="Crea incontro">
+                        <input type="hidden" name="idGruppo" value="${gruppo.id}" />
                     </form>
                 </div>
             </div>

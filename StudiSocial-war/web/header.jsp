@@ -4,6 +4,17 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+<style>
+    .navbar-brand {
+        padding: 5px 15px;
+    }
+    
+    .navbar img {
+        max-width: 40px;
+        max-height: 40px;
+    }
+</style>
+
 <!--[if lt IE 7]>
     <p class="chromeframe">You are using an <strong>outdated</strong> browser.
     Please <a href="http://browsehappy.com/">upgrade your browser</a> or
@@ -18,7 +29,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="News">Social Study</a>
+            <a class="navbar-brand" href="News"><img src="img/logo100.png" alt=""/> Social Study</a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -77,19 +88,16 @@
                 <li><a href="Meetings?action=show">Incontri</a></li>
                 <li><a href="Map?action=show">Mappa</a></li>
             </ul>
-            <% Utente usr = (Utente)session.getAttribute("utente"); %> 
-            <form class="navbar-form navbar-right">
-                <a class="btn btn-danger" href="Controller?action=logout">Logout: <%=usr.getUsername() %></a>
-                <%
-                Boolean mobile = (Boolean)session.getAttribute("mobile");
-                if(mobile != null && mobile){
-                %>
-                <script src="js/cordova.js"></script>
-                <button class="btn btn-success"	onClick="cordova.exec(function(res){}, function(err){}, 'avviaActivity' , 'chat', [<%= usr.getPhoneNumber()%>]);">Chat</button>
-            
-                <% } %>
-            </form>
+            <div class="navbar-right">
+                <a class="btn btn-danger navbar-btn" href="Controller?action=logout">Logout</a>
+                <c:if test="${sessionScope.mobile}">
+                    <script src="js/cordova.js"></script>
+                    <button class="btn btn-success navbar-btn" onClick="cordova.exec(function(res){}, function(err){}, 'avviaActivity' , 'chat', [${sessionScope.utente.phoneNumber}]);">
+                        Chat
+                    </button>
+                </c:if>
+            </div>
 
-        </div><!--/.navbar-collapse -->
+        </div>
     </div>
 </div>
