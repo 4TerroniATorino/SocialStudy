@@ -2,6 +2,8 @@
    Author's custom styles
    ========================================================================== */
 
+.input-group { font-size: 14px !important; }
+
 .profile-picture {
     max-width: 200px;
     max-height: 200px;

@@ -8,10 +8,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-
-
-
-
 <script>
     function checkForm() {
         f = document.createForm;
@@ -23,32 +19,38 @@
             return true;
     }
 </script>
-
+<script>
+    $(function () {
+        $('#datetimepicker').datetimepicker({
+            language: 'it'
+        });
+    });
+</script>
 <div class="container">
     <div class="jumbotron">
-        <div class="row clearfix">
-            <div class="col-md-12 column">
-                <div class="row clearfix">
-                    <div class="col-md-12 column">
-                        <h2>Crea nuovo incontro nel gruppo ${gruppo.nome}</h2>
-                        <form id="myForm" method="post" name="createForm" action="Meetings?action=addMeeting" onkeypress="noEnter(event)" onSubmit="return(checkForm());">
-                            Inserisci data <input class="form-control" type="text" name="data"><br>
-                            Inserisci argomento <input class="form-control" type="text" name="argomento"><br>
-                            Location (facoltativo)
-                            <select name="idLocation" class="form-control">
-                                <option value="-1">Nessuno</option>
-                                <c:forEach var="location" items="${locations}">
-                                    <option value="${location.id}">${location.descrizione}</option>
-                                </c:forEach>
-                            </select>
-                            <br>
-                            <input type="hidden" name="deviceType" value="android">
-                            <input type="hidden" name="idGruppo" value="${gruppo.id}">
-                            <input type="submit" class="btn btn-primary btn-lg" value="Crea incontro">
-                        </form>
-                    </div>
+        <div class="col-md-12 column">
+            <h2>Crea nuovo incontro nel gruppo ${gruppo.nome}</h2>
+            <form id="myForm" method="post" name="createForm" action="Meetings?action=addMeeting" onkeypress="noEnter(event)" onSubmit="return(checkForm());">
+                Inserisci data
+                <div class='input-group date' id='datetimepicker'>
+                    <input name="data" type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
                 </div>
-            </div>
+                Inserisci argomento <input class="form-control" type="text" name="argomento">
+                Location (facoltativo)
+                <select name="idLocation" class="form-control">
+                    <option value="-1">Nessuno</option>
+                    <c:forEach var="location" items="${locations}">
+                        <option value="${location.id}">${location.descrizione}</option>
+                    </c:forEach>
+                </select>
+                <br>
+                <input type="hidden" name="deviceType" value="android">
+                <input type="hidden" name="idGruppo" value="${gruppo.id}">
+                <input type="submit" class="btn btn-primary btn-lg" value="Crea incontro">
+            </form>
         </div>
     </div>
 </div>
