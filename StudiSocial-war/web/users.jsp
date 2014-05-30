@@ -17,6 +17,15 @@
             $("#deleteButton").hide();
             $("#addButton").after('<button id="confirmButton" class="btn btn-default" type="button"> Conferma</button>');
             $("#confirmButton").click(function() {
+                /*$("addCorsoForm").ajaxSubmit({
+                    type : "POST",
+                    url : "",
+                    timeout : 20000,
+                    success : function(data) {
+                    },
+                    error: function(e) {
+                    } 
+                });*/
                 $("addCorsoForm").submit();
             });
         });
@@ -104,14 +113,14 @@
                                 <c:forEach var="voto" items="${libretto}">
                                     <tr><td>${voto.corso.nome}</td><td>${voto.voti}</td></tr>
                                 </c:forEach>
-                                <form method="POST" action="Career?action=addCorso">
-                                    <tr id="rigaAggiungi"><td><select class="form-control" name="corso">
-                                        <c:forEach var="corso" items="${corsiNonInLibretto}">
-                                            <option value="${corso.id}">${corso.nome}</option>
-                                        </c:forEach>
-                                    </select></td><td>0</td></tr>
-                                </form>
                             </table>
+                            <form method="POST" action="Career?action=addCorso">
+                                <select class="form-control" name="corso">
+                                    <c:forEach var="corso" items="${corsiNonInLibretto}">
+                                        <option value="${corso.id}">${corso.nome}</option>
+                                    </c:forEach>
+                                </select>
+                            </form>
                         </c:if>
                         <button id="addButton" class="btn btn-default" type="button"> Aggiungi corso</button>
                         <button id="deleteButton" class="btn btn-default" type="button"> Elimina corso</button>
@@ -132,12 +141,12 @@
                             <div class="tab-pane active" id="tab2">
                                 <c:forEach var="gruppo" items="${gruppiFondati}">
                                     <p><a href="Groups?action=show&id=${gruppo.id}">${gruppo.nome}</a></p>
-                                    </c:forEach>
+                                </c:forEach>
                             </div>
                             <div class="tab-pane" id="tab3">
                                 <c:forEach var="gruppo" items="${gruppi}">
                                     <p><a href="Groups?action=show&id=${gruppo.id}">${gruppo.nome}</a></p>
-                                    </c:forEach>
+                                </c:forEach>
                             </div>
                             <div class="tab-pane" id="tab4">
                             </div>
