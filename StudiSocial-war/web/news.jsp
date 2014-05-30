@@ -22,8 +22,7 @@
             <div class="col-md-9 column">
                 <h1 class="lead">Benvenuto in Social Study</h1>
                 <p>
-                    Social Study è il network intelligente per la tua università. E Gianvito Siciliano è invitato a 
-                    scrivere un paio di righe qui su cazzi e mazzi :D
+                    Social Study è il network intelligente per la tua università.
                 </p>
             </div>
         </div>

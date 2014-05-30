@@ -80,7 +80,7 @@
                     </div>
                     <blockquote>
                         <p>Buongiorno...</p>
-                        <small>...stamattina <cite> adda studià !! :D</cite></small>
+                        <small>...stamattina <cite> si studia !! :D</cite></small>
                     </blockquote>
                 </div>
             </div>
@@ -92,7 +92,7 @@
                     <div class="alert alert-dismissable alert-success">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                         <h4>Alert!</h4>
-                        <strong>Warning!</strong> Devi dare l'esame di SSCWEB. <a href="#" class="alert-link">alert link</a>
+                        <strong>Warning!</strong> Devi dare l'esame di SCSWEB. <a href="#" class="alert-link">alert link</a>
                     </div>
                 </div>
             </div>
