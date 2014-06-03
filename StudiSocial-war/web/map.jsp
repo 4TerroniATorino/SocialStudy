@@ -19,8 +19,21 @@
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASm3CwaK9qtcZEWYa-iQwHaGi3gcosAJc&sensor=false"></script>
 <script type="text/javascript">
 
+    $(function detectBrowser() {
+        var useragent = navigator.userAgent;
+        var mapdiv = document.getElementById("map");
+
+        if (useragent.indexOf('iPhone') != -1 || useragent.indexOf('Android') != -1 || useragent.indexOf('mobileSocialStudy') != -1) {
+            mapdiv.style.width = '100%';
+            mapdiv.style.height = '100%';
+        } else {
+            mapdiv.style.width = '600px';
+            mapdiv.style.height = '800px';
+        }
+    });
+
     var map;
-    var markers = {};
+            var markers = {};
 
     google.maps.event.addDomListener(window, 'load', init);
 
@@ -88,31 +101,31 @@
 
         map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-        <c:if test="${not empty param.id}">
-            putMarker(
+    <c:if test="${not empty param.id}">
+        putMarker(
                 '${location.type}',
                 '${location.id}',
                 '${fn:escapeXml(location.descrizione)}',
                 '${fn:escapeXml(location.indirizzo)}',
-                ${location.lat},
-                ${location.lng}
-            );
-            markers['${location.id}'].infoWindow.open(map, markers['${location.id}']);
-        </c:if>
-            
-        <c:if test="${empty param.id}">
-            <c:forEach var="location" items="${locations}">
-                putMarker(
-                    '${location.type}',
-                    '${location.id}',
-                    '${fn:escapeXml(location.descrizione)}',
-                    '${fn:escapeXml(location.indirizzo)}',
-                    ${location.lat},
-                    ${location.lng}
-                );
-            </c:forEach>
+        ${location.lat},
+        ${location.lng}
+        );
+        markers['${location.id}'].infoWindow.open(map, markers['${location.id}']);
+    </c:if>
 
-        </c:if>
+    <c:if test="${empty param.id}">
+        <c:forEach var="location" items="${locations}">
+        putMarker(
+                '${location.type}',
+                '${location.id}',
+                '${fn:escapeXml(location.descrizione)}',
+                '${fn:escapeXml(location.indirizzo)}',
+            ${location.lat},
+            ${location.lng}
+        );
+        </c:forEach>
+
+    </c:if>
     }
 
     function closeInfoWindow() {
