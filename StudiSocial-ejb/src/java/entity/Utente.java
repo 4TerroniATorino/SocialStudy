@@ -76,9 +76,9 @@ public class Utente implements Serializable {
     @Column(name = "PICTURE")
     private String picture;
     @ManyToMany(mappedBy = "utenteCollection", fetch = FetchType.EAGER)
-    private Collection<Gruppo> gruppoCollection;
+    private Collection<Gruppo> gruppiPartecipante;
     @OneToMany(mappedBy = "fondatore", fetch = FetchType.EAGER)
-    private Collection<Gruppo> gruppoCollection1;
+    private Collection<Gruppo> gruppiFondati;
 
     public Utente() {
     }
@@ -158,21 +158,21 @@ public class Utente implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Gruppo> getGruppoCollection() {
-        return gruppoCollection;
+    public Collection<Gruppo> getGruppiPartecipante() {
+        return gruppiPartecipante;
     }
 
-    public void setGruppoCollection(Collection<Gruppo> gruppoCollection) {
-        this.gruppoCollection = gruppoCollection;
+    public void setGruppiPartecipante(Collection<Gruppo> gruppiPartecipante) {
+        this.gruppiPartecipante = gruppiPartecipante;
     }
 
     @XmlTransient
-    public Collection<Gruppo> getGruppoCollection1() {
-        return gruppoCollection1;
+    public Collection<Gruppo> getGruppiFondati() {
+        return gruppiFondati;
     }
 
-    public void setGruppoCollection1(Collection<Gruppo> gruppoCollection1) {
-        this.gruppoCollection1 = gruppoCollection1;
+    public void setGruppiFondati(Collection<Gruppo> gruppiFondati) {
+        this.gruppiFondati = gruppiFondati;
     }
 
     @Override

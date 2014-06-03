@@ -54,7 +54,7 @@ public class Users extends HttpServlet {
         if (id != null) {
             Utente user = gestoreUtente.find(Long.parseLong(id));
             Collection<Voto> voti = gestoreLibretto.findByUser(user);
-            Collection<Gruppo> gruppi = user.getGruppoCollection();
+            Collection<Gruppo> gruppi = user.getGruppiPartecipante();
             Collection<Gruppo> gruppiFondati = gestoreGruppo.findAllByFounder(user);
             Collection<Corso> corsi = gestoreCorso.findAll();
             Collection<Corso> corsiInLibretto = new ArrayList<>();

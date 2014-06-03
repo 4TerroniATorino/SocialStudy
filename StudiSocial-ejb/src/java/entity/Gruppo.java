@@ -65,7 +65,7 @@ public class Gruppo implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     private Corso corso;
     @OneToMany(mappedBy = "gruppo", fetch = FetchType.EAGER)
-    private Collection<Incontro> incontroCollection;
+    private Collection<Incontro> incontri;
 
     public Gruppo() {
     }
@@ -124,12 +124,12 @@ public class Gruppo implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Incontro> getIncontroCollection() {
-        return incontroCollection;
+    public Collection<Incontro> getIncontri() {
+        return incontri;
     }
 
-    public void setIncontroCollection(Collection<Incontro> incontroCollection) {
-        this.incontroCollection = incontroCollection;
+    public void setIncontri(Collection<Incontro> incontri) {
+        this.incontri = incontri;
     }
 
     @Override

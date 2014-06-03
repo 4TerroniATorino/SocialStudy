@@ -14,17 +14,16 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import session.GruppoFacadeLocal;
 import session.IncontroFacadeLocal;
 import session.LocationFacadeLocal;
@@ -84,9 +83,20 @@ public class Meetings extends HttpServlet {
             if(idIncontro!=null) {
                 Incontro incontro = gestoreIncontri.find(idIncontro);
                 request.setAttribute("incontro", incontro);
-            }
-            else {
-                List<Incontro> incontri = gestoreIncontri.findAll();
+            } else {
+                List<Incontro> incontri = new ArrayList<>();
+                Collection<Gruppo> gruppi1 = currentUser.getGruppiFondati();
+                Collection<Gruppo> gruppi2 = currentUser.getGruppiPartecipante();
+                for (Gruppo g : gruppi1){
+                    for (Incontro i : g.getIncontri()){
+                        incontri.add(i);
+                    }
+                }
+                for (Gruppo g : gruppi2){
+                    for (Incontro i : g.getIncontri()){
+                        incontri.add(i);
+                    }
+                }
                 request.setAttribute("incontri", incontri);
             }
             request.setAttribute("page", "meetings");
@@ -107,10 +117,20 @@ public class Meetings extends HttpServlet {
         
         else if (action.equalsIgnoreCase("modMeeting")) {
             String id = request.getParameter("id");
+            String strDate = request.getParameter("data");
+            
             Incontro inc = gestoreIncontri.find(id);
-            //inc.setDataincontro(request.getParameter("date"));
+            
+            Date date;
+            try {
+                date = new SimpleDateFormat("dd/MM/yyyy hh:mm").parse(strDate);
+                inc.setData(date);
+            } catch (ParseException e) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid date");
+                return;
+            }
             //inc.setLocationId(request.getParameter("locId"));
-                    request.setAttribute("page", "meetings");
+            request.setAttribute("page", "meetings");
 
         }
         
@@ -136,11 +156,10 @@ public class Meetings extends HttpServlet {
             }
             
             newIncontro.setArgomento(request.getParameter("argomento"));
-            String data = request.getParameter("data");
-            DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm"); 
+            String strDate = request.getParameter("data");
             Date date;
             try {
-                date = df.parse(data);
+                date = new SimpleDateFormat("dd/MM/yyyy hh:mm").parse(strDate);
                 newIncontro.setData(date);
             } catch (ParseException e) {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid date");
