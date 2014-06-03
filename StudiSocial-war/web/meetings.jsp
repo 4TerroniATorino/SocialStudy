@@ -15,12 +15,6 @@
 <script type="text/javascript">
 
     $(function() {
-        var codropsEvents = {
-            <c:forEach var="incontro" items="${incontri}">
-                '<fmt:formatDate pattern="MM-dd-yyyy" value="${incontro.data}" />':
-                '${incontro.argomento}|${incontro.gruppo.id}|${incontro.gruppo.nome}|${incontro.location.id}|${incontro.location.descrizione}'
-            </c:forEach>
-        };
         var transEndEventNames = {
             'WebkitTransition': 'webkitTransitionEnd',
             'MozTransition': 'transitionend',
