@@ -83,9 +83,6 @@
         }
 
     });
-    
-
-    
 </script>
 
 <div class="jumbotron">
@@ -143,7 +140,7 @@
 
             <!-- info sull'incontro selezionato nel calendario -->
             <div class="col-sm-4">
-                ....testo da nascondere/mostrare....
+                ...
             </div>
 
 
