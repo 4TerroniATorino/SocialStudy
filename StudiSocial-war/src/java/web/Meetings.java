@@ -11,9 +11,10 @@ import entity.Incontro;
 import entity.Location;
 import entity.Utente;
 import java.io.IOException;
-import java.sql.Date;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -61,6 +62,21 @@ public class Meetings extends HttpServlet {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "You must provide an action");
             return;
         }
+        /*else if (action.equalsIgnoreCase("addIncontro")) {
+            Incontro incontro = new Incontro();
+            incontro.setGruppoId(new BigInteger(request.getParameter("idGruppo")));
+            incontro.setLocationId(new BigInteger(request.getParameter("idLocation")));
+            incontro.setDataincontro(parseDate(request.getParameter("data")));
+            gestoreIncontro.create(incontro);
+            map.put("output", "Incontro creato");
+        } else if (action.equalsIgnoreCase("removeIncontro")) {
+            Incontro incontro = gestoreIncontro.find(Long.parseLong(request.getParameter("id")));
+            gestoreIncontro.remove(incontro);
+            map.put("output", "Incontro eliminato");
+        } else if (action.equalsIgnoreCase("listIncontri")) {
+            List<Incontro> incontri = gestoreIncontro.findAll();
+            map.put("incontri", incontri);
+        }*/
 
 
         else if (action.equalsIgnoreCase("show")) {
@@ -105,6 +121,7 @@ public class Meetings extends HttpServlet {
 
         }
         
+        //richiamato da meeting_create
         else if (action.equalsIgnoreCase("addMeeting")){
             Incontro newIncontro = new Incontro();
             
@@ -119,7 +136,16 @@ public class Meetings extends HttpServlet {
             }
             
             newIncontro.setArgomento(request.getParameter("argomento"));
-            /*newIncontro.setDataincontro(request.getParameter("data"));*/
+            String data = request.getParameter("data");
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm"); 
+            Date date;
+            try {
+                date = df.parse(data);
+                newIncontro.setData(date);
+            } catch (ParseException e) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid date");
+                return;
+            }
 
             
             gestoreIncontri.create(newIncontro);

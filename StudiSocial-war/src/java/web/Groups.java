@@ -110,21 +110,7 @@ public class Groups extends HttpServlet {
         } else if (action.equalsIgnoreCase("list")) {
             List<Gruppo> gruppi = gestoreGruppo.findAll();
             map.put("groups", gruppi);
-        } /*else if (action.equalsIgnoreCase("addIncontro")) {
-            Incontro incontro = new Incontro();
-            incontro.setGruppoId(new BigInteger(request.getParameter("idGruppo")));
-            incontro.setLocationId(new BigInteger(request.getParameter("idLocation")));
-            incontro.setDataincontro(parseDate(request.getParameter("data")));
-            gestoreIncontro.create(incontro);
-            map.put("output", "Incontro creato");
-        } else if (action.equalsIgnoreCase("removeIncontro")) {
-            Incontro incontro = gestoreIncontro.find(Long.parseLong(request.getParameter("id")));
-            gestoreIncontro.remove(incontro);
-            map.put("output", "Incontro eliminato");
-        } else if (action.equalsIgnoreCase("listIncontri")) {
-            List<Incontro> incontri = gestoreIncontro.findAll();
-            map.put("incontri", incontri);
-        }*/ else {
+        }  else {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Not recognized action");
             return;
         }
