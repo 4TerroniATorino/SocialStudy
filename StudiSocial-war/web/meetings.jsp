@@ -1,19 +1,21 @@
-<%--
-    Document   : Register
-    Created on : 7-feb-2014, 14.28.51
-    Author     : Daniele
---%>
-
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <link rel="stylesheet" type="text/css" href="css/calendar.css" />
 <link rel="stylesheet" type="text/css" href="css/custom_2.css" />
 <script src="js/modernizr.custom.63321.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery.calendario.js"></script>
-<script type="text/javascript" src="js/data.js"></script>
 <script type="text/javascript">
 
     $(function() {
+        var codropsEvents = {
+            <c:forEach var="incontro" items="${incontri}">
+                '<fmt:formatDate pattern="MM-dd-yyyy" value="${incontro.data}" />':
+                '${incontro.argomento}|${incontro.gruppo.id}|${incontro.gruppo.nome}|${incontro.location.id}|${incontro.location.nome}'
+            </c:forEach>
+        };
 
         var transEndEventNames = {
             'WebkitTransition': 'webkitTransitionEnd',
@@ -57,7 +59,7 @@
             hideEvents();
 
             var $events = $('<div id="custom-content-reveal" class="custom-content-reveal"><h4>Events for ' + dateProperties.monthname + ' ' + dateProperties.day + ', ' + dateProperties.year + '</h4></div>'),
-                    $close = $('<span class="custom-content-close"></span>').on('click', hideEvents);
+                $close = $('<span class="custom-content-close"></span>').on('click', hideEvents);
 
             $events.append($contentEl.html(), $close).insertAfter($wrapper);
 

@@ -1,8 +1,3 @@
-<%-- 
-    Document   : Register
-    Created on : 7-feb-2014, 14.28.51
-    Author     : Daniele
---%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
