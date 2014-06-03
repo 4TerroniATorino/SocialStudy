@@ -13,7 +13,7 @@
         var codropsEvents = {
             <c:forEach var="incontro" items="${incontri}">
                 '<fmt:formatDate pattern="MM-dd-yyyy" value="${incontro.data}" />':
-                '${incontro.argomento}|${incontro.gruppo.id}|${incontro.gruppo.nome}|${incontro.location.id}|${incontro.location.nome}'
+                '${incontro.argomento}|${incontro.gruppo.id}|${incontro.gruppo.nome}|${incontro.location.id}|${incontro.location.descrizione}'
             </c:forEach>
         };
 
@@ -83,6 +83,9 @@
         }
 
     });
+    
+
+    
 </script>
 
 <div class="jumbotron">
@@ -140,7 +143,7 @@
 
             <!-- info sull'incontro selezionato nel calendario -->
             <div class="col-sm-4">
-                ...
+                ....testo da nascondere/mostrare....
             </div>
 
 
