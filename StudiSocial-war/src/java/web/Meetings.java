@@ -11,7 +11,6 @@ import entity.Incontro;
 import entity.Location;
 import entity.Utente;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -79,10 +78,12 @@ public class Meetings extends HttpServlet {
 
 
         else if (action.equalsIgnoreCase("show")) {
-            String idIncontro = request.getParameter("idIncontro");
-            if(idIncontro!=null) {
-                Incontro incontro = gestoreIncontri.find(idIncontro);
+            String idIncontro = request.getParameter("id");
+            if (idIncontro!=null) {
+                long id = Long.parseLong(idIncontro);
+                Incontro incontro = gestoreIncontri.find(id);
                 request.setAttribute("incontro", incontro);
+                request.setAttribute("page", "meeting");
             } else {
                 List<Incontro> incontri = new ArrayList<>();
                 Collection<Gruppo> gruppi1 = currentUser.getGruppiFondati();
@@ -98,8 +99,8 @@ public class Meetings extends HttpServlet {
                     }
                 }
                 request.setAttribute("incontri", incontri);
+                request.setAttribute("page", "meetings");
             }
-            request.setAttribute("page", "meetings");
 
         }
         

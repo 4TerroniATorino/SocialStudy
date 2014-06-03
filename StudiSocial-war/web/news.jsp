@@ -37,7 +37,7 @@
                     <img id="news-image" src="data/news/02.jpg" alt=""/>
                 </div>
                 <div class="col-md-8 column">
-                    <h3>SocialStudy parteciperà ad <a href="http://www.hackunito.it/">#hackUnito!</a></h3>
+                    <h3>SocialStudy parteciperà ad <a href="http://www.hackunito.it/">#hackUnito</a>!</h3>
                     <p>
                         Il progetto SocialStudy è stato iscritto come partecipante all'evento...
                     </p>
