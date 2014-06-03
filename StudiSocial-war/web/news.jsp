@@ -34,6 +34,20 @@
         <div class="well">
             <div class="row clearfix">
                 <div class="col-md-3 column">
+                    <img id="news-image" src="data/news/03.png" alt=""/>
+                </div>
+                <div class="col-md-8 column">
+                    <h3>Disponibile l'app Android di Social Study!</h3>
+                    <p>
+                        Scarica subito l'applicazione di Social Study per il tuo smartphone Android! 
+                        <a href="data/android/socialstudy android.apk">Download</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="well">
+            <div class="row clearfix">
+                <div class="col-md-3 column">
                     <img id="news-image" src="data/news/02.jpg" alt=""/>
                 </div>
                 <div class="col-md-8 column">

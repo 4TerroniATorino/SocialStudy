@@ -100,7 +100,7 @@
 
             <!-- bottoni per l'interazione -->
             <div class="col-sm-2">
-                <%-- <%
+                <%
                     if (request.getAttribute("incontro") != null) {
                         out.print("incontro");
                         //<c:out value="${person.nome} ${person.cognome}"/c:out>;
@@ -118,7 +118,7 @@
                     <input type="hidden" name="id" value="${incontro.id}%>">
                     <input type="hidden" name="op" value="delMeeting">
                     <input type="submit" class="btn btn-primary btn-lg" value="Cancella">
-                </form> --%>
+                </form>
             </div>
 
 
