@@ -4,42 +4,47 @@
 
 <link rel="stylesheet" type="text/css" href="css/calendar.css" />
 <link rel="stylesheet" type="text/css" href="css/custom_2.css" />
+<style>
+    .centered-title {
+        text-align: center;
+    }
+</style>
 <script src="js/modernizr.custom.63321.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery.calendario.js"></script>
 <script type="text/javascript">
 
     $(function() {
-        var codropsEvents = {
-            <c:forEach var="incontro" items="${incontri}">
-                '<fmt:formatDate pattern="MM-dd-yyyy" value="${incontro.data}" />':
-                '${incontro.argomento}|${incontro.gruppo.id}|${incontro.gruppo.nome}|${incontro.location.id}|${incontro.location.nome}'
-            </c:forEach>
-        };
-
         var transEndEventNames = {
             'WebkitTransition': 'webkitTransitionEnd',
             'MozTransition': 'transitionend',
             'OTransition': 'oTransitionEnd',
             'msTransition': 'MSTransitionEnd',
             'transition': 'transitionend'
-        },
-        transEndEventName = transEndEventNames[ Modernizr.prefixed('transition') ],
-                $wrapper = $('#custom-inner'),
-                $calendar = $('#calendar'),
-                cal = $calendar.calendario({
-                    onDayClick: function($el, $contentEl, dateProperties) {
-
-                        if ($contentEl.length > 0) {
-                            showEvents($contentEl, dateProperties);
-                        }
-
-                    },
-                    caldata: codropsEvents,
-                    displayWeekAbbr: true
-                }),
-                $month = $('#custom-month').html(cal.getMonthName()),
-                $year = $('#custom-year').html(cal.getYear());
+        };
+        var transEndEventName = transEndEventNames[ Modernizr.prefixed('transition') ];
+        var $wrapper = $('#custom-inner');
+        var $calendar = $('#calendar');
+        var cal = $calendar.calendario({
+            onDayClick: function($el, $contentEl, dateProperties) {
+                if ($contentEl.length > 0) {
+                    showEvents($contentEl, dateProperties);
+                }
+            },
+            weeks : [ 'Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato' ],
+            weekabbrs : [ 'Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab' ],
+            months : [ 'Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre' ],
+            monthabbrs : [ 'Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic' ],
+            caldata: {
+                <c:forEach var="incontro" items="${incontri}">
+                    '<fmt:formatDate pattern="MM-dd-yyyy" value="${incontro.data}" />':
+                    '<br>|${incontro.id}|${incontro.argomento}|${incontro.gruppo.id}|${incontro.gruppo.nome}|${incontro.location.id}|${incontro.location.descrizione}',
+                </c:forEach>
+            },
+            displayWeekAbbr: true
+        });
+        var $month = $('#custom-month').html(cal.getMonthName());
+        var $year = $('#custom-year').html(cal.getYear());
 
         $('#custom-next').on('click', function() {
             cal.gotoNextMonth(updateMonthYear);
@@ -53,15 +58,18 @@
             $year.html(cal.getYear());
         }
 
-        // just an example..
         function showEvents($contentEl, dateProperties) {
 
             hideEvents();
 
-            var $events = $('<div id="custom-content-reveal" class="custom-content-reveal"><h4>Events for ' + dateProperties.monthname + ' ' + dateProperties.day + ', ' + dateProperties.year + '</h4></div>'),
-                $close = $('<span class="custom-content-close"></span>').on('click', hideEvents);
-
-            $events.append($contentEl.html(), $close).insertAfter($wrapper);
+            var $events = $('<div id="custom-content-reveal" class="custom-content-reveal"><h4>Incontri del ' + dateProperties.day + ' ' + dateProperties.monthname + ' ' + dateProperties.year + '</h4></div>');
+            var $close = $('<span class="custom-content-close"></span>').on('click', hideEvents);
+            
+            var content = $contentEl.html().split("|");
+            var info = '<p><a href=Meetings?action=show&id=' + content[1] + '>' + content[2] + '</a></p><br>';
+            info += '<p>Gruppo: <a href=Groups?action=show&id=' + content[3] + '>' + content[4] + '</a></p>';
+            info += '<p>Location: <a href=Locations?action=show&id=' + content[5] + '>' + content[6] + '</a></p>';
+            $events.append(info, $close).insertAfter($wrapper);
 
             setTimeout(function() {
                 $events.css('top', '0%');
@@ -85,15 +93,14 @@
     });
 </script>
 
-<div class="jumbotron">
-    <div class="container">
-
-        <div class="row">
-
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="lead centered-title">I tuoi incontri</h1><br>
+        <div class="row clearfix">
 
             <!-- bottoni per l'interazione -->
             <div class="col-sm-2">
-                <%
+                <%-- <%
                     if (request.getAttribute("incontro") != null) {
                         out.print("incontro");
                         //<c:out value="${person.nome} ${person.cognome}"/c:out>;
@@ -111,12 +118,12 @@
                     <input type="hidden" name="id" value="${incontro.id}%>">
                     <input type="hidden" name="op" value="delMeeting">
                     <input type="submit" class="btn btn-primary btn-lg" value="Cancella">
-                </form>
+                </form> --%>
             </div>
 
 
             <!-- calendario -->
-            <div class="col-sm-6">
+            <div class="col-sm-8">
                 <section class="main">
                     <div class="custom-calendar-wrap">
                         <div id="custom-inner" class="custom-inner">
@@ -132,22 +139,19 @@
                         </div>
                     </div>
                 </section>
-
             </div>
 
 
 
 
             <!-- info sull'incontro selezionato nel calendario -->
-            <div class="col-sm-4">
-                ...
+            <div class="col-sm-2">
+                
             </div>
 
 
 
         </div>
-
-        <h2>Incontro</h2>
 
     </div>
 </div>
