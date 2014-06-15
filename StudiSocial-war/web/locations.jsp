@@ -23,17 +23,17 @@
                                 <br>
                                 <div class="tab-pane active" id="tab1">
                                     <c:forEach var="location" items="${locations1}">
-                                        <p><a href="Location?id=${location.id}">${location.descrizione}</a></p>
+                                        <p><a href="Locations?id=${location.id}">${location.descrizione}</a></p>
                                     </c:forEach>
                                 </div>
                                 <div class="tab-pane" id="tab2">
                                     <c:forEach var="location" items="${locations2}">
-                                        <p><a href="Location?id=${location.id}">${location.descrizione}</a></p>
+                                        <p><a href="Locations?id=${location.id}">${location.descrizione}</a></p>
                                     </c:forEach>
                                 </div>
                                 <div class="tab-pane" id="tab3">
                                     <c:forEach var="location" items="${locations3}">
-                                        <p><a href="Location?id=${location.id}">${location.descrizione}</a></p>
+                                        <p><a href="Locations?id=${location.id}">${location.descrizione}</a></p>
                                     </c:forEach>
                                 </div>
                                 <div class="tab-pane" id="tab4">
